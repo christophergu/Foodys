@@ -13,8 +13,6 @@
 		DF4DB85918FC450000C225EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF4DB85718FC450000C225EC /* InfoPlist.strings */; };
 		DF4DB85B18FC450000C225EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB85A18FC450000C225EC /* main.m */; };
 		DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB85E18FC450000C225EC /* AppDelegate.m */; };
-		DF4DB86218FC450000C225EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF4DB86018FC450000C225EC /* Main.storyboard */; };
-		DF4DB86518FC450000C225EC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB86418FC450000C225EC /* ViewController.m */; };
 		DF4DB86718FC450000C225EC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF4DB86618FC450000C225EC /* Images.xcassets */; };
 		DF4DB86E18FC450000C225EC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB86D18FC450000C225EC /* XCTest.framework */; };
 		DF4DB86F18FC450000C225EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB84E18FC44FF00C225EC /* Foundation.framework */; };
@@ -30,8 +28,15 @@
 		DF4DB89018FC4A4400C225EC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88F18FC4A4400C225EC /* CoreLocation.framework */; };
 		DF4DB89218FC4A4E00C225EC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB89118FC4A4E00C225EC /* CFNetwork.framework */; };
 		DF4DB89418FC4A5900C225EC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB89318FC4A5900C225EC /* AudioToolbox.framework */; };
-		DF4DB89518FC4A7100C225EC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB86D18FC450000C225EC /* XCTest.framework */; };
 		DF4DB89718FC4A8B00C225EC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB89618FC4A8B00C225EC /* Parse.framework */; };
+		DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB89918FC4EFF00C225EC /* SearchViewController.m */; };
+		DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */; };
+		DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */; };
+		DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB8A218FC505400C225EC /* LogInViewController.m */; };
+		DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB8A518FC508800C225EC /* ProfileViewController.m */; };
+		DF4DB8A818FC60B200C225EC /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */; };
+		DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */; };
+		DF4DB8EE18FC784900C225EC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB8ED18FC784900C225EC /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,9 +60,6 @@
 		DF4DB85C18FC450000C225EC /* Foodys-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Foodys-Prefix.pch"; sourceTree = "<group>"; };
 		DF4DB85D18FC450000C225EC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DF4DB85E18FC450000C225EC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DF4DB86118FC450000C225EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		DF4DB86318FC450000C225EC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DF4DB86418FC450000C225EC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DF4DB86618FC450000C225EC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF4DB86C18FC450000C225EC /* FoodysTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodysTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4DB86D18FC450000C225EC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -74,6 +76,20 @@
 		DF4DB89118FC4A4E00C225EC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DF4DB89318FC4A5900C225EC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DF4DB89618FC4A8B00C225EC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		DF4DB89818FC4EFF00C225EC /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		DF4DB89918FC4EFF00C225EC /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantViewController.h; sourceTree = "<group>"; };
+		DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantViewController.m; sourceTree = "<group>"; };
+		DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		DF4DB8A118FC505400C225EC /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		DF4DB8A218FC505400C225EC /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		DF4DB8A418FC508800C225EC /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		DF4DB8A518FC508800C225EC /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		DF4DB8A918FC706D00C225EC /* ShowMoreResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowMoreResultsViewController.h; sourceTree = "<group>"; };
+		DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowMoreResultsViewController.m; sourceTree = "<group>"; };
+		DF4DB8ED18FC784900C225EC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF4DB89518FC4A7100C225EC /* XCTest.framework in Frameworks */,
+				DF4DB8EE18FC784900C225EC /* MapKit.framework in Frameworks */,
 				DF4DB89418FC4A5900C225EC /* AudioToolbox.framework in Frameworks */,
 				DF4DB89218FC4A4E00C225EC /* CFNetwork.framework in Frameworks */,
 				DF4DB89018FC4A4400C225EC /* CoreLocation.framework in Frameworks */,
@@ -133,6 +149,7 @@
 		DF4DB84D18FC44FF00C225EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF4DB8ED18FC784900C225EC /* MapKit.framework */,
 				DF4DB89618FC4A8B00C225EC /* Parse.framework */,
 				DF4DB89318FC4A5900C225EC /* AudioToolbox.framework */,
 				DF4DB89118FC4A4E00C225EC /* CFNetwork.framework */,
@@ -156,9 +173,19 @@
 			children = (
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
-				DF4DB86018FC450000C225EC /* Main.storyboard */,
-				DF4DB86318FC450000C225EC /* ViewController.h */,
-				DF4DB86418FC450000C225EC /* ViewController.m */,
+				DF4DB89818FC4EFF00C225EC /* SearchViewController.h */,
+				DF4DB89918FC4EFF00C225EC /* SearchViewController.m */,
+				DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */,
+				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
+				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
+				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
+				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
+				DF4DB8A918FC706D00C225EC /* ShowMoreResultsViewController.h */,
+				DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */,
+				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
+				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
+				DF4DB8A418FC508800C225EC /* ProfileViewController.h */,
+				DF4DB8A518FC508800C225EC /* ProfileViewController.m */,
 				DF4DB86618FC450000C225EC /* Images.xcassets */,
 				DF4DB85518FC450000C225EC /* Supporting Files */,
 			);
@@ -271,8 +298,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF4DB86718FC450000C225EC /* Images.xcassets in Resources */,
+				DF4DB8A818FC60B200C225EC /* Storyboard.storyboard in Resources */,
 				DF4DB85918FC450000C225EC /* InfoPlist.strings in Resources */,
-				DF4DB86218FC450000C225EC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,9 +318,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF4DB86518FC450000C225EC /* ViewController.m in Sources */,
+				DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */,
+				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
 				DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */,
+				DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
+				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,
+				DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */,
+				DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,14 +354,6 @@
 				DF4DB85818FC450000C225EC /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		DF4DB86018FC450000C225EC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DF4DB86118FC450000C225EC /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		DF4DB87618FC450000C225EC /* InfoPlist.strings */ = {
@@ -508,6 +532,7 @@
 				DF4DB87F18FC450000C225EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF4DB88018FC450000C225EC /* Build configuration list for PBXNativeTarget "FoodysTests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +541,7 @@
 				DF4DB88218FC450000C225EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

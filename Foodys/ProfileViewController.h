@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ProfileViewController.h
 //  Foodys
 //
 //  Created by Christopher Gu on 4/14/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
-// My comment
+@interface ProfileViewController : UIViewController
 
 @end
