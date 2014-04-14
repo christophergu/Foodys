@@ -21,6 +21,17 @@
 		DF4DB87018FC450000C225EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85218FC450000C225EC /* UIKit.framework */; };
 		DF4DB87818FC450000C225EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF4DB87618FC450000C225EC /* InfoPlist.strings */; };
 		DF4DB87A18FC450000C225EC /* FoodysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB87918FC450000C225EC /* FoodysTests.m */; };
+		DF4DB88418FC4A0300C225EC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88318FC4A0300C225EC /* SystemConfiguration.framework */; };
+		DF4DB88618FC4A0D00C225EC /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88518FC4A0D00C225EC /* StoreKit.framework */; };
+		DF4DB88818FC4A1800C225EC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88718FC4A1800C225EC /* Security.framework */; };
+		DF4DB88A18FC4A2500C225EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88918FC4A2500C225EC /* QuartzCore.framework */; };
+		DF4DB88C18FC4A2F00C225EC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88B18FC4A2F00C225EC /* MobileCoreServices.framework */; };
+		DF4DB88E18FC4A3900C225EC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88D18FC4A3900C225EC /* libz.dylib */; };
+		DF4DB89018FC4A4400C225EC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB88F18FC4A4400C225EC /* CoreLocation.framework */; };
+		DF4DB89218FC4A4E00C225EC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB89118FC4A4E00C225EC /* CFNetwork.framework */; };
+		DF4DB89418FC4A5900C225EC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB89318FC4A5900C225EC /* AudioToolbox.framework */; };
+		DF4DB89518FC4A7100C225EC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB86D18FC450000C225EC /* XCTest.framework */; };
+		DF4DB89718FC4A8B00C225EC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB89618FC4A8B00C225EC /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +64,16 @@
 		DF4DB87518FC450000C225EC /* FoodysTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FoodysTests-Info.plist"; sourceTree = "<group>"; };
 		DF4DB87718FC450000C225EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DF4DB87918FC450000C225EC /* FoodysTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FoodysTests.m; sourceTree = "<group>"; };
+		DF4DB88318FC4A0300C225EC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DF4DB88518FC4A0D00C225EC /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DF4DB88718FC4A1800C225EC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		DF4DB88918FC4A2500C225EC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DF4DB88B18FC4A2F00C225EC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		DF4DB88D18FC4A3900C225EC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		DF4DB88F18FC4A4400C225EC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		DF4DB89118FC4A4E00C225EC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		DF4DB89318FC4A5900C225EC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		DF4DB89618FC4A8B00C225EC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +81,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF4DB89518FC4A7100C225EC /* XCTest.framework in Frameworks */,
+				DF4DB89418FC4A5900C225EC /* AudioToolbox.framework in Frameworks */,
+				DF4DB89218FC4A4E00C225EC /* CFNetwork.framework in Frameworks */,
+				DF4DB89018FC4A4400C225EC /* CoreLocation.framework in Frameworks */,
+				DF4DB88E18FC4A3900C225EC /* libz.dylib in Frameworks */,
+				DF4DB88C18FC4A2F00C225EC /* MobileCoreServices.framework in Frameworks */,
+				DF4DB88A18FC4A2500C225EC /* QuartzCore.framework in Frameworks */,
+				DF4DB88818FC4A1800C225EC /* Security.framework in Frameworks */,
+				DF4DB88618FC4A0D00C225EC /* StoreKit.framework in Frameworks */,
+				DF4DB88418FC4A0300C225EC /* SystemConfiguration.framework in Frameworks */,
+				DF4DB89718FC4A8B00C225EC /* Parse.framework in Frameworks */,
 				DF4DB85118FC450000C225EC /* CoreGraphics.framework in Frameworks */,
 				DF4DB85318FC450000C225EC /* UIKit.framework in Frameworks */,
 				DF4DB84F18FC450000C225EC /* Foundation.framework in Frameworks */,
@@ -101,6 +133,16 @@
 		DF4DB84D18FC44FF00C225EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF4DB89618FC4A8B00C225EC /* Parse.framework */,
+				DF4DB89318FC4A5900C225EC /* AudioToolbox.framework */,
+				DF4DB89118FC4A4E00C225EC /* CFNetwork.framework */,
+				DF4DB88F18FC4A4400C225EC /* CoreLocation.framework */,
+				DF4DB88D18FC4A3900C225EC /* libz.dylib */,
+				DF4DB88B18FC4A2F00C225EC /* MobileCoreServices.framework */,
+				DF4DB88918FC4A2500C225EC /* QuartzCore.framework */,
+				DF4DB88718FC4A1800C225EC /* Security.framework */,
+				DF4DB88518FC4A0D00C225EC /* StoreKit.framework */,
+				DF4DB88318FC4A0300C225EC /* SystemConfiguration.framework */,
 				DF4DB84E18FC44FF00C225EC /* Foundation.framework */,
 				DF4DB85018FC450000C225EC /* CoreGraphics.framework */,
 				DF4DB85218FC450000C225EC /* UIKit.framework */,
@@ -376,6 +418,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foodys/Foodys-Prefix.pch";
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
@@ -389,6 +436,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foodys/Foodys-Prefix.pch";
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
