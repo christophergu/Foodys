@@ -187,6 +187,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="xPH-y0-sCP"/>
                     <connections>
                         <outlet property="passwordTextField" destination="gZr-rS-qe1" id="xGP-yG-gmM"/>
                         <outlet property="usernameTextField" destination="2Tg-VJ-Eup" id="NED-XV-qT5"/>
@@ -631,9 +632,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="User's Name Here" id="65f-AI-6pn"/>
+                    <navigationItem key="navigationItem" title="User's Name Here" id="65f-AI-6pn">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="OZ1-9j-Lpz">
+                            <connections>
+                                <action selector="onLogOutButtonPressed:" destination="Bg0-Kt-1wg" id="na1-7I-JBB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="1GR-HN-HOX" id="8Gw-yK-f2u"/>
+                        <segue destination="Qim-L0-T0b" kind="modal" identifier="LogInSegue" id="3AK-th-B7Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3D-Pe-SXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -729,5 +737,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="w5m-Th-icB"/>
+        <segue reference="3AK-th-B7Y"/>
     </inferredMetricsTieBreakers>
 </document>

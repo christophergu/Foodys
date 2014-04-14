@@ -7,6 +7,7 @@
 //
 
 #import "SignInViewController.h"
+#import <Parse/Parse.h>
 
 @interface SignInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -20,12 +21,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (IBAction)onSignUpButtonPressed:(id)sender
 {
-    //    [self createNewUser];
+    [self createNewUser];
 }
 
 - (IBAction)onCancelButtonPressed:(id)sender
@@ -35,19 +35,19 @@
 
 - (IBAction)onEndEditingButtonPressed:(id)sender
 {
-    //    [self.usernameTextField endEditing:YES];
-    //    [self.passwordTextField endEditing:YES];
-    //    [self.emailTextField endEditing:YES];
+    [self.usernameTextField endEditing:YES];
+    [self.passwordTextField endEditing:YES];
+    [self.emailTextField endEditing:YES];
 }
 
 - (void)createNewUser
 {
-    //    PFUser *user = [PFUser user];
-    //    user.username = self.usernameTextField.text;
-    //    user.password = self.passwordTextField.text;
-    //    user.email = self.emailTextField.text;
-    //
-    //    [user signUpInBackgroundWithTarget:self selector:@selector(handleSignUp:error:)];
+    PFUser *user = [PFUser user];
+    user.username = self.usernameTextField.text;
+    user.password = self.passwordTextField.text;
+    user.email = self.emailTextField.text;
+    
+    [user signUpInBackgroundWithTarget:self selector:@selector(handleSignUp:error:)];
 }
 
 - (void)handleSignUp:(NSNumber *)result error:(NSError *)error

@@ -7,6 +7,7 @@
 //
 
 #import "LogInViewController.h"
+#import <Parse/Parse.h>
 
 @interface LogInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -24,19 +25,19 @@
 
 - (IBAction)onLogInButtonPressed:(id)sender
 {
-    //    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error)
-    //     {
-    //         if (user)
-    //         {
-    //             NSLog(@"logged in");
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    //         }
-    //         else
-    //         {
-    //             UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    //             [logInFailAlert show];
-    //         }
-    //     }];
+    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error)
+    {
+      if (user)
+      {
+          NSLog(@"logged in");
+          [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+      }
+      else
+      {
+          UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [logInFailAlert show];
+      }
+    }];
 }
 
 - (IBAction)onSignUpButtonPressed:(id)sender

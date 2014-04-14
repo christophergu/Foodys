@@ -13,6 +13,7 @@
 #import "ShowMoreResultsViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import <Parse/Parse.h>
 
 @interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *cuisineTextField;
@@ -57,7 +58,11 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser)
+    {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
 }
 
 - (void)foodSearch

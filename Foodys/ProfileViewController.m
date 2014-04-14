@@ -7,6 +7,7 @@
 //
 
 #import "ProfileViewController.h"
+#import <Parse/Parse.h>
 
 @interface ProfileViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -20,6 +21,12 @@
     [super viewDidLoad];
     
     self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
+}
+
+- (IBAction)onLogOutButtonPressed:(id)sender
+{
+    [PFUser logOut];
+    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
 }
 
 @end
