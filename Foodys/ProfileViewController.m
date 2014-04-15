@@ -43,11 +43,11 @@
      }];
     
     PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
-    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
-
+    [friendRequestQuery whereKey:@"requestor" equalTo:self.currentUser];
+    
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         NSLog(@"%@",objects);
+         NSLog(@"objects %@",objects);
      }];
 }
 
