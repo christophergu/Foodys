@@ -101,6 +101,12 @@
 - (IBAction)onAddButtonPressed:(AddFriendButton *)sender
 {
     NSLog(@"%@",sender.friendUser);
+    PFUser *currentUser = [PFUser currentUser];
+
+    PFObject *friendRequest = [PFObject objectWithClassName:@"FriendRequest"];
+    [friendRequest addUniqueObject:currentUser forKey:@"requestor"];
+    [friendRequest addUniqueObject:self.currentFriendUser forKey:@"requestee"];
+    [friendRequest saveInBackground];
 }
 
 @end

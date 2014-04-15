@@ -34,6 +34,23 @@
     [self loadUsers];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    PFQuery *query = [PFUser query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         self.userArray = (id)objects;
+     }];
+    
+    PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+
+    [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         NSLog(@"%@",objects);
+     }];
+}
+
 - (void)friendsSetter
 {    
     PFQuery *query = [PFUser query];
