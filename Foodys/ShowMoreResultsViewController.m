@@ -9,6 +9,7 @@
 #import "ShowMoreResultsViewController.h"
 #import "RestaurantViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "ResultsTableViewCell.h"
 
 @interface ShowMoreResultsViewController ()<UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
@@ -157,6 +158,8 @@
     
     float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+    
+    
     
     //    cell.detailTextLabel.text = restaurantAddress;
     

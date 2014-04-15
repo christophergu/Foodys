@@ -10,6 +10,9 @@
 
 @interface RestaurantViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
+@property (strong, nonatomic) IBOutlet UILabel *address;
+@property (strong, nonatomic) IBOutlet UILabel *phoneNumber;
+@property (strong, nonatomic) IBOutlet UILabel *websiteURL;
 
 @end
 
@@ -18,6 +21,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//NSLog(@"%@",self.chosenRestaurantDictionary);
+  self.address.text = self.chosenRestaurantDictionary[@"street_address"];
+    self.phoneNumber.text = self.chosenRestaurantDictionary[@"phone"];
+  self.websiteURL.text = self.chosenRestaurantDictionary [@"website_url"];
+    
     self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     self.myAtmosphereImageView.clipsToBounds = YES;
     

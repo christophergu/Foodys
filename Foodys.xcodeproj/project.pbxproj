@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */; };
 		DF4DB84F18FC450000C225EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB84E18FC44FF00C225EC /* Foundation.framework */; };
 		DF4DB85118FC450000C225EC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85018FC450000C225EC /* CoreGraphics.framework */; };
 		DF4DB85318FC450000C225EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85218FC450000C225EC /* UIKit.framework */; };
@@ -50,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsTableViewCell.h; sourceTree = "<group>"; };
+		43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewCell.m; sourceTree = "<group>"; };
 		DF4DB84B18FC44FF00C225EC /* Foodys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foodys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4DB84E18FC44FF00C225EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF4DB85018FC450000C225EC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,6 +181,8 @@
 				DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */,
 				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
+				43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */,
+				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
 				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
 				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
 				DF4DB8A918FC706D00C225EC /* ShowMoreResultsViewController.h */,
@@ -322,6 +327,7 @@
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
 				DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */,
 				DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */,
+				43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
 				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,
 				DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */,
