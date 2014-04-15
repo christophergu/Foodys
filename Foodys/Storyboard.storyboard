@@ -577,7 +577,6 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -626,6 +625,16 @@
                                             <segue destination="DgN-33-OhK" kind="push" id="Spb-sY-eur"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKh-2O-LY6" userLabel="Button (UIImageView)">
+                                        <rect key="frame" x="0.0" y="67" width="114" height="109"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onImageViewButtonPressed:" destination="Bg0-Kt-1wg" eventType="touchUpInside" id="hgd-Bc-cAx"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -641,6 +650,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="1GR-HN-HOX" id="8Gw-yK-f2u"/>
+                        <outlet property="myAvatarPhotoButton" destination="dKh-2O-LY6" id="Shj-62-KTU"/>
                         <segue destination="Qim-L0-T0b" kind="modal" identifier="LogInSegue" id="3AK-th-B7Y"/>
                     </connections>
                 </viewController>
