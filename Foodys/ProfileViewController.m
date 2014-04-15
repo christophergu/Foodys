@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
 @property (strong, nonatomic) NSArray *userArray;
+@property (strong, nonatomic) PFUser *currentUser;
 
 @end
 
@@ -23,6 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.currentUser = [PFUser currentUser];
+    self.navigationItem.title = self.currentUser[@"username"];
+    
     if (self.avatarImageView.image == nil) {
         self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
     }

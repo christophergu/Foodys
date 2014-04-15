@@ -1,29 +1,27 @@
 //
-//  FriendsViewController.m
+//  AllUserBrowseViewController.m
 //  Foodys
 //
-//  Created by Christopher Gu on 4/14/14.
+//  Created by Christopher Gu on 4/15/14.
 //  Copyright (c) 2014 Christopher Gu. All rights reserved.
 //
 
-#import "FriendsViewController.h"
-#import "FriendProfileViewController.h"
+#import "AllUserBrowseViewController.h"
 #import "CollectionViewCellWithImage.h"
 #import <Parse/Parse.h>
 
-@interface FriendsViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface AllUserBrowseViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentFriendUser;
 
 @end
 
-@implementation FriendsViewController
+@implementation AllUserBrowseViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
+    // Do any additional setup after loading the view.
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -44,18 +42,6 @@
         }
     }];
     return cell;
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"FriendsProfileSegue"]) {
-        FriendProfileViewController *fpvc = segue.destinationViewController;
-        
-        NSIndexPath *indexPath = [self.myCollectionView indexPathForCell:sender];
-        
-        fpvc.currentFriendUser = self.userArray[indexPath.row];
-    }
-
 }
 
 @end

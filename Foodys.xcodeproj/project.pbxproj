@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */; };
+		DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */; };
+		DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */; };
 		DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */; };
 		DF28E26B18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DF28E26A18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m */; };
 		DF4DB84F18FC450000C225EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB84E18FC44FF00C225EC /* Foundation.framework */; };
@@ -52,6 +55,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
+		DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileViewController.m; sourceTree = "<group>"; };
+		DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendsViewController.h; sourceTree = "<group>"; };
+		DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsFriendsViewController.m; sourceTree = "<group>"; };
+		DF11A01118FD9A7400CAB607 /* AllUserBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllUserBrowseViewController.h; sourceTree = "<group>"; };
+		DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllUserBrowseViewController.m; sourceTree = "<group>"; };
 		DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		DF28E26918FCC22E00E3D4F5 /* CollectionViewCellWithImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCellWithImage.h; sourceTree = "<group>"; };
@@ -196,6 +205,12 @@
 				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
 				DF4DB8A418FC508800C225EC /* ProfileViewController.h */,
 				DF4DB8A518FC508800C225EC /* ProfileViewController.m */,
+				DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */,
+				DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */,
+				DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */,
+				DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */,
+				DF11A01118FD9A7400CAB607 /* AllUserBrowseViewController.h */,
+				DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */,
 				DF4DB86618FC450000C225EC /* Images.xcassets */,
 				DF4DB85518FC450000C225EC /* Supporting Files */,
 			);
@@ -330,13 +345,16 @@
 			files = (
 				DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */,
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
+				DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */,
 				DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */,
 				DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */,
+				DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */,
 				DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
 				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,
 				DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */,
 				DF28E26B18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m in Sources */,
+				DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */,
 				DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
