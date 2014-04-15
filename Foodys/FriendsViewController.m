@@ -8,6 +8,7 @@
 
 #import "FriendsViewController.h"
 #import "FriendProfileViewController.h"
+#import "AllUserBrowseViewController.h"
 #import "CollectionViewCellWithImage.h"
 #import <Parse/Parse.h>
 
@@ -55,7 +56,11 @@
         
         fpvc.currentFriendUser = self.userArray[indexPath.row];
     }
-
+    if ([[segue identifier] isEqualToString:@"AllUserBrowseSegue"])
+    {
+        AllUserBrowseViewController *aubvc = segue.destinationViewController;
+        aubvc.userArray = self.userArray;
+    }
 }
 
 @end

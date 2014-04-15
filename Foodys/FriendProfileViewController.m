@@ -73,6 +73,7 @@
         FriendsFriendsViewController *fvc = segue.destinationViewController;
         fvc.userArray = self.userArray;
     }
+    
 }
 
 @end

@@ -739,7 +739,7 @@
                     <navigationItem key="navigationItem" id="4lh-G7-En6">
                         <barButtonItem key="rightBarButtonItem" title="Search for New Friends" id="FO8-c2-mdO">
                             <connections>
-                                <segue destination="GT4-rm-hgZ" kind="push" id="fMT-3f-g41"/>
+                                <segue destination="GT4-rm-hgZ" kind="push" identifier="AllUserBrowseSegue" id="fMT-3f-g41"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
