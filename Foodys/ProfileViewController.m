@@ -98,8 +98,11 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    FriendsViewController *fvc = segue.destinationViewController;
-    fvc.userArray = self.userArray;
+    if ([[segue identifier] isEqualToString:@"FriendsCollectionSegue"])
+    {
+        FriendsViewController *fvc = segue.destinationViewController;
+        fvc.userArray = self.userArray;
+    }
 }
 
 @end
