@@ -7,11 +7,14 @@
 //
 
 #import "ProfileViewController.h"
+#import "FriendsViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
+@property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
+@property (strong, nonatomic) NSArray *userArray;
 
 @end
 
@@ -23,6 +26,33 @@
     if (self.avatarImageView.image == nil) {
         self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
     }
+    [self friendsSetter];
+    [self loadUsers];
+}
+
+- (void)friendsSetter
+{    
+    PFQuery *query = [PFUser query];
+    [query countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
+        if (!error) {
+            // The count request succeeded. Log the count
+//            NSLog(@"Sean has played %d games", count);
+            self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",count];
+        } else {
+            // The request failed
+        }
+    }];
+    
+
+}
+
+- (void)loadUsers
+{
+    PFQuery *query = [PFUser query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         self.userArray = (id)objects;
+     }];
 }
 
 - (IBAction)onLogOutButtonPressed:(id)sender
@@ -52,14 +82,24 @@
     UIImage *pickedImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     NSData* data = UIImageJPEGRepresentation(pickedImage,1.0f);
     PFFile *imageFile = [PFFile fileWithData:data];
+    PFUser *user = [PFUser currentUser];
+    
+    user[@"avatar"] = imageFile;
+    [user saveInBackground];
     
     // getting a uiimage from pffile
-    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+    [user[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             UIImage *photo = [UIImage imageWithData:data];
             self.avatarImageView.image = photo;
         }
     }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    FriendsViewController *fvc = segue.destinationViewController;
+    fvc.userArray = self.userArray;
 }
 
 @end

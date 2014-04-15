@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */; };
+		DF28E26B18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DF28E26A18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m */; };
 		DF4DB84F18FC450000C225EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB84E18FC44FF00C225EC /* Foundation.framework */; };
 		DF4DB85118FC450000C225EC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85018FC450000C225EC /* CoreGraphics.framework */; };
 		DF4DB85318FC450000C225EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85218FC450000C225EC /* UIKit.framework */; };
@@ -50,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		DF28E26918FCC22E00E3D4F5 /* CollectionViewCellWithImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCellWithImage.h; sourceTree = "<group>"; };
+		DF28E26A18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCellWithImage.m; sourceTree = "<group>"; };
 		DF4DB84B18FC44FF00C225EC /* Foodys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foodys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4DB84E18FC44FF00C225EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF4DB85018FC450000C225EC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -175,6 +181,10 @@
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
 				DF4DB89818FC4EFF00C225EC /* SearchViewController.h */,
 				DF4DB89918FC4EFF00C225EC /* SearchViewController.m */,
+				DF28E26918FCC22E00E3D4F5 /* CollectionViewCellWithImage.h */,
+				DF28E26A18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m */,
+				DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */,
+				DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */,
 				DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */,
 				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
@@ -321,10 +331,12 @@
 				DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */,
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
 				DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */,
+				DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */,
 				DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
 				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,
 				DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */,
+				DF28E26B18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m in Sources */,
 				DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
