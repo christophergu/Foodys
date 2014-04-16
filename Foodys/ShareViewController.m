@@ -15,6 +15,13 @@
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
 @property (strong, nonatomic) IBOutlet UIView *chooseFriendToWriteView;
 @property (strong, nonatomic) IBOutlet UITableView *chooseFriendToWriteTableView;
+@property (strong, nonatomic) IBOutlet UIButton *wouldGoAgainButton;
+@property (strong, nonatomic) IBOutlet UILabel *wouldGoAgainYesNoLabel;
+@property BOOL yesNoBool;
+@property (strong, nonatomic) IBOutlet UILabel *sliderScoreLabel;
+@property (strong, nonatomic) IBOutlet UISlider *mySlider;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+
 @property (strong, nonatomic) PFUser *currentUser;
 
 @end
@@ -27,11 +34,18 @@
 
     self.myTextView.layer.cornerRadius=8.0f;
     self.myTextView.layer.masksToBounds=YES;
-    self.myTextView.layer.borderColor=[[UIColor redColor]CGColor];
+    self.myTextView.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
     self.myTextView.layer.borderWidth= 1.0f;
 
     self.currentUser = [PFUser currentUser];
-    NSLog(@"%@",self.currentUser[@"friends"]);
+    self.yesNoBool = 0;
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *todayDate = [NSDate date];
+    NSString *todayString = [dateFormat stringFromDate:todayDate];
+
+    self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -58,6 +72,26 @@
 {
     [self.myTextView endEditing:YES];
     [self.subjectTextField endEditing:YES];
+}
+
+- (IBAction)onWouldGoAgainButtonPressed:(id)sender
+{
+    self.yesNoBool = !self.yesNoBool;
+    if (self.yesNoBool) {
+        self.wouldGoAgainYesNoLabel.text = @"YES";
+        self.wouldGoAgainYesNoLabel.textColor = [UIColor greenColor];
+    }
+    else
+    {
+        self.wouldGoAgainYesNoLabel.text = @"NO";
+        self.wouldGoAgainYesNoLabel.textColor = [UIColor redColor];
+    }
+}
+
+- (IBAction)onMySliderChanged:(UISlider *)sender
+{
+    int discreteValue = roundl([sender value]);
+    self.sliderScoreLabel.text = [NSString stringWithFormat:@"%d", discreteValue];
 }
 
 - (IBAction)onSegmentedControlPressed:(id)sender
