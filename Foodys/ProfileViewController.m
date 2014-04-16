@@ -50,29 +50,27 @@
 
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         NSLog(@"objects %@",objects);
-         NSArray *requestorsToAddArray = (id)objects;
+         NSArray *requestorsToAddArray = objects;
          for (PFObject *requestorsAndRequestees in requestorsToAddArray) {
-             [self.currentUser addUniqueObject:requestorsAndRequestees[@"requestor"] forKey:@"friends"];
-             NSLog(@"friends array %@",self.currentUser[@"friends"]);
+             
+             // the objects that were fetched were _NSarrayM objects so this refetches the objects as PFUser objects
+             NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",requestorsAndRequestees[@"requestor"]];
+             NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
+             
+             PFQuery *friendToIncludeQuery = [PFUser query];
+             [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
+             [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                 NSLog(@"yaaa %@",objects.firstObject);
+                 [self.currentUser addUniqueObject:objects.firstObject forKey:@"friends"];
+                 [self.currentUser saveInBackground];
+             }];
          }
      }];
 }
 
 - (void)friendsSetter
-{    
-    PFQuery *query = [PFUser query];
-    [query countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
-        if (!error) {
-            // The count request succeeded. Log the count
-//            NSLog(@"Sean has played %d games", count);
-            self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",count];
-        } else {
-            // The request failed
-        }
-    }];
-    
-
+{
+    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
 }
 
 - (void)loadUsers
@@ -131,6 +129,7 @@
     {
         FriendsViewController *fvc = segue.destinationViewController;
         fvc.userArray = self.userArray;
+        fvc.currentUser = self.currentUser;
     }
 }
 

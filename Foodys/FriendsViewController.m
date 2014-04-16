@@ -23,20 +23,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.userArray.count;
+    return [self.currentUser[@"friends"] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
     
-    self.currentFriendUser = self.userArray[indexPath.row];
+    self.currentFriendUser = (PFUser *)self.currentUser[@"friends"][indexPath.row];    
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -54,7 +52,7 @@
         
         NSIndexPath *indexPath = [self.myCollectionView indexPathForCell:sender];
         
-        fpvc.currentFriendUser = self.userArray[indexPath.row];
+        fpvc.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
     }
     if ([[segue identifier] isEqualToString:@"AllUserBrowseSegue"])
     {
