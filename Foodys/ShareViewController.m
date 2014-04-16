@@ -121,4 +121,17 @@
                          completion:^(BOOL finished){
                          }];    }
 }
+
+- (IBAction)onDoneButtonPressed:(id)sender
+{
+//    PFObject *publicPost = [PFObject objectWithClassName:@"PublicPost"];
+//    publicPost[@"author"] = self.currentUser[@"username"];
+//    publicPost[@"date"] = self.dateLabel.text;
+//    publicPost[@"title"] = self.myTextView.text;
+//    publicPost[@"body"] = self.subjectTextField.text;
+//    publicPost[@"rating"] = self.sliderScoreLabel.text;
+//    publicPost[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
+//    [publicPost saveInBackground];
+}
+
 @end
