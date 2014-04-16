@@ -854,7 +854,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="eRt-gQ-r7X" kind="push" id="6Md-cT-L7l"/>
+                                            <segue destination="eRt-gQ-r7X" kind="push" identifier="FriendsFriendsCollectionSegue" id="6Md-cT-L7l"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDu-rK-MVb">

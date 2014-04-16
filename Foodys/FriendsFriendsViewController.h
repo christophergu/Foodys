@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FriendsFriendsViewController : UIViewController
-@property (strong, nonatomic) NSArray *userArray;
+@property (strong, nonatomic) NSArray *friendsFriendsArray;
 
 @end

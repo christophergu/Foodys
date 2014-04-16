@@ -15,6 +15,7 @@
 @interface FriendsViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentFriendUser;
+@property (strong, nonatomic) NSArray *userArray;
 
 @end
 
@@ -23,7 +24,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self loadUsers];
 }
+
+#pragma mark - collection view delegate methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -45,8 +49,20 @@
     return cell;
 }
 
+#pragma mark - segue methods or related
+
+- (void)loadUsers
+{
+    PFQuery *query = [PFUser query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         self.userArray = (id)objects;
+     }];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    
     if ([[segue identifier] isEqualToString:@"FriendsProfileSegue"]) {
         FriendProfileViewController *fpvc = segue.destinationViewController;
         

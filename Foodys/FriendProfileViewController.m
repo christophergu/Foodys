@@ -23,8 +23,7 @@
 {
     [super viewDidLoad];
 
-//    [self friendsSetter];
-//    [self loadUsers];
+    [self friendsSetter];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,27 +42,7 @@
 
 - (void)friendsSetter
 {
-    PFQuery *query = [PFUser query];
-    [query countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
-        if (!error) {
-            // The count request succeeded. Log the count
-            //            NSLog(@"Sean has played %d games", count);
-            self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",count];
-        } else {
-            // The request failed
-        }
-    }];
-    
-    
-}
-
-- (void)loadUsers
-{
-    PFQuery *query = [PFUser query];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         self.userArray = (id)objects;
-     }];
+    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentFriendUser[@"friends"] count]];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -71,9 +50,8 @@
     if ([[segue identifier] isEqualToString:@"FriendsFriendsCollectionSegue"])
     {
         FriendsFriendsViewController *fvc = segue.destinationViewController;
-        fvc.userArray = self.userArray;
+        fvc.friendsFriendsArray = self.currentFriendUser[@"friends"];
     }
-    
 }
 
 @end

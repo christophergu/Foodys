@@ -31,19 +31,10 @@
         self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
     }
     [self friendsSetter];
-    [self loadUsers];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
-    // trying to accept friends here
-    PFQuery *query = [PFUser query];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         self.userArray = (id)objects;
-     }];
-    
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
 }
@@ -97,15 +88,6 @@
     self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
 }
 
-- (void)loadUsers
-{
-    PFQuery *query = [PFUser query];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         self.userArray = (id)objects;
-     }];
-}
-
 #pragma mark - button methods
 
 - (IBAction)onLogOutButtonPressed:(id)sender
@@ -156,9 +138,8 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"FriendsCollectionSegue"])
-    {
+    {        
         FriendsViewController *fvc = segue.destinationViewController;
-        fvc.userArray = self.userArray;
         fvc.currentUser = self.currentUser;
     }
 }
