@@ -36,6 +36,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+    // trying to accept friends here
     PFQuery *query = [PFUser query];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -43,11 +45,17 @@
      }];
     
     PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
-    [friendRequestQuery whereKey:@"requestor" equalTo:self.currentUser];
-    
+    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+    [friendRequestQuery includeKey:@"requestor"];
+
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          NSLog(@"objects %@",objects);
+         NSArray *requestorsToAddArray = (id)objects;
+         for (PFObject *requestorsAndRequestees in requestorsToAddArray) {
+             [self.currentUser addUniqueObject:requestorsAndRequestees[@"requestor"] forKey:@"friends"];
+             NSLog(@"friends array %@",self.currentUser[@"friends"]);
+         }
      }];
 }
 
