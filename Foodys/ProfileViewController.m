@@ -44,10 +44,18 @@
          self.userArray = (id)objects;
      }];
     
+    [self acceptFriends];
+    [self autoAddFriendsThatAccepted];
+}
+
+#pragma mark - friend request and accept management methods
+
+- (void)acceptFriends
+{
     PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
     [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
     [friendRequestQuery includeKey:@"requestor"];
-
+    
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          NSArray *requestorsToAddArray = objects;
@@ -68,6 +76,22 @@
      }];
 }
 
+- (void)autoAddFriendsThatAccepted
+{
+    NSArray *currentUserArray = @[self.currentUser];
+    
+    PFQuery *friendsThatAcceptedQuery = [PFUser query];
+    [friendsThatAcceptedQuery whereKey:@"friends" containsAllObjectsInArray:currentUserArray];
+    [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFUser *newFriend in objects) {
+            [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
+        }
+        [self.currentUser saveInBackground];
+    }];
+}
+
+#pragma mark - populate view methods
+
 - (void)friendsSetter
 {
     self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
@@ -82,11 +106,15 @@
      }];
 }
 
+#pragma mark - button methods
+
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
     [PFUser logOut];
     [self performSegueWithIdentifier:@"LogInSegue" sender:self];
 }
+
+#pragma mark - image picker delegate methods
 
 - (IBAction)onImageViewButtonPressed:(id)sender
 {
@@ -122,6 +150,8 @@
         }
     }];
 }
+
+#pragma mark - segue methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
