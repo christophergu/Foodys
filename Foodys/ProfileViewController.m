@@ -59,7 +59,6 @@
              PFQuery *friendToIncludeQuery = [PFUser query];
              [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
              [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                 NSLog(@"yaaa %@",objects.firstObject);
                  [self.currentUser addUniqueObject:objects.firstObject forKey:@"friends"];
                  [self.currentUser saveInBackground];
              }];

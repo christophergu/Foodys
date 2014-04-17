@@ -129,12 +129,16 @@
     
     PFObject *publicPost = [PFObject objectWithClassName:@"PublicPost"];
     publicPost[@"author"] = self.currentUser[@"username"];
+    publicPost[@"authorObjectId"] = self.currentUser.objectId;
     publicPost[@"date"] = [formatter dateFromString:self.dateLabel.text];
     publicPost[@"title"] = self.myTextView.text;
     publicPost[@"body"] = self.subjectTextField.text;
     publicPost[@"rating"] = self.sliderScoreLabel.text;
     publicPost[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
     [publicPost saveInBackground];
+    
+    [self.currentUser addUniqueObject:publicPost forKey:@"postsMade"];
+    [self.currentUser saveInBackground];
 }
 
 @end
