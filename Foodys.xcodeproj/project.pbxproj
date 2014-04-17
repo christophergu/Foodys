@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */; };
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
+		43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E4130419003E2A008D7431 /* RecommendViewController.m */; };
 		DF0A6C2C18FF5FE90064DA6B /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */; };
 		DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */; };
 		DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */; };
@@ -65,6 +66,8 @@
 		43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewCell.m; sourceTree = "<group>"; };
 		43E412FD18FF397D008D7431 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
 		43E412FE18FF397D008D7431 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
+		43E4130319003E2A008D7431 /* RecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecommendViewController.h; path = ../RecommendViewController.h; sourceTree = "<group>"; };
+		43E4130419003E2A008D7431 /* RecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecommendViewController.m; path = ../RecommendViewController.m; sourceTree = "<group>"; };
 		DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailViewController.h; sourceTree = "<group>"; };
 		DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
 		DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */,
 				DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */,
 				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
+				43E4130319003E2A008D7431 /* RecommendViewController.h */,
+				43E4130419003E2A008D7431 /* RecommendViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
 				43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */,
 				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
@@ -374,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF11A01618FD9F8A00CAB607 /* CollectionViewCellWithImageThatFlips.m in Sources */,
+				43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */,
 				DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */,
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
 				DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */,
