@@ -37,9 +37,26 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
-    PFQuery* query = [PFQuery queryWithClassName:@"PublicPost"];
-    [query whereKey:@"author" equalTo:self.currentUser[@"username"]];
-    self.currentUserPostsArray = [query findObjects];
+    
+    NSMutableArray *friendsObjectIdMutableArray = [NSMutableArray new];
+    for (PFUser *friend in self.currentUser[@"friends"])
+    {
+        [friendsObjectIdMutableArray addObject:friend.objectId];
+    }
+    
+    PFQuery *postsQuery = [PFQuery queryWithClassName:@"PublicPost"];
+    [postsQuery whereKey:@"authorObjectId" containedIn:friendsObjectIdMutableArray];
+    
+    PFQuery *userPostQuery = [PFQuery queryWithClassName:@"PublicPost"];
+    [userPostQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
+    
+    PFQuery *userAndFriendsPostsQuery = [PFQuery orQueryWithSubqueries:@[postsQuery, userPostQuery]];
+    
+    [userAndFriendsPostsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        self.currentUserPostsArray = objects;
+        [self.myTableView reloadData];
+    }];
 }
 
 
@@ -56,9 +73,7 @@
     
     self.currentPost = self.currentUserPostsArray[indexPath.row];
     
-    
     cell.textLabel.text = self.currentPost[@"title"];
-    
     
     return cell;
 }
