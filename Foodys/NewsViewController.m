@@ -7,12 +7,14 @@
 //
 
 #import "NewsViewController.h"
+#import "NewsDetailViewController.h"
 #import <Parse/Parse.h>
 
 @interface NewsViewController () <UITableViewDataSource, UITabBarDelegate>
 @property (strong,nonatomic) PFObject* currentPost;
 @property (strong,nonatomic) PFUser* currentUser;
 @property (strong,nonatomic) NSArray* currentUserPostsArray;
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @end
 
@@ -30,8 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -40,8 +40,6 @@
     PFQuery* query = [PFQuery queryWithClassName:@"PublicPost"];
     [query whereKey:@"author" equalTo:self.currentUser[@"username"]];
     self.currentUserPostsArray = [query findObjects];
-    NSLog(@"%@", self.currentUserPostsArray );
-
 }
 
 
@@ -66,21 +64,15 @@
 }
 
 
-
-
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"NewsDetailSegue"]) {
+        NewsDetailViewController *ndvc = segue.destinationViewController;
+        
+        NSIndexPath *indexPath = [self.myTableView indexPathForCell:sender];
+        
+        ndvc.currentPost = self.currentUserPostsArray[indexPath.row];
+    }
 }
-*/
 
 @end

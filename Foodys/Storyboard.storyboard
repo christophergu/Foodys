@@ -17,7 +17,7 @@
                     <connections>
                         <segue destination="gJd-vD-2iy" kind="relationship" relationship="viewControllers" id="yaw-HR-xLf"/>
                         <segue destination="wc1-9F-xiD" kind="relationship" relationship="viewControllers" id="QgM-lU-of6"/>
-                        <segue destination="aoN-qb-Xww" kind="relationship" relationship="viewControllers" id="Str-8w-9be"/>
+                        <segue destination="7C8-Na-WAW" kind="relationship" relationship="viewControllers" id="nyR-0n-ZtK"/>
                         <segue destination="hAF-hT-jKK" kind="relationship" relationship="viewControllers" id="8Ht-lU-epW"/>
                         <segue destination="Ozh-Zh-4Up" kind="relationship" relationship="viewControllers" id="7yc-2o-dsE"/>
                     </connections>
@@ -352,6 +352,25 @@
             </objects>
             <point key="canvasLocation" x="1497" y="-1023"/>
         </scene>
+        <!--News Detail View Controller-->
+        <scene sceneID="ajZ-qn-aha">
+            <objects>
+                <viewController id="4dE-KN-oxu" customClass="NewsDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="q0P-Ni-4dw"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ttc-jD-psf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qer-xr-ff8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="K40-tR-Is5"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q7e-Wa-GoJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1497" y="-348"/>
+        </scene>
         <!--Restaurant View Controller-->
         <scene sceneID="7gM-kr-hiF">
             <objects>
@@ -426,13 +445,16 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellReuseID" id="vLb-Qp-jeQ">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CellReuseID" id="vLb-Qp-jeQ">
                                         <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vLb-Qp-jeQ" id="Gzk-ms-CbS">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="4dE-KN-oxu" kind="push" identifier="NewsDetailSegue" id="gXh-nZ-pvy"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -443,11 +465,56 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="What's Cooking?" id="jET-Jh-cXb"/>
+                    <navigationItem key="navigationItem" title="What's Cooking?" id="jET-Jh-cXb">
+                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="add" id="gAC-ah-SLA">
+                            <connections>
+                                <segue destination="Pty-GU-GcG" kind="push" id="BDU-nm-VZC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="myTableView" destination="Yx6-e5-YjB" id="DK6-RS-bdg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ya-yf-k8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1000" y="-348"/>
+        </scene>
+        <!--Navigation Controller - Recommend-->
+        <scene sceneID="LXG-L8-a0U">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="7C8-Na-WAW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Recommend" id="IYF-6f-5f6"/>
+                    <navigationItem key="navigationItem" id="o7v-vh-5H0"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZEa-lf-G8f">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="30x-0P-ifi" kind="relationship" relationship="rootViewController" id="GjT-Hh-IqQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tOa-wJ-lRy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="474" y="337"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="DUI-d7-cKI">
+            <objects>
+                <viewController id="30x-0P-ifi" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Eg-gK-qsN"/>
+                        <viewControllerLayoutGuide type="bottom" id="h7B-Yq-y2I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c25-BS-89D">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ykV-bv-czA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xg7-cV-i0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1000" y="337"/>
         </scene>
         <!--Share View Controller-->
         <scene sceneID="rGJ-QY-1Tz">
@@ -536,60 +603,14 @@
                                     <action selector="onDoneButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="lOG-iG-bKC"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y0P-ky-WaW" userLabel="View - chooseFriend">
-                                <rect key="frame" x="0.0" y="578" width="320" height="514"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please Select a Friend to Write" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivz-VU-8a0">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1v3-6E-ecG">
-                                        <rect key="frame" x="0.0" y="39" width="320" height="475"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendToChooseCellReuseID" id="4h6-6O-QyZ">
-                                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4h6-6O-QyZ" id="yLg-Lr-atF">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="Pty-GU-GcG" id="NIk-Ot-9Kf"/>
-                                            <outlet property="delegate" destination="Pty-GU-GcG" id="C43-2F-8XY"/>
-                                        </connections>
-                                    </tableView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="fpH-tw-1aM">
                         <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="xWs-bq-7wd">
-                            <rect key="frame" x="62" y="6" width="197" height="32"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Public Post"/>
-                                <segment title="Write a Friend"/>
-                            </segments>
-                            <connections>
-                                <action selector="onSegmentedControlPressed:" destination="Pty-GU-GcG" eventType="valueChanged" id="FKA-tF-zMM"/>
-                            </connections>
-                        </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="chooseFriendToWriteTableView" destination="1v3-6E-ecG" id="Qsq-5J-QY7"/>
-                        <outlet property="chooseFriendToWriteView" destination="y0P-ky-WaW" id="nzD-re-E1c"/>
                         <outlet property="dateLabel" destination="tNv-jP-LXl" id="7SU-A9-fCc"/>
-                        <outlet property="mySegmentedControl" destination="xWs-bq-7wd" id="vnf-pr-GOo"/>
                         <outlet property="mySlider" destination="i5P-p5-jBy" id="0nR-Ng-VqG"/>
                         <outlet property="myTextView" destination="19n-sR-eoB" id="cw3-ao-3eX"/>
                         <outlet property="sliderScoreLabel" destination="yIS-ll-mdb" id="wd0-7P-fHI"/>
@@ -600,7 +621,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tvP-yR-Brr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1000" y="337"/>
+            <point key="canvasLocation" x="1497" y="337"/>
         </scene>
         <!--Navigation Controller - Search-->
         <scene sceneID="o2e-HV-WGA">
@@ -639,25 +660,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eje-fl-djg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="474" y="-348"/>
-        </scene>
-        <!--Navigation Controller - Share-->
-        <scene sceneID="sVU-8u-Gkl">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aoN-qb-Xww" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Share" id="kfd-VW-FrJ"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4H4-uz-Hg4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Pty-GU-GcG" kind="relationship" relationship="rootViewController" id="gnS-kg-ubS"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hmc-Fr-Ffx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="474" y="337"/>
         </scene>
         <!--View Controller - My To Eat List-->
         <scene sceneID="pIx-B3-dy3">
@@ -1214,7 +1216,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="3AK-th-B7Y"/>
         <segue reference="jyQ-n9-7XU"/>
+        <segue reference="3AK-th-B7Y"/>
     </inferredMetricsTieBreakers>
 </document>
