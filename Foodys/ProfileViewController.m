@@ -75,8 +75,8 @@
     [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFUser *newFriend in objects) {
             [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
+            [self.currentUser saveInBackground];
         }
-        [self.currentUser saveInBackground];
     }];
 }
 
@@ -121,7 +121,6 @@
     PFUser *user = [PFUser currentUser];
     
     user[@"avatar"] = imageFile;
-    [user saveInBackground];
     
     // getting a uiimage from pffile
     [user[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -130,6 +129,8 @@
             self.avatarImageView.image = photo;
         }
     }];
+    
+    [user saveInBackground];
 }
 
 #pragma mark - segue methods
