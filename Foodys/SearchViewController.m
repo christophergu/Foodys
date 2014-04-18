@@ -69,7 +69,7 @@
 {
     self.searchResultsArray = nil;
     
-    NSMutableString *itemSearchString;
+    NSMutableString *itemSearchString = nil;
     itemSearchString = [@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
     
     [self nameAutoCorrect];
@@ -100,7 +100,7 @@
             NSLog(@"hi");
             NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
             NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
-            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=10000",
+            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
                                      self.locationManager.location.coordinate.latitude,
                                      self.locationManager.location.coordinate.longitude];
             [itemSearchString appendString:locationTextForSearch];

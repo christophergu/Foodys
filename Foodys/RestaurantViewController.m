@@ -32,6 +32,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) NSArray *restaurantUnfilteredMenu;
 @property (strong, nonatomic) NSMutableArray *restaurantMenu;
+@property (strong, nonatomic) IBOutlet UIView *menuView;
+@property BOOL menuBoolForButton;
 
 @end
 
@@ -61,6 +63,8 @@
     self.thuLabel.alpha = 0.0;
     self.friLabel.alpha = 0.0;
     self.satLabel.alpha = 0.0;
+    
+    self.menuBoolForButton = 0.0;
 }
 
 #pragma mark - tableview delegate methods
@@ -84,6 +88,73 @@
     NSLog(@"%@",currentFoodItem);
     return cell;
 }
+
+#pragma mark - menu and hours display button methods
+
+- (IBAction)onMenuButtonPressed:(id)sender
+{
+    self.menuBoolForButton = !self.menuBoolForButton;
+    
+    if (self.menuBoolForButton)
+    {
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options: UIViewAnimationOptionCurveEaseOut
+                         animations:^
+                            {
+                             self.menuView.frame = CGRectMake(0, 64, 320, 514);
+                            }
+                         completion:^(BOOL finished)
+                            {
+                            }
+         ];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             self.menuView.frame = CGRectMake(0, 422, 320, 514);
+                         }
+                         completion:^(BOOL finished){
+                         }
+         ];
+    }
+}
+
+
+
+
+
+
+//- (IBAction)onSegmentedControlPressed:(id)sender
+//{
+//    if (self.mySegmentedControl.selectedSegmentIndex == 0)
+//    {
+//        [UIView animateWithDuration:0.5
+//                              delay:0.0
+//                            options: UIViewAnimationOptionCurveEaseIn
+//                         animations:^{
+//                             self.chooseFriendToWriteView.frame = CGRectMake(0, 578, 320, 514);
+//                         }
+//                         completion:^(BOOL finished){
+//                         }];
+//    }
+//    else if (self.mySegmentedControl.selectedSegmentIndex == 1)
+//    {
+//        self.chooseFriendToWriteView.frame = CGRectMake(0, 578, 320, 514);
+//        
+//        
+//        [UIView animateWithDuration:0.5
+//                              delay:0.0
+//                            options: UIViewAnimationOptionCurveEaseOut
+//                         animations:^{
+//                             self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
+//                         }
+//                         completion:^(BOOL finished){
+//                         }];    }
+//}
 
 #pragma mark - venue method
 

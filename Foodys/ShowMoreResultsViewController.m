@@ -121,15 +121,18 @@
     
     NSDictionary *currentRestaurant = self.searchResultsArray[indexPath.row];
 
-    double latitude = [currentRestaurant[@"lat"] doubleValue];
-    double longitude = [currentRestaurant[@"long"] doubleValue];
-    
-    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
-    MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-    
-    float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-    
-    cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+    if (!(currentRestaurant[@"lat"] == nil) && !(currentRestaurant[@"long"] == nil))
+    {
+        double latitude = [currentRestaurant[@"lat"] doubleValue];
+        double longitude = [currentRestaurant[@"long"] doubleValue];
+        
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
+        MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+        
+        float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+        
+        cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+    }
 
     return cell;
 }
