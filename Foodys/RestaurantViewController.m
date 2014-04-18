@@ -8,7 +8,7 @@
 
 #import "RestaurantViewController.h"
 
-@interface RestaurantViewController ()
+@interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
 @property (strong, nonatomic) IBOutlet UIButton *phoneNumber;
 @property (strong, nonatomic) IBOutlet UIButton *websiteURL;
@@ -28,6 +28,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *thuLabel;
 @property (strong, nonatomic) IBOutlet UILabel *friLabel;
 @property (strong, nonatomic) IBOutlet UILabel *satLabel;
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
+@property (strong, nonatomic) NSArray *restaurantUnfilteredMenu;
+@property (strong, nonatomic) NSMutableArray *restaurantMenu;
 
 @end
 
@@ -59,14 +62,22 @@
     self.satLabel.alpha = 0.0;
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    
-    
-    
-    
+#pragma mark - tableview delegate methods
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.restaurantMenu count];
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCellReuseID"];
+    NSDictionary *currentFoodItem = self.restaurantMenu[indexPath.row];
+    cell.textLabel.text = currentFoodItem[@"name"];
+    return cell;
+}
+
+#pragma mark - venue method
 
 - (void)getVenueDetail
 {
@@ -80,11 +91,22 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         self.restaurantResultsDictionary = intermediateDictionary[@"objects"][0];
         
-        NSLog(@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Friday"]);
+        // instantiating the restaurant menu here
+        self.restaurantUnfilteredMenu = self.restaurantResultsDictionary[@"menus"][0][@"sections"][0][@"subsections"][0][@"contents"];
+        
+        self.restaurantMenu = [NSMutableArray new];
+        
+        for (NSDictionary *foodItem in self.restaurantUnfilteredMenu)
+        {
+            if (foodItem[@"name"]) {
+                [self.restaurantMenu addObject:foodItem];
+            }
+        }
+        
+        [self.myTableView reloadData];
         
         if (![self.restaurantResultsDictionary[@"open_hours"][@"Thursday"]  isEqual: @[]])
         {
-            NSLog(@"yaaa");
             self.sundayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Sunday"][0]];
             self.mondayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Monday"][0]];
             self.tuesdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"][0]];
@@ -103,6 +125,8 @@
         };
     }];
 }
+
+#pragma mark - flickr method
 
 - (void)loadFlickrImageForAtmosphere
 {
