@@ -61,34 +61,9 @@
                 
                 [self.myMapView addAnnotation:annotation];
             }
+            [self.myMapView showAnnotations:self.myMapView.annotations animated:YES];
         }];
     }
-    //    float latitudeTotal = 0.0;
-    //    float longitudeTotal = 0.0;
-    //
-    //    float latitudeCount = 0.0;
-    //    float longitudeCount = 0.0;
-    //
-    //    float averagedLatitude = 0.0;
-    //    float averagedLongitude = 0.0;
-    //
-    //    for (MKPointAnnotation *point in self.myMapView.annotations) {
-    //        latitudeTotal += point.coordinate.latitude;
-    //        longitudeTotal += point.coordinate.longitude;
-    //
-    //        latitudeCount++;
-    //        longitudeCount++;
-    //
-    //        averagedLatitude = latitudeTotal/latitudeCount;
-    //        averagedLongitude = longitudeTotal/longitudeCount;
-    //    }
-    //
-    //    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(averagedLatitude, averagedLongitude);
-    //
-    //    MKCoordinateSpan coordinateSpan = MKCoordinateSpanMake(1.0, 1.0);
-    //    MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, coordinateSpan);
-    //
-    //    self.myMapView.region = region;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -140,16 +115,12 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsReuseCellID"];
-    cell.textLabel.text = self.searchResultsArray[indexPath.row][@"name"];
+    ResultsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsReuseCellID"];
+    cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"name"];
+    cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"street_address"];
     
     NSDictionary *currentRestaurant = self.searchResultsArray[indexPath.row];
-    
-    //    NSString *restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@",
-    //                                   self.searchResultsArray[indexPath.row][@"street_address"],
-    //                                   self.searchResultsArray[indexPath.row][@"locality"],
-    //                                   self.searchResultsArray[indexPath.row][@"region"]];
-    
+
     double latitude = [currentRestaurant[@"lat"] doubleValue];
     double longitude = [currentRestaurant[@"long"] doubleValue];
     
@@ -157,12 +128,9 @@
     MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
     
     float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
     
-    
-    
-    //    cell.detailTextLabel.text = restaurantAddress;
-    
+    cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+
     return cell;
 }
 

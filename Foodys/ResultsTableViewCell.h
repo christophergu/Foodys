@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ResultsTableViewCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UILabel *restaurantTitle;
+@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
 
 @end

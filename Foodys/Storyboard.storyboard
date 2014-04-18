@@ -272,43 +272,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="119" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0XK-f8-cbj">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="42" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0XK-f8-cbj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="556"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mapView key="tableFooterView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="Bel-gf-qPZ">
-                                    <rect key="frame" x="0.0" y="205" width="320" height="457"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="A1S-Mz-i4t" id="8pa-aV-AQk"/>
-                                    </connections>
-                                </mapView>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="ResultsReuseCellID" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ResultsReuseCellID" textLabel="R5B-g9-ilO" detailTextLabel="RuT-h4-cW3" style="IBUITableViewCellStyleSubtitle" id="ATO-Re-SRp" customClass="ResultsTableViewCell">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="119"/>
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="ResultsReuseCellID" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ResultsReuseCellID" rowHeight="42" id="ATO-Re-SRp" customClass="ResultsTableViewCell">
+                                        <rect key="frame" x="0.0" y="86" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ATO-Re-SRp" id="6UO-7U-s1H">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="118"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R5B-g9-ilO">
-                                                    <rect key="frame" x="15" y="41" width="34" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NX-Oo-4V8">
+                                                    <rect key="frame" x="207" y="20" width="141" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RuT-h4-cW3">
-                                                    <rect key="frame" x="15" y="63" width="43" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sy6-GB-Mwg">
+                                                    <rect key="frame" x="17" y="20" width="182" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fec-ES-4VQ">
+                                                    <rect key="frame" x="17" y="1" width="252" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="cM8-7k-1gT" kind="push" identifier="RestaurantViewControllerSegue" id="4xe-Ir-RuB"/>
+                                            <outlet property="addressLabel" destination="sy6-GB-Mwg" id="btk-n8-frm"/>
+                                            <outlet property="distanceLabel" destination="9NX-Oo-4V8" id="qfh-qn-TgM"/>
+                                            <outlet property="restaurantTitle" destination="Fec-ES-4VQ" id="YAd-19-bgb"/>
+                                            <segue destination="cM8-7k-1gT" kind="push" identifier="RestaurantViewControllerSegue" id="x6Y-Dp-pb2"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -317,6 +318,13 @@
                                     <outlet property="delegate" destination="A1S-Mz-i4t" id="2L3-Nl-0I0"/>
                                 </connections>
                             </tableView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Bel-gf-qPZ">
+                                <rect key="frame" x="0.0" y="200" width="320" height="401"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="A1S-Mz-i4t" id="8pa-aV-AQk"/>
+                                </connections>
+                            </mapView>
                             <imageView userInteractionEnabled="NO" alpha="0.75" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="smokePlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Q7g-nh-GhO" userLabel="Image View (smoke placeholder)">
                                 <rect key="frame" x="0.0" y="465" width="320" height="103"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -520,7 +528,6 @@
         <!--Recommend View Controller - Recommend-->
         <scene sceneID="DUI-d7-cKI">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Xg7-cV-i0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="30x-0P-ifi" customClass="RecommendViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Eg-gK-qsN"/>
@@ -601,6 +608,7 @@
                         <outlet property="recommendTextView" destination="5TJ-BB-AQv" id="bcL-sb-JTc"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xg7-cV-i0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1000" y="337"/>
         </scene>
@@ -1304,7 +1312,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jyQ-n9-7XU"/>
         <segue reference="3AK-th-B7Y"/>
+        <segue reference="x6Y-Dp-pb2"/>
     </inferredMetricsTieBreakers>
 </document>
