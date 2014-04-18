@@ -12,22 +12,29 @@
 @interface ShareViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *subjectTextField;
+
 @property (strong, nonatomic) IBOutlet UIButton *wouldGoAgainButton;
 @property (strong, nonatomic) IBOutlet UILabel *wouldGoAgainYesNoLabel;
 @property BOOL yesNoBool;
+
 @property (strong, nonatomic) IBOutlet UILabel *sliderScoreLabel;
 @property (strong, nonatomic) IBOutlet UISlider *mySlider;
 @property int sliderIntValue;
+
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UIButton *recommendToFriendsButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseFriendToWriteView;
 @property (strong, nonatomic) IBOutlet UIButton *chooseFriendsToWriteButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *chooseFriendsDoneButton;
+
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRestaurantRatingLabel;
 @property (strong, nonatomic) IBOutlet UITextView *cumulativeRestaurantRatingsTextView;
+@property int averagedRatingHolder;
 
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) PFObject *reviewedRestaurant;
 
 @end
 
@@ -47,9 +54,7 @@
     self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     self.chooseFriendsDoneButton.enabled = NO;
     
-//    int ya =[@"100" integerValue];
-//    
-//    NSLog(@"%d",ya);
+    self.sliderIntValue = 50;
 }
 
 -(void)setUpBasicElementsForThisView
@@ -71,15 +76,49 @@
     };
     
     [self.recommendToFriendsButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+    
+    [self refreshRatingLabel];
+}
+
+#pragma mark - refreshing the rating label methods
+
+-(void)refreshRatingLabel
+{
+    if (self.chosenRestaurantDictionary) {
+        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+        [reviewedRestaurantQuery whereKey:@"name" equalTo:self.chosenRestaurantDictionary[@"name"]];
+        
+        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             self.cumulativeRestaurantRatingLabel.text = [NSString stringWithFormat:@"%@%%",self.reviewedRestaurant[@"rating"]];
+         }];
+    }
+    else
+    {
+        self.cumulativeRestaurantRatingLabel.text = [NSString stringWithFormat:@"%@%%",self.reviewedRestaurant[@"rating"]];
+    }
+    NSLog(@"rating %@",self.reviewedRestaurant[@"rating"]);
+    NSLog(@"label %@",self.cumulativeRestaurantRatingLabel.text);
+    [self cumulativeRestaurantRatingsLabelSetUp];
 }
 
 -(void)cumulativeRestaurantRatingsLabelSetUp
 {
-    if ([self.cumulativeRestaurantRatingLabel.text isEqualToString:@""])
+    // the blank text length is 6 by default, 7 with a percent sign
+    if (self.cumulativeRestaurantRatingLabel.text.length == 7)
     {
         self.cumulativeRestaurantRatingsTextView.alpha = 0.0;
+        self.cumulativeRestaurantRatingLabel.alpha = 0.0;
+    }
+    else
+    {
+        self.cumulativeRestaurantRatingsTextView.alpha = 1.0;
+        self.cumulativeRestaurantRatingLabel.alpha = 1.0;
     }
 }
+
+
+#pragma mark - table view delegate methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -100,6 +139,8 @@
     cell.textLabel.text = arrayHolder.firstObject[@"username"];
     return cell;
 }
+
+#pragma mark - button methods
 
 - (IBAction)onEndEditingAllButtonPressed:(id)sender
 {
@@ -141,6 +182,8 @@
                      }];
 }
 
+#pragma mark - choose friends to recommend to methods
+
 - (IBAction)onChooseFriendsButtonPressed:(id)sender
 {
     [UIView animateWithDuration:0.5
@@ -177,26 +220,48 @@
     
     
     
-    PFObject *reviewedRestaurant = [PFObject objectWithClassName:@"ReviewedRestaurant"];
-    reviewedRestaurant[@"name"] = self.subjectTextField.text;
-    if ([self.cumulativeRestaurantRatingLabel.text isEqualToString:@""])
-    {
-        NSLog(@"cumulative rating is nil");
-        if (reviewedRestaurant[@"ratingCounter"] == nil) {
-            reviewedRestaurant[@"ratingCounter"] = @(1);
-            reviewedRestaurant[@"rating"] = @(self.sliderIntValue);
-        }
-    }
-    else
-    {
-        int addingToTheRatingCounter = [reviewedRestaurant[@"ratingCounter"] intValue];
-        addingToTheRatingCounter += 1;
-        reviewedRestaurant[@"ratingCounter"] =  @(addingToTheRatingCounter);
-    }
-    int averagedRatingHolder = [self.cumulativeRestaurantRatingLabel.text integerValue];
-    reviewedRestaurant[@"rating"] = @((averagedRatingHolder + self.sliderIntValue)/[reviewedRestaurant[@"ratingCounter"] intValue]);
     
-    [reviewedRestaurant saveInBackground];
-}
+    PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+    [reviewedRestaurantQuery whereKey:@"name" equalTo:self.subjectTextField.text];
+    
+    [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (objects.firstObject)
+         {
+             self.reviewedRestaurant = objects.firstObject;
+         }
+         else
+         {
+             self.reviewedRestaurant = [PFObject objectWithClassName:@"ReviewedRestaurant"];
+         }
+         
+         self.reviewedRestaurant[@"name"] = self.subjectTextField.text;
+         
+         if (self.cumulativeRestaurantRatingLabel.text.length == 0)
+         {
+             NSLog(@"cumulative rating is nil");
+             if (self.reviewedRestaurant[@"ratingCounter"] == nil) {
+                 self.reviewedRestaurant[@"ratingCounter"] = @(1);
+                 self.reviewedRestaurant[@"rating"] = @(self.sliderIntValue);
+             }
+         }
+         else
+         {
+             int addingToTheRatingCounter = [self.reviewedRestaurant[@"ratingCounter"] intValue];
+             addingToTheRatingCounter += 1;
+             self.reviewedRestaurant[@"ratingCounter"] = @(addingToTheRatingCounter);
+             
+             self.averagedRatingHolder = [self.cumulativeRestaurantRatingLabel.text integerValue];
+             
+             NSLog(@"average rating holder %d",self.averagedRatingHolder);
+             NSLog(@"slider int value %d",self.sliderIntValue);
+             
+             self.reviewedRestaurant[@"rating"] = @((self.averagedRatingHolder*([self.reviewedRestaurant[@"ratingCounter"] intValue]-1) + self.sliderIntValue)/[self.reviewedRestaurant[@"ratingCounter"] intValue]);
+         }
+         
+         [self refreshRatingLabel];
+         [self.reviewedRestaurant saveInBackground];
+     }];
+};
 
 @end
