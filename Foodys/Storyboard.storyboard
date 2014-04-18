@@ -940,14 +940,14 @@
                                     <action selector="onChooseFriendsToWriteButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="ie3-hX-g6B"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="You and your friends rated this restaurant:" translatesAutoresizingMaskIntoConstraints="NO" id="QeA-gX-cMH">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="You and your friends rated this restaurant:" translatesAutoresizingMaskIntoConstraints="NO" id="QeA-gX-cMH">
                                 <rect key="frame" x="157" y="60" width="101" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87X-Wu-tBf">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87X-Wu-tBf">
                                 <rect key="frame" x="252" y="65" width="48" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -994,6 +994,8 @@
                         <outlet property="chooseFriendToWriteView" destination="FKt-Kb-JmN" id="Dhp-RS-QKJ"/>
                         <outlet property="chooseFriendsDoneButton" destination="TfV-sb-lzd" id="7lv-fA-jmL"/>
                         <outlet property="chooseFriendsToWriteButton" destination="JES-f7-nSb" id="BKk-zD-njR"/>
+                        <outlet property="cumulativeRestaurantRatingLabel" destination="87X-Wu-tBf" id="pKv-rv-hA3"/>
+                        <outlet property="cumulativeRestaurantRatingsTextView" destination="QeA-gX-cMH" id="r1Y-RI-Egd"/>
                         <outlet property="dateLabel" destination="tNv-jP-LXl" id="7SU-A9-fCc"/>
                         <outlet property="mySlider" destination="i5P-p5-jBy" id="0nR-Ng-VqG"/>
                         <outlet property="myTableView" destination="8r9-Pn-wsS" id="RZl-Ay-ZlN"/>
@@ -1602,8 +1604,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="x6Y-Dp-pb2"/>
-        <segue reference="RhK-hE-tTe"/>
         <segue reference="3AK-th-B7Y"/>
+        <segue reference="x6Y-Dp-pb2"/>
+        <segue reference="BDU-nm-VZC"/>
     </inferredMetricsTieBreakers>
 </document>
