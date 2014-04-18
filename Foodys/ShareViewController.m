@@ -9,18 +9,20 @@
 #import "ShareViewController.h"
 #import <Parse/Parse.h>
 
-@interface ShareViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ShareViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *subjectTextField;
-@property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
-@property (strong, nonatomic) IBOutlet UIView *chooseFriendToWriteView;
-@property (strong, nonatomic) IBOutlet UITableView *chooseFriendToWriteTableView;
 @property (strong, nonatomic) IBOutlet UIButton *wouldGoAgainButton;
 @property (strong, nonatomic) IBOutlet UILabel *wouldGoAgainYesNoLabel;
 @property BOOL yesNoBool;
 @property (strong, nonatomic) IBOutlet UILabel *sliderScoreLabel;
 @property (strong, nonatomic) IBOutlet UISlider *mySlider;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) IBOutlet UIButton *recommendToFriendsButton;
+@property (strong, nonatomic) IBOutlet UIView *chooseFriendToWriteView;
+@property (strong, nonatomic) IBOutlet UIButton *chooseFriendsToWriteButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *chooseFriendsDoneButton;
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (strong, nonatomic) PFUser *currentUser;
 
@@ -46,6 +48,16 @@
     NSString *todayString = [dateFormat stringFromDate:todayDate];
 
     self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
+    if (self.chosenRestaurantDictionary)
+    {
+        self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
+    };
+    
+    [self.recommendToFriendsButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+    
+    // hiding the choose friends button
+    self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    self.chooseFriendsDoneButton.enabled = NO;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -94,32 +106,32 @@
     self.sliderScoreLabel.text = [NSString stringWithFormat:@"%d", discreteValue];
 }
 
-- (IBAction)onSegmentedControlPressed:(id)sender
+- (IBAction)onChooseFriendsToWriteButtonPressed:(id)sender
 {
-    if (self.mySegmentedControl.selectedSegmentIndex == 0)
-    {
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options: UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-                             self.chooseFriendToWriteView.frame = CGRectMake(0, 578, 320, 514);
-                         }
-                         completion:^(BOOL finished){
-                         }];
-    }
-    else if (self.mySegmentedControl.selectedSegmentIndex == 1)
-    {
-        self.chooseFriendToWriteView.frame = CGRectMake(0, 578, 320, 514);
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
+                         self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+                     }
+                     completion:^(BOOL finished){
+                         self.chooseFriendsDoneButton.enabled = YES;
+                     }];
+}
 
-        
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options: UIViewAnimationOptionCurveEaseOut
-                         animations:^{
-                             self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
-                         }
-                         completion:^(BOOL finished){
-                         }];    }
+- (IBAction)onChooseFriendsButtonPressed:(id)sender
+{
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options: UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.chooseFriendToWriteView.frame = CGRectMake(0, 529, 320, 514);
+                         self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:0.0];
+                     }
+                     completion:^(BOOL finished){
+                         self.chooseFriendsDoneButton.enabled = NO;
+                     }];
 }
 
 - (IBAction)onDoneButtonPressed:(id)sender

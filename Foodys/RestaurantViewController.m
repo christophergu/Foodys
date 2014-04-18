@@ -8,6 +8,7 @@
 
 #import "RestaurantViewController.h"
 #import "RestaurantMenuTableViewCell.h"
+#import "ShareViewController.h"
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
@@ -34,6 +35,8 @@
 @property (strong, nonatomic) NSMutableArray *restaurantMenu;
 @property (strong, nonatomic) IBOutlet UIView *menuView;
 @property BOOL menuBoolForButton;
+@property (strong, nonatomic) IBOutlet UIView *hoursView;
+@property BOOL hoursBoolForButton;
 
 @end
 
@@ -123,6 +126,37 @@
     }
 }
 
+- (IBAction)onHoursButtonPressed:(id)sender
+{
+    self.hoursBoolForButton = !self.hoursBoolForButton;
+    
+    if (self.hoursBoolForButton)
+    {
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options: UIViewAnimationOptionCurveEaseOut
+                         animations:^
+         {
+             self.hoursView.frame = CGRectMake(0, 221, 320, 514);
+         }
+                         completion:^(BOOL finished)
+         {
+         }
+         ];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+                         }
+                         completion:^(BOOL finished){
+                         }
+         ];
+    }
+}
 
 
 
@@ -242,5 +276,15 @@
          }
          
      }];
+}
+
+#pragma mark - segue methods
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShareViewControllerSegue"]) {
+        ShareViewController *svc = segue.destinationViewController;
+        svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+    }
 }
 @end
