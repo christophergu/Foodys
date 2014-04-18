@@ -7,6 +7,7 @@
 //
 
 #import "RestaurantViewController.h"
+#import "RestaurantMenuTableViewCell.h"
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
@@ -71,9 +72,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCellReuseID"];
+    RestaurantMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCellReuseID"];
     NSDictionary *currentFoodItem = self.restaurantMenu[indexPath.row];
-    cell.textLabel.text = currentFoodItem[@"name"];
+    cell.nameLabel.text = currentFoodItem[@"name"];
+    if (currentFoodItem[@"price"]) {
+        cell.priceLabel.text = [NSString stringWithFormat:@"$%@",currentFoodItem[@"price"]];
+    }
+    cell.descriptionTextView.text = currentFoodItem[@"description"];
+    cell.descriptionTextView.textColor = [UIColor lightGrayColor];
+    
+    NSLog(@"%@",currentFoodItem);
     return cell;
 }
 
