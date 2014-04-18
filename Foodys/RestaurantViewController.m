@@ -10,9 +10,24 @@
 
 @interface RestaurantViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
-@property (strong, nonatomic) IBOutlet UILabel *address;
-@property (strong, nonatomic) IBOutlet UILabel *phoneNumber;
-@property (strong, nonatomic) IBOutlet UILabel *websiteURL;
+@property (strong, nonatomic) IBOutlet UIButton *phoneNumber;
+@property (strong, nonatomic) IBOutlet UIButton *websiteURL;
+@property (strong, nonatomic) IBOutlet UIButton *address;
+@property (strong, nonatomic) NSDictionary *restaurantResultsDictionary;
+@property (strong, nonatomic) IBOutlet UILabel *sundayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *mondayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *tuesdayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *wednesdayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *thursdayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *fridayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *saturdayHoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sunLabel;
+@property (strong, nonatomic) IBOutlet UILabel *monLabel;
+@property (strong, nonatomic) IBOutlet UILabel *tueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *wedLabel;
+@property (strong, nonatomic) IBOutlet UILabel *thuLabel;
+@property (strong, nonatomic) IBOutlet UILabel *friLabel;
+@property (strong, nonatomic) IBOutlet UILabel *satLabel;
 
 @end
 
@@ -21,27 +36,72 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//NSLog(@"%@",self.chosenRestaurantDictionary);
-  self.address.text = self.chosenRestaurantDictionary[@"street_address"];
-    self.phoneNumber.text = self.chosenRestaurantDictionary[@"phone"];
-  self.websiteURL.text = self.chosenRestaurantDictionary [@"website_url"];
-    
+
+    [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
+    [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
+    NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
+    [self.address setTitle:fullAddress forState:UIControlStateNormal];
+    [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
+
+
     self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     self.myAtmosphereImageView.clipsToBounds = YES;
+
+    [self loadFlickrImageForAtmosphere];
+    [self getVenueDetail];
     
-    //    // trying out gradients here
-    //    CAGradientLayer *l = [CAGradientLayer layer];
-    //    l.frame = self.myAtmosphereImageView.bounds;
-    //    l.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
-    //    l.startPoint = CGPointMake(1.0, 1.0f);
-    //    l.endPoint = CGPointMake(0.0f, 0.0f);
-    //    self.myAtmosphereImageView.layer.mask = l;
+    self.sunLabel.alpha = 0.0;
+    self.monLabel.alpha = 0.0;
+    self.tueLabel.alpha = 0.0;
+    self.wedLabel.alpha = 0.0;
+    self.thuLabel.alpha = 0.0;
+    self.friLabel.alpha = 0.0;
+    self.satLabel.alpha = 0.0;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self loadFlickrImageForAtmosphere];
+    
+    
+    
+    
+
+}
+
+- (void)getVenueDetail
+{
+    NSMutableString *itemSearchString = [[NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/%@/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e",self.chosenRestaurantDictionary[@"id"]] mutableCopy];
+    
+    NSURL *url = [NSURL URLWithString: itemSearchString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSError *error;
+        NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        self.restaurantResultsDictionary = intermediateDictionary[@"objects"][0];
+        
+        NSLog(@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Friday"]);
+        
+        if (![self.restaurantResultsDictionary[@"open_hours"][@"Thursday"]  isEqual: @[]])
+        {
+            NSLog(@"yaaa");
+            self.sundayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Sunday"][0]];
+            self.mondayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Monday"][0]];
+            self.tuesdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"][0]];
+            self.wednesdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"][0]];
+            self.thursdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Thursday"][0]];
+            self.fridayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Friday"][0]];
+            self.saturdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Saturday"][0]];
+            
+            self.sunLabel.alpha = 1.0;
+            self.monLabel.alpha = 1.0;
+            self.tueLabel.alpha = 1.0;
+            self.wedLabel.alpha = 1.0;
+            self.thuLabel.alpha = 1.0;
+            self.friLabel.alpha = 1.0;
+            self.satLabel.alpha = 1.0;
+        };
+    }];
 }
 
 - (void)loadFlickrImageForAtmosphere
