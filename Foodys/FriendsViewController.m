@@ -39,12 +39,11 @@
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
 
     PFUser *currentFriendUser = self.currentUser[@"friends"][indexPath.row];
-    [currentFriendUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        NSLog(@"%@",currentFriendUser);
-    }];
-
-    
-    
+    self.currentFriendUser = (PFUser *)[currentFriendUser fetchIfNeeded];
+     
+//     fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        NSLog(@"%@",currentFriendUser);
+//    }];
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -60,11 +59,13 @@
 - (void)loadUsers
 {
     PFQuery *query = [PFUser query];
-    [query whereKey:@"username" notEqualTo:self.currentUser[@"username"]];
-    for (PFUser *friend in self.currentUser[@"friends"])
-    {
-        [query whereKey:@"username" notEqualTo:friend[@"username"]];
-    }
+    
+//    for (PFUser *friend in self.currentUser[@"friends"])
+//    {
+//        [query whereKey:@"username" notEqualTo:friend[@"username"]];
+//        [query whereKey:@"username" notEqualTo:self.currentUser[@"username"]];
+//    }
+
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          self.userArray = (id)objects;

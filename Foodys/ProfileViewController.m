@@ -50,7 +50,8 @@
     {
         self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
     }
-    
+    self.avatarImageView.clipsToBounds = YES;
+
     [self friendsSetter];
     
     self.favoritesArray = [NSMutableArray new];
@@ -84,7 +85,7 @@
 
 - (void)friendsSetter
 {
-    NSLog(@"number of friends %u",[self.currentUser[@"friends"] count]);
+//    NSLog(@"number of friends %lu",(unsigned long)[self.currentUser[@"friends"] count]);
     NSLog(@"number of friends %@",self.currentUser[@"friends"]);
     self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
 }

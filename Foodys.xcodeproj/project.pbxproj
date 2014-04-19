@@ -51,6 +51,7 @@
 		DF4DB8EE18FC784900C225EC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB8ED18FC784900C225EC /* MapKit.framework */; };
 		DFE1B0FE1900E9CA0090F929 /* RestaurantMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */; };
 		DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */; };
+		DFFC0A5D19033ECE009F582A /* EatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC0A5C19033ECE009F582A /* EatViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,8 @@
 		DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantMenuTableViewCell.m; sourceTree = "<group>"; };
 		DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedSearchViewController.h; sourceTree = "<group>"; };
 		DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedSearchViewController.m; sourceTree = "<group>"; };
+		DFFC0A5B19033ECE009F582A /* EatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EatViewController.h; sourceTree = "<group>"; };
+		DFFC0A5C19033ECE009F582A /* EatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EatViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +228,8 @@
 				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
 				43E4130319003E2A008D7431 /* RecommendViewController.h */,
 				43E4130419003E2A008D7431 /* RecommendViewController.m */,
+				DFFC0A5B19033ECE009F582A /* EatViewController.h */,
+				DFFC0A5C19033ECE009F582A /* EatViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
 				43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */,
 				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
@@ -388,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFFC0A5D19033ECE009F582A /* EatViewController.m in Sources */,
 				DF11A01618FD9F8A00CAB607 /* CollectionViewCellWithImageThatFlips.m in Sources */,
 				43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */,
 				DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */,

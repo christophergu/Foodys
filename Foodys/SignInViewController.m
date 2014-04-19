@@ -62,7 +62,7 @@
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
     if (user) {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
     else
     {

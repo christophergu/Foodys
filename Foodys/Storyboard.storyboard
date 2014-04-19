@@ -1166,10 +1166,10 @@
             </objects>
             <point key="canvasLocation" x="474" y="-348"/>
         </scene>
-        <!--View Controller-->
+        <!--Eat View Controller-->
         <scene sceneID="pIx-B3-dy3">
             <objects>
-                <viewController id="bWt-qo-L1A" sceneMemberID="viewController">
+                <viewController id="bWt-qo-L1A" customClass="EatViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sEv-75-h3r"/>
                         <viewControllerLayoutGuide type="bottom" id="Pb7-MN-svf"/>
@@ -1183,7 +1183,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gJl-Oh-4x1">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCellReuseID" id="gJl-Oh-4x1">
                                         <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gJl-Oh-4x1" id="nZz-Yu-qZD">
@@ -1192,6 +1192,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="bWt-qo-L1A" id="BbS-Rw-3Yp"/>
+                                    <outlet property="delegate" destination="bWt-qo-L1A" id="6xA-Cr-Ktf"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1207,6 +1211,10 @@
                             </segments>
                         </segmentedControl>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mySegmentedControl" destination="Ova-uf-ZiZ" id="9D2-BC-Hbg"/>
+                        <outlet property="myTableView" destination="13f-m7-BIs" id="AfG-8Q-BQz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8oU-6J-Gfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
