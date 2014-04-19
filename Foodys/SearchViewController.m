@@ -47,11 +47,16 @@
     
     self.locationManager.delegate = self;
     
-    if (self.locationManager.location)
-    {
-        [self.allowLocationButton setTitle:@"Using Current Location" forState:UIControlStateNormal];
-    }
-    
+    [self.locationManager startUpdatingLocation];
+//    NSLog(@"%@",self.locationManager.location);
+//    [self.allowLocationButton setTitle:@"Using Current Location" forState:UIControlStateNormal];
+//    
+//    
+//    if (self.locationManager.location)
+//    {
+//        [self.allowLocationButton setTitle:@"Using Current Location" forState:UIControlStateNormal];
+//    }
+//    
     // locu api: aea05d0dffb636cb9aad86f6482e51035d79e84e
     // locu widget api: 71747ca57e325a86544c9edc0d96a9c5b95026f7
 }
@@ -74,10 +79,10 @@
     
     [self nameAutoCorrect];
     
-    NSString *nameTextForSearch;
+//    NSString *nameTextForSearch;
     NSString *cuisineTextForSearch;
-    NSString *locationTextForSearch;
-    NSString *regionTextForSearch;
+//    NSString *locationTextForSearch;
+//    NSString *regionTextForSearch;
     
     if (![self.cuisineTextField.text isEqualToString:@""])
     {
@@ -86,52 +91,52 @@
         [itemSearchString appendString:cuisineTextForSearch];
     }
     
-    if (![self.nameTextField.text isEqualToString:@""])
-    {
-        nameTextForSearch = [NSString stringWithFormat:@"&name=%@",self.nameTextField.text];
-        nameTextForSearch = [nameTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        [itemSearchString appendString:nameTextForSearch];
-    }
-    
-    if ([self.locationTextField.text isEqualToString:@""])
-    {
-        if (self.locationManager.location)
-        {
-            NSLog(@"hi");
-            NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-            NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
-            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
-                                     self.locationManager.location.coordinate.latitude,
-                                     self.locationManager.location.coordinate.longitude];
-            [itemSearchString appendString:locationTextForSearch];
-        }
-    }
-    else if (![self.locationTextField.text isEqualToString:@""])
-    {
-        if ([self.locationTextField.text intValue] <= 99999 && !(self.locationTextField.text.intValue == 0))
-        {
-            locationTextForSearch = [NSString stringWithFormat:@"&postal_code=%@",self.locationTextField.text];
-        }
-        else if ([self.locationTextField.text rangeOfString:@","].location == NSNotFound)
-        {
-            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",self.locationTextField.text];
-            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        }
-        else if ([self.locationTextField.text rangeOfString:@","].location)
-        {
-            NSArray* searchedStringArray = [self.locationTextField.text componentsSeparatedByString: @","];
-            NSString* locationWord = [searchedStringArray objectAtIndex: 0];
-            NSString* regionWord = [searchedStringArray objectAtIndex: 1];
-            regionWord = [regionWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            
-            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",locationWord];
-            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-            
-            regionTextForSearch = [NSString stringWithFormat:@"&region=%@",regionWord];
-            [itemSearchString appendString:regionTextForSearch];
-        }
-        [itemSearchString appendString:locationTextForSearch];
-    }
+//    if (![self.nameTextField.text isEqualToString:@""])
+//    {
+//        nameTextForSearch = [NSString stringWithFormat:@"&name=%@",self.nameTextField.text];
+//        nameTextForSearch = [nameTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//        [itemSearchString appendString:nameTextForSearch];
+//    }
+//    
+//    if ([self.locationTextField.text isEqualToString:@""])
+//    {
+//        if (self.locationManager.location)
+//        {
+//            NSLog(@"hi");
+//            NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
+//            NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
+//            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
+//                                     self.locationManager.location.coordinate.latitude,
+//                                     self.locationManager.location.coordinate.longitude];
+//            [itemSearchString appendString:locationTextForSearch];
+//        }
+//    }
+//    else if (![self.locationTextField.text isEqualToString:@""])
+//    {
+//        if ([self.locationTextField.text intValue] <= 99999 && !(self.locationTextField.text.intValue == 0))
+//        {
+//            locationTextForSearch = [NSString stringWithFormat:@"&postal_code=%@",self.locationTextField.text];
+//        }
+//        else if ([self.locationTextField.text rangeOfString:@","].location == NSNotFound)
+//        {
+//            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",self.locationTextField.text];
+//            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//        }
+//        else if ([self.locationTextField.text rangeOfString:@","].location)
+//        {
+//            NSArray* searchedStringArray = [self.locationTextField.text componentsSeparatedByString: @","];
+//            NSString* locationWord = [searchedStringArray objectAtIndex: 0];
+//            NSString* regionWord = [searchedStringArray objectAtIndex: 1];
+//            regionWord = [regionWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//            
+//            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",locationWord];
+//            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//            
+//            regionTextForSearch = [NSString stringWithFormat:@"&region=%@",regionWord];
+//            [itemSearchString appendString:regionTextForSearch];
+//        }
+//        [itemSearchString appendString:locationTextForSearch];
+//    }
     
     NSLog(@"%@",itemSearchString);
     
@@ -142,6 +147,8 @@
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         self.searchResultsArray = intermediateDictionary[@"objects"];
+        
+        [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];
 }
 
@@ -262,43 +269,38 @@
 
 #pragma mark - button methods
 
-- (IBAction)onAllowLocationButtonPressed:(id)sender
-{
-    [self.locationManager startUpdatingLocation];
-    NSLog(@"%@",self.locationManager.location);
-    [self.allowLocationButton setTitle:@"Using Current Location" forState:UIControlStateNormal];
-}
 
 - (IBAction)onSearchButtonPressed:(id)sender
 {
     [self foodSearch];
     
-    if (self.resultsButton.alpha == 0.0)
-    {
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             self.nameTextField.alpha = 0.0;
-                             self.cuisineTextField.alpha = 0.0;
-                             self.locationTextField.alpha = 0.0;
-                             self.resultsButton.alpha = 1.0;
-                             self.foodysSuggestionButton.alpha = 1.0;
-                             self.allowLocationButton.alpha = 0.0;
-                         } completion:^(BOOL finished) {
-                             [self removeHighlightingOnTextFields];
-                         }];
-    }
-    else if (self.resultsButton.alpha == 1.0)
-    {
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             self.resultsButton.alpha = 0.0;
-                             self.foodysSuggestionButton.alpha = 0.0;
-                             self.nameTextField.alpha = 1.0;
-                             self.cuisineTextField.alpha = 1.0;
-                             self.locationTextField.alpha = 1.0;
-                             self.allowLocationButton.alpha = 1.0;
-                         }];
-    }
+
+//    if (self.resultsButton.alpha == 0.0)
+//    {
+//        [UIView animateWithDuration:0.5
+//                         animations:^{
+//                             self.nameTextField.alpha = 0.0;
+//                             self.cuisineTextField.alpha = 0.0;
+//                             self.locationTextField.alpha = 0.0;
+//                             self.resultsButton.alpha = 1.0;
+//                             self.foodysSuggestionButton.alpha = 1.0;
+//                             self.allowLocationButton.alpha = 0.0;
+//                         } completion:^(BOOL finished) {
+//                             [self removeHighlightingOnTextFields];
+//                         }];
+//    }
+//    else if (self.resultsButton.alpha == 1.0)
+//    {
+//        [UIView animateWithDuration:0.5
+//                         animations:^{
+//                             self.resultsButton.alpha = 0.0;
+//                             self.foodysSuggestionButton.alpha = 0.0;
+//                             self.nameTextField.alpha = 1.0;
+//                             self.cuisineTextField.alpha = 1.0;
+//                             self.locationTextField.alpha = 1.0;
+//                             self.allowLocationButton.alpha = 1.0;
+//                         }];
+//    }
 }
 
 -(void)removeHighlightingOnTextFields
