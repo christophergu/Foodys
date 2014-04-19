@@ -1229,7 +1229,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dZI-r8-3Tz">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteCellReuseID" id="dZI-r8-3Tz">
                                         <rect key="frame" x="0.0" y="86" width="326" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dZI-r8-3Tz" id="kWN-kb-swc">
@@ -1238,6 +1238,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Bg0-Kt-1wg" id="Esx-W6-Vd6"/>
+                                    <outlet property="delegate" destination="Bg0-Kt-1wg" id="W1b-tv-wNi"/>
+                                </connections>
                             </tableView>
                             <tableViewCell contentMode="scaleToFill" fixedFrame="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="Cjg-Ne-qmA">
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
@@ -1321,6 +1325,7 @@
                         <outlet property="avatarImageView" destination="1GR-HN-HOX" id="8Gw-yK-f2u"/>
                         <outlet property="friendsCounterLabel" destination="G5I-AE-nbu" id="0sB-Cn-ooo"/>
                         <outlet property="myAvatarPhotoButton" destination="dKh-2O-LY6" id="Shj-62-KTU"/>
+                        <outlet property="myTableView" destination="NaG-DQ-JPW" id="YBT-na-oqJ"/>
                         <segue destination="Qim-L0-T0b" kind="modal" identifier="LogInSegue" id="3AK-th-B7Y"/>
                     </connections>
                 </viewController>
@@ -1448,7 +1453,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="qN3-4u-Fuc">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteCellReuseID" id="qN3-4u-Fuc">
                                         <rect key="frame" x="0.0" y="86" width="326" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qN3-4u-Fuc" id="7LQ-ly-DTd">
@@ -1706,7 +1711,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="y1n-gR-17A"/>
+        <segue reference="3AK-th-B7Y"/>
         <segue reference="Bhm-sR-I30"/>
         <segue reference="NWp-EL-yek"/>
     </inferredMetricsTieBreakers>

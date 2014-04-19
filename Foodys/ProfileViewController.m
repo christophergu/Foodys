@@ -10,12 +10,14 @@
 #import "FriendsViewController.h"
 #import <Parse/Parse.h>
 
-@interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
 @property (strong, nonatomic) NSArray *userArray;
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) NSMutableArray *favoritesArray;
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @end
 
@@ -32,34 +34,42 @@
     }
     [self friendsSetter];
     
-    NSLog(@"%@",self.currentUser[@"favorites"]);
-//    PFQuery *favoritesQuery = [PFQuery queryWithClassName:@"FriendRequest"];
-//    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
-//    [friendRequestQuery includeKey:@"requestor"];
-//    
-//    [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         NSArray *requestorsToAddArray = objects;
-//         for (PFObject *requestorsAndRequestees in requestorsToAddArray) {
-//             
-//             // the objects that were fetched were _NSarrayM objects so this refetches the objects as PFUser objects
-//             NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",requestorsAndRequestees[@"requestor"]];
-//             NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
-//             
-//             PFQuery *friendToIncludeQuery = [PFUser query];
-//             [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
-//             [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//                 [self.currentUser addUniqueObject:objects.firstObject forKey:@"friends"];
-//                 [self.currentUser saveInBackground];
-//             }];
-//         }
-//     }];
+    self.favoritesArray = [NSMutableArray new];
+    
+    [self retrieveFavorites];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
+}
+
+- (void)retrieveFavorites
+{
+    int favoriteCount = [self.currentUser[@"friends"] count];
+    
+    for (int i = 0; i < favoriteCount; i++)
+    {
+        PFObject *favorite = self.currentUser[@"favorites"][i];
+        [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            [self.favoritesArray addObject:favorite];
+            
+            [self.myTableView reloadData];
+        }];
+    }
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.favoritesArray.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavoriteCellReuseID"];
+    cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+    return cell;
 }
 
 #pragma mark - friend request and accept management methods
