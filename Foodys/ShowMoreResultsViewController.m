@@ -148,7 +148,7 @@
     else if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])
     {
         NSIndexPath *indexPath = [self.myTableView indexPathForCell:cell];
-        
+        NSLog(@"%@",self.searchResultsArray[indexPath.row]);
         rvc.chosenRestaurantDictionary = self.searchResultsArray[indexPath.row];
     }
 }

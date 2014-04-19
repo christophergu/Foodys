@@ -31,6 +31,29 @@
         self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
     }
     [self friendsSetter];
+    
+    NSLog(@"%@",self.currentUser[@"favorites"]);
+//    PFQuery *favoritesQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+//    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+//    [friendRequestQuery includeKey:@"requestor"];
+//    
+//    [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         NSArray *requestorsToAddArray = objects;
+//         for (PFObject *requestorsAndRequestees in requestorsToAddArray) {
+//             
+//             // the objects that were fetched were _NSarrayM objects so this refetches the objects as PFUser objects
+//             NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",requestorsAndRequestees[@"requestor"]];
+//             NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
+//             
+//             PFQuery *friendToIncludeQuery = [PFUser query];
+//             [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
+//             [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//                 [self.currentUser addUniqueObject:objects.firstObject forKey:@"friends"];
+//                 [self.currentUser saveInBackground];
+//             }];
+//         }
+//     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

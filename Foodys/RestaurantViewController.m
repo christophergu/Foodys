@@ -9,6 +9,7 @@
 #import "RestaurantViewController.h"
 #import "RestaurantMenuTableViewCell.h"
 #import "ShareViewController.h"
+#import <Parse/Parse.h>
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
@@ -37,6 +38,7 @@
 @property BOOL menuBoolForButton;
 @property (strong, nonatomic) IBOutlet UIView *hoursView;
 @property BOOL hoursBoolForButton;
+@property (strong, nonatomic) PFUser *currentUser;
 
 @end
 
@@ -46,11 +48,40 @@
 {
     [super viewDidLoad];
 
-    [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
-    [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
-    NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
-    [self.address setTitle:fullAddress forState:UIControlStateNormal];
-    [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
+    if (!(self.chosenRestaurantDictionary[@"phone"] == nil))
+    {
+        [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
+        self.phoneNumber.enabled = YES;
+    }
+    else
+    {
+        self.phoneNumber.enabled = NO;
+        self.phoneNumber.alpha = 0.0;
+    }
+    
+    if (!(self.chosenRestaurantDictionary[@"website_url"] == nil))
+    {
+        [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
+        self.websiteURL.enabled = YES;
+    }
+    else
+    {
+        self.websiteURL.enabled = NO;
+        self.websiteURL.alpha = 0.0;
+    }
+    
+    if (!(self.chosenRestaurantDictionary[@"street_address"] == nil)) {
+        NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
+        [self.address setTitle:fullAddress forState:UIControlStateNormal];
+        [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
+        self.address.enabled = YES;
+    }
+    else
+    {
+        self.address.enabled = NO;
+        self.address.alpha = 0.0;
+    }
+
 
 
     self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
@@ -158,37 +189,40 @@
     }
 }
 
+- (IBAction)onBookmarkButtonPressed:(id)sender
+{
+    PFObject *bookmark = [PFObject objectWithClassName:@"Bookmark"];
+    bookmark[@"name"]=self.chosenRestaurantDictionary[@"name"];
+    bookmark[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
+    
+    [bookmark saveInBackground];
+    
+    self.currentUser = [PFUser currentUser];
+    [self.currentUser addUniqueObject:bookmark forKey:@"bookmarks"];
+    [self.currentUser saveInBackground];
+}
+
+
+- (IBAction)onSaveToProfileButtonPressed:(id)sender
+{
+    PFObject *favorite = [PFObject objectWithClassName:@"Favorite"];
+    favorite[@"name"]=self.chosenRestaurantDictionary[@"name"];
+    favorite[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
+    
+    [favorite saveInBackground];
+    
+    self.currentUser = [PFUser currentUser];
+    [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
+    [self.currentUser saveInBackground];
+}
 
 
 
 
-//- (IBAction)onSegmentedControlPressed:(id)sender
-//{
-//    if (self.mySegmentedControl.selectedSegmentIndex == 0)
-//    {
-//        [UIView animateWithDuration:0.5
-//                              delay:0.0
-//                            options: UIViewAnimationOptionCurveEaseIn
-//                         animations:^{
-//                             self.chooseFriendToWriteView.frame = CGRectMake(0, 578, 320, 514);
-//                         }
-//                         completion:^(BOOL finished){
-//                         }];
-//    }
-//    else if (self.mySegmentedControl.selectedSegmentIndex == 1)
-//    {
-//        self.chooseFriendToWriteView.frame = CGRectMake(0, 578, 320, 514);
-//        
-//        
-//        [UIView animateWithDuration:0.5
-//                              delay:0.0
-//                            options: UIViewAnimationOptionCurveEaseOut
-//                         animations:^{
-//                             self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
-//                         }
-//                         completion:^(BOOL finished){
-//                         }];    }
-//}
+
+
+
+
 
 #pragma mark - venue method
 
@@ -218,7 +252,7 @@
         
         [self.myTableView reloadData];
         
-        if (![self.restaurantResultsDictionary[@"open_hours"][@"Thursday"]  isEqual: @[]])
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0))
         {
             self.sundayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Sunday"][0]];
             self.mondayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Monday"][0]];
@@ -282,9 +316,14 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"ShareViewControllerSegue"]) {
+    if ([[segue identifier] isEqualToString:@"SharePostViewControllerSegue"]) {
         ShareViewController *svc = segue.destinationViewController;
         svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+    }
+    else if ([[segue identifier] isEqualToString:@"ShareFriendViewControllerSegue"]) {
+        ShareViewController *svc = segue.destinationViewController;
+        svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+        svc.cameForFriend = 1;
     }
 }
 @end

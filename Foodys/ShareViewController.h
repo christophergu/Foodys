@@ -10,5 +10,6 @@
 
 @interface ShareViewController : UIViewController
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
+@property BOOL cameForFriend;
 
 @end

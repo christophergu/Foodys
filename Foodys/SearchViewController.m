@@ -14,8 +14,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
+#import "AdvancedSearchViewController.h"
 
-@interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate>
+@interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 @property (strong, nonatomic) IBOutlet UITextField *cuisineTextField;
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
 @property (strong, nonatomic) IBOutlet UIButton *resultsButton;
@@ -28,6 +29,11 @@
 @property (strong, nonatomic) LogInViewController *modalLogInViewController;
 @property (strong, nonatomic) SignInViewController *modalSignInViewController;
 @property (strong, nonatomic) NSArray *searchResultsArray;
+
+@property (strong, nonatomic) NSArray *pickerArray;
+
+@property (strong, nonatomic) IBOutlet UIPickerView *myPickerView;
+@property (strong, nonatomic) NSString *stringForSelectedPickerRow;
 
 
 @end
@@ -59,8 +65,52 @@
 //    
     // locu api: aea05d0dffb636cb9aad86f6482e51035d79e84e
     // locu widget api: 71747ca57e325a86544c9edc0d96a9c5b95026f7
+    
+//    peruvian,
+//    mediterranean,
+//    moroccan,
+//    persian,
+//    cambodian,
+//    "latin american",
+//    caribbean,
+//    vietnamese,
+//    "dim sum",
+//    german,
+//    "steakhouse / grill",
+//    brazilian,
+//    venezuelan,
+//    taiwanese,
+//    "middle eastern",
+//    vegan,
+//    afghan,
+//    cuban,
+//    tapas,
+//    malaysian,
+//    british,
+//    african
+    
+    self.pickerArray = @[@"american", @"chinese", @"italian", @"german", @"japanese"];
 }
 
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.pickerArray count];
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return self.pickerArray[row];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    self.stringForSelectedPickerRow = self.pickerArray[row];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     PFUser *currentUser = [PFUser currentUser];
@@ -81,12 +131,12 @@
     
 //    NSString *nameTextForSearch;
     NSString *cuisineTextForSearch;
-//    NSString *locationTextForSearch;
+    NSString *locationTextForSearch;
 //    NSString *regionTextForSearch;
     
-    if (![self.cuisineTextField.text isEqualToString:@""])
+    if (!(self.stringForSelectedPickerRow.length < 1))
     {
-        cuisineTextForSearch = [NSString stringWithFormat:@"&cuisine=%@",self.cuisineTextField.text];
+        cuisineTextForSearch = [NSString stringWithFormat:@"&cuisine=%@",self.stringForSelectedPickerRow];
         cuisineTextForSearch = [cuisineTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         [itemSearchString appendString:cuisineTextForSearch];
     }
@@ -100,16 +150,16 @@
 //    
 //    if ([self.locationTextField.text isEqualToString:@""])
 //    {
-//        if (self.locationManager.location)
-//        {
-//            NSLog(@"hi");
-//            NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-//            NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
-//            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
-//                                     self.locationManager.location.coordinate.latitude,
-//                                     self.locationManager.location.coordinate.longitude];
-//            [itemSearchString appendString:locationTextForSearch];
-//        }
+        if (self.locationManager.location)
+        {
+            NSLog(@"hi");
+            NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
+            NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
+            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
+                                     self.locationManager.location.coordinate.latitude,
+                                     self.locationManager.location.coordinate.longitude];
+            [itemSearchString appendString:locationTextForSearch];
+        }
 //    }
 //    else if (![self.locationTextField.text isEqualToString:@""])
 //    {
@@ -317,14 +367,21 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"RestaurantViewControllerSegue"]) {
+    if ([[segue identifier] isEqualToString:@"RestaurantViewControllerSegue"])
+    {
         RestaurantViewController *rvc = segue.destinationViewController;
         rvc.chosenRestaurantDictionary = self.searchResultsArray.firstObject;
     }
-    else if ([[segue identifier] isEqualToString:@"ShowMoreResultsSegue"]) {
+    else if ([[segue identifier] isEqualToString:@"ShowMoreResultsSegue"])
+    {
         ShowMoreResultsViewController *smrvc = segue.destinationViewController;
         smrvc.searchResultsArray = self.searchResultsArray;
         smrvc.currentLocation = self.locationManager.location;
+    }
+    else if ([[segue identifier] isEqualToString:@"AdvancedSearchSegue"])
+    {
+        AdvancedSearchViewController *asvc = segue.destinationViewController;
+        asvc.currentLocation = self.locationManager.location;
     }
 }
 

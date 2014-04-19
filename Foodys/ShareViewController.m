@@ -7,6 +7,7 @@
 //
 
 #import "ShareViewController.h"
+#import "RestaurantViewController.h"
 #import <Parse/Parse.h>
 
 @interface ShareViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -75,7 +76,17 @@
         self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
     };
     
-    [self.recommendToFriendsButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+    if (self.cameForFriend) {
+        [self.recommendToFriendsButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+        self.recommendToFriendsButton.enabled = YES;
+        self.recommendToFriendsButton.alpha = 1.0;
+
+    }
+    else
+    {
+        self.recommendToFriendsButton.enabled = NO;
+        self.recommendToFriendsButton.alpha = 0.0;
+    }
     
     [self refreshRatingLabel];
 }
@@ -104,8 +115,9 @@
 
 -(void)cumulativeRestaurantRatingsLabelSetUp
 {
+    NSLog(@"length %lu",(unsigned long)self.cumulativeRestaurantRatingLabel.text.length);
     // the blank text length is 6 by default, 7 with a percent sign
-    if (self.cumulativeRestaurantRatingLabel.text.length == 7)
+    if (self.cumulativeRestaurantRatingLabel.text.length == 7 || self.cumulativeRestaurantRatingLabel.text.length == 0)
     {
         self.cumulativeRestaurantRatingsTextView.alpha = 0.0;
         self.cumulativeRestaurantRatingLabel.alpha = 0.0;

@@ -50,6 +50,7 @@
 		DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */; };
 		DF4DB8EE18FC784900C225EC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB8ED18FC784900C225EC /* MapKit.framework */; };
 		DFE1B0FE1900E9CA0090F929 /* RestaurantMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */; };
+		DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,8 @@
 		DF4DB8ED18FC784900C225EC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DFE1B0FC1900E9CA0090F929 /* RestaurantMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantMenuTableViewCell.h; sourceTree = "<group>"; };
 		DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantMenuTableViewCell.m; sourceTree = "<group>"; };
+		DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedSearchViewController.h; sourceTree = "<group>"; };
+		DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +215,8 @@
 			children = (
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
+				DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */,
+				DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */,
 				DF4DB89818FC4EFF00C225EC /* SearchViewController.h */,
 				DF4DB89918FC4EFF00C225EC /* SearchViewController.m */,
 				DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */,
@@ -385,6 +390,7 @@
 			files = (
 				DF11A01618FD9F8A00CAB607 /* CollectionViewCellWithImageThatFlips.m in Sources */,
 				43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */,
+				DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */,
 				DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */,
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
 				DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */,

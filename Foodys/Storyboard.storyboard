@@ -42,7 +42,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XAr-kD-qJ3">
-                                <rect key="frame" x="124" y="269" width="73" height="30"/>
+                                <rect key="frame" x="124" y="328" width="73" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Ask Foody">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,41 +55,37 @@
                                 <rect key="frame" x="83" y="491" width="155" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Cuisine Type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R53-Ru-vAh">
-                                <rect key="frame" x="62" y="228" width="197" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zy-Sa-u0J">
+                                <rect key="frame" x="100" y="366" width="121" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="cuineseTextFieldEditingDidEnd:" destination="d44-jI-TxM" eventType="editingDidEnd" id="QC8-w5-xAL"/>
-                                    <action selector="cuisineTextFieldEndEditing:" destination="d44-jI-TxM" eventType="editingDidEndOnExit" id="Kk5-zf-O5f"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kdE-Eg-XRR">
-                                <rect key="frame" x="20" y="331" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="No! Show me more results!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhK-z6-AC5">
-                                <rect key="frame" x="60" y="302" width="201" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Foody cooked up something!">
+                                <state key="normal" title="Advanced Search">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="cM8-7k-1gT" kind="push" identifier="RestaurantViewControllerSegue" id="jyQ-n9-7XU"/>
+                                    <segue destination="Kcs-Iy-pbr" kind="push" identifier="AdvancedSearchSegue" id="Ck4-BX-uQA"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="No time to waste, on to the next feast." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e34-Sb-cQM">
+                                <rect key="frame" x="40" y="67" width="240" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6w-i3-yUc">
+                                <rect key="frame" x="0.0" y="115" width="320" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="d44-jI-TxM" id="Lmk-bj-Idv"/>
+                                    <outlet property="delegate" destination="d44-jI-TxM" id="EFr-xt-cCq"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Foody's" id="Gvk-b9-GXW"/>
                     <connections>
-                        <outlet property="cuisineTextField" destination="R53-Ru-vAh" id="mv5-KH-5iU"/>
-                        <outlet property="foodysSuggestionButton" destination="uhK-z6-AC5" id="2dG-Te-kR2"/>
-                        <outlet property="resultsButton" destination="kdE-Eg-XRR" id="eDd-bn-uoH"/>
+                        <outlet property="myPickerView" destination="A6w-i3-yUc" id="6bl-Dk-S6O"/>
                         <outlet property="searchButton" destination="XAr-kD-qJ3" id="v67-vE-ssX"/>
                         <segue destination="Qim-L0-T0b" kind="modal" identifier="LogInSegue" animates="NO" id="y1n-gR-17A"/>
                         <segue destination="A1S-Mz-i4t" kind="push" identifier="ShowMoreResultsSegue" id="Bhm-sR-I30"/>
@@ -98,6 +94,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yyq-NL-yoj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1000" y="-1023"/>
+        </scene>
+        <!--Advanced Search View Controller-->
+        <scene sceneID="Agr-EW-Gld">
+            <objects>
+                <viewController id="Kcs-Iy-pbr" customClass="AdvancedSearchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dnT-kv-8Y4"/>
+                        <viewControllerLayoutGuide type="bottom" id="fdh-yT-AOq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ho7-0B-7VE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.75" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="smokePlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="mak-RM-vQd" userLabel="Image View (smoke placeholder)">
+                                <rect key="frame" x="0.0" y="465" width="320" height="103"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="poweredby-gray" translatesAutoresizingMaskIntoConstraints="NO" id="WGA-Li-gk7">
+                                <rect key="frame" x="83" y="483" width="155" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Choose any number and any combination of fields to find your next favorite meal." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3KJ-eV-d3m">
+                                <rect key="frame" x="40" y="66" width="240" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="cuisine" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eii-hh-37j">
+                                <rect key="frame" x="83" y="134" width="155" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="cuineseTextFieldEditingDidEnd:" destination="Kcs-Iy-pbr" eventType="editingDidEnd" id="ppz-Tp-K6x"/>
+                                    <action selector="cuisineTextFieldEndEditing:" destination="Kcs-Iy-pbr" eventType="editingDidEndOnExit" id="XBQ-y3-MWg"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="restaurant" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xfj-O3-nX5">
+                                <rect key="frame" x="83" y="172" width="155" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="nameTextFieldEditingDidEnd:" destination="Kcs-Iy-pbr" eventType="editingDidEnd" id="v8E-ex-dUq"/>
+                                    <action selector="nameTextFieldEndEditing:" destination="Kcs-Iy-pbr" eventType="editingDidEndOnExit" id="QJq-ad-ycJ"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jm5-U7-XOc">
+                                <rect key="frame" x="83" y="210" width="155" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="locationTextFieldEditingDidEnd:" destination="Kcs-Iy-pbr" eventType="editingDidEnd" id="AE2-j2-nGZ"/>
+                                    <action selector="locationTextFieldEndEditing:" destination="Kcs-Iy-pbr" eventType="editingDidEndOnExit" id="KDV-MH-Uq8"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIK-Oo-zj7">
+                                <rect key="frame" x="124" y="374" width="73" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Ask Foody">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSearchButtonPressed:" destination="Kcs-Iy-pbr" eventType="touchUpInside" id="pzq-0t-nT9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Yzb-C2-R6K"/>
+                    <connections>
+                        <outlet property="cuisineTextField" destination="eii-hh-37j" id="Ees-HV-P1Y"/>
+                        <outlet property="locationTextField" destination="jm5-U7-XOc" id="NKy-FL-JbW"/>
+                        <outlet property="nameTextField" destination="Xfj-O3-nX5" id="VLa-BE-gV7"/>
+                        <outlet property="searchButton" destination="wIK-Oo-zj7" id="voN-MH-q40"/>
+                        <segue destination="A1S-Mz-i4t" kind="push" identifier="ShowMoreResultsSegue" id="f1F-GM-mYT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2fm-Xx-fyf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1000" y="-1692"/>
         </scene>
         <!--Log In View Controller-->
         <scene sceneID="Xkr-ua-5Wt">
@@ -416,7 +495,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Pty-GU-GcG" kind="push" identifier="ShareViewControllerSegue" id="RhK-hE-tTe"/>
+                                    <segue destination="Pty-GU-GcG" kind="push" identifier="SharePostViewControllerSegue" id="RhK-hE-tTe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Y7I-20-eoQ">
@@ -426,6 +505,9 @@
                                 <state key="normal" title="Send to a Friend">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Pty-GU-GcG" kind="push" identifier="ShareFriendViewControllerSegue" id="NWp-EL-yek"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="qlk-uz-vFu">
                                 <rect key="frame" x="9" y="279" width="155" height="68"/>
@@ -434,6 +516,20 @@
                                 <state key="normal" title="Bookmark ">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onBookmarkButtonPressed:" destination="cM8-7k-1gT" eventType="touchUpInside" id="Sd9-eR-xdi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xv1-G7-Z0E">
+                                <rect key="frame" x="163" y="279" width="146" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Save to Profile">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSaveToProfileButtonPressed:" destination="cM8-7k-1gT" eventType="touchUpInside" id="OJw-rF-AXu"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRh-2K-3ld" userLabel="View - Hours">
                                 <rect key="frame" x="0.0" y="382" width="320" height="514"/>
@@ -608,14 +704,6 @@
                                 <rect key="frame" x="83" y="491" width="155" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xv1-G7-Z0E">
-                                <rect key="frame" x="163" y="279" width="146" height="68"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Save to Profile">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1155,6 +1243,7 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1238,25 +1327,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3D-Pe-SXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1000" y="1705"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="R3T-53-ny9">
-            <objects>
-                <viewController id="DgN-33-OhK" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hB7-ge-5ee"/>
-                        <viewControllerLayoutGuide type="bottom" id="nSi-K8-z3B"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4PF-Ht-qsx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="TsK-az-waY"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IHa-ac-ZRt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1497" y="1705"/>
         </scene>
         <!--Friends View Controller-->
         <scene sceneID="YA8-7w-SEe">
@@ -1636,7 +1706,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="3AK-th-B7Y"/>
-        <segue reference="x6Y-Dp-pb2"/>
+        <segue reference="y1n-gR-17A"/>
+        <segue reference="Bhm-sR-I30"/>
+        <segue reference="NWp-EL-yek"/>
     </inferredMetricsTieBreakers>
 </document>
