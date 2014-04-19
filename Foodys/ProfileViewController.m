@@ -17,7 +17,14 @@
 @property (strong, nonatomic) NSArray *userArray;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *favoritesArray;
+
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+@property (strong, nonatomic) IBOutlet UITextField *favoriteTextField;
+
+@property (strong, nonatomic) NSArray *rankings;
+@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+
+@property int numberOfReviewsAndRecommendations;
 
 @end
 
@@ -28,26 +35,124 @@
     [super viewDidLoad];
     self.currentUser = [PFUser currentUser];
     self.navigationItem.title = self.currentUser[@"username"];
-    
-    if (self.avatarImageView.image == nil) {
+    self.rankingLabel.text = self.currentUser[@"rank"];
+
+    if (self.currentUser[@"avatar"])
+    {
+        [self.currentUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!error) {
+                UIImage *photo = [UIImage imageWithData:data];
+                self.avatarImageView.image = photo;
+            }
+        }];
+    }
+    else
+    {
         self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
     }
+    
     [self friendsSetter];
     
     self.favoritesArray = [NSMutableArray new];
     
+    if (self.currentUser[@"currentFavorite"])
+    {
+        self.favoriteTextField.text = self.currentUser[@"currentFavorite"];
+    }
+    
     [self retrieveFavorites];
+    
+    self.rankings = @[@"Shy Foodie",
+                      @"Novice Foodie",
+                      @"Mentor Foodie",
+                      @"Master Foodie",
+                      @"Genius Foodie",
+                      @"Celebrity Foodie",
+                      @"Rockstar Foodie",
+                      @"Superhero Foodie"];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self countReviewsAndRecommendations];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
 }
 
+#pragma mark - populate view methods
+
+- (void)friendsSetter
+{
+    NSLog(@"number of friends %u",[self.currentUser[@"friends"] count]);
+    NSLog(@"number of friends %@",self.currentUser[@"friends"]);
+    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
+}
+
+- (void)countReviewsAndRecommendations
+{
+    self.numberOfReviewsAndRecommendations = 0;
+    PFQuery *userPostQuery = [PFQuery queryWithClassName:@"PublicPost"];
+    [userPostQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
+    
+    [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        self.numberOfReviewsAndRecommendations += number;
+        
+        PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
+        [userRecommendationQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
+        
+        [userRecommendationQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+            self.numberOfReviewsAndRecommendations += number;
+            [self rankingSetter:self.numberOfReviewsAndRecommendations];
+        }];
+    }];
+}
+
+- (void)rankingSetter:(int)numberOfReviewsAndRecommendations
+{
+    if (numberOfReviewsAndRecommendations == 0)
+    {
+        self.currentUser[@"rank"] = self.rankings[0];
+    }
+    else if (numberOfReviewsAndRecommendations < 4)
+    {
+        self.currentUser[@"rank"] = self.rankings[1];
+    }
+    else if (numberOfReviewsAndRecommendations < 8)
+    {
+        self.currentUser[@"rank"] = self.rankings[2];
+    }
+    else if (numberOfReviewsAndRecommendations < 12)
+    {
+        self.currentUser[@"rank"] = self.rankings[3];
+    }
+    else if (numberOfReviewsAndRecommendations < 16)
+    {
+        self.currentUser[@"rank"] = self.rankings[4];
+    }
+    else if (numberOfReviewsAndRecommendations < 20)
+    {
+        self.currentUser[@"rank"] = self.rankings[5];
+    }
+    else if (numberOfReviewsAndRecommendations < 24)
+    {
+        self.currentUser[@"rank"] = self.rankings[6];
+    }
+    else if (numberOfReviewsAndRecommendations < 28)
+    {
+        self.currentUser[@"rank"] = self.rankings[7];
+    }
+    
+    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        self.rankingLabel.text = self.currentUser[@"rank"];
+    }];
+}
+
+#pragma mark - table view methods
+
 - (void)retrieveFavorites
 {
-    int favoriteCount = [self.currentUser[@"friends"] count];
+    int favoriteCount = [self.currentUser[@"favorites"] count];
     
     for (int i = 0; i < favoriteCount; i++)
     {
@@ -113,19 +218,19 @@
     }];
 }
 
-#pragma mark - populate view methods
-
-- (void)friendsSetter
-{
-    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
-}
-
 #pragma mark - button methods
 
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
     [PFUser logOut];
     [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+}
+
+- (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
+{
+    [self.favoriteTextField endEditing:YES];
+    self.currentUser[@"currentFavorite"] = self.favoriteTextField.text;
+    [self.currentUser saveInBackground];
 }
 
 #pragma mark - image picker delegate methods

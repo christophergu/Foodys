@@ -47,29 +47,34 @@
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
     
+    UIImage *pickedImage = [UIImage imageNamed:@"defaultUserImage"];
+    NSData* data = UIImageJPEGRepresentation(pickedImage,1.0f);
+    PFFile *imageFile = [PFFile fileWithData:data];
+    user[@"avatar"] = imageFile;
+    
     [user signUpInBackgroundWithTarget:self selector:@selector(handleSignUp:error:)];
 }
 
 - (void)handleSignUp:(NSNumber *)result error:(NSError *)error
 {
-    //    if (!error)
-    //    {
-    //        [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-    //            if (user) {
+    if (!error)
+    {
+    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
+    if (user) {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    //            }
-    //            else
-    //            {
-    //                UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    //                [logInFailAlert show];            }
-    //        }];
-    //    }
-    //    else
-    //    {
-    //        UIAlertView *signUpErrorAlert = [[UIAlertView alloc] initWithTitle:@"Sign In Failed" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    //        [signUpErrorAlert show];
-    //    }
+    }
+    else
+    {
+        UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [logInFailAlert show];            }
+    }];
+    }
+    else
+    {
+        UIAlertView *signUpErrorAlert = [[UIAlertView alloc] initWithTitle:@"Sign In Failed" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [signUpErrorAlert show];
+    }
 }
 
 @end

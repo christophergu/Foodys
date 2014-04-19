@@ -21,7 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -41,6 +40,8 @@
             cell.friendImageView.image = photo;
             cell.friendDetailImageView.alpha = 0.5;
             cell.friendDetailImageView.image = photo;
+            cell.usernameLabel.text = self.currentFriendUser[@"username"];
+            cell.rankLabel.text = self.currentFriendUser[@"rank"];
         }
     }];
     
