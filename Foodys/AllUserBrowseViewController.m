@@ -13,6 +13,7 @@
 @interface AllUserBrowseViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentFriendUser;
+@property (strong, nonatomic) PFUser *currentUser;
 
 @end
 
@@ -21,6 +22,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.currentUser = [PFUser currentUser];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -33,6 +39,9 @@
     CollectionViewCellWithImageThatFlips *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
     
     self.currentFriendUser = self.userArray[indexPath.row];
+
+    cell.usernameLabel.text = self.currentFriendUser[@"username"];
+    cell.rankLabel.text = self.currentFriendUser[@"rank"];
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -40,8 +49,6 @@
             cell.friendImageView.image = photo;
             cell.friendDetailImageView.alpha = 0.5;
             cell.friendDetailImageView.image = photo;
-            cell.usernameLabel.text = self.currentFriendUser[@"username"];
-            cell.rankLabel.text = self.currentFriendUser[@"rank"];
         }
     }];
     
@@ -55,7 +62,19 @@
 {
     CollectionViewCellWithImageThatFlips *cell = (CollectionViewCellWithImageThatFlips *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    cell.addFriendButton.friendUser = self.userArray[indexPath.row];
+    
+    if ([cell.usernameLabel.text isEqualToString:self.currentUser[@"username"]])
+    {
+        cell.addFriendButton.hidden = YES;
+        cell.addFriendButton.enabled = NO;
+        cell.usernameLabel.text = @"YOU";
+    }
+    else
+    {
+        cell.addFriendButton.hidden = NO;
+        cell.addFriendButton.enabled = YES;
+        cell.addFriendButton.friendUser = self.userArray[indexPath.row];
+    }
     
     if (cell.flipped == NO)
     {

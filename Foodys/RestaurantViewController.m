@@ -9,6 +9,7 @@
 #import "RestaurantViewController.h"
 #import "RestaurantMenuTableViewCell.h"
 #import "ShareViewController.h"
+#import "WebViewController.h"
 #import <Parse/Parse.h>
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -216,13 +217,23 @@
     [self.currentUser saveInBackground];
 }
 
+#pragma mark - phone methods
 
-
-
-
-
-
-
+- (IBAction)onTelephoneButtonPressed:(id)sender
+{
+    NSString *phNo = self.chosenRestaurantDictionary[@"phone"];
+    NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
+    
+    if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
+    {
+        [[UIApplication sharedApplication] openURL:phoneUrl];
+    }
+    else
+    {
+        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [calert show];
+    }
+}
 
 #pragma mark - venue method
 
@@ -324,6 +335,10 @@
         ShareViewController *svc = segue.destinationViewController;
         svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
         svc.cameForFriend = 1;
+    }
+    else if ([[segue identifier] isEqualToString:@"WebViewControllerSegue"]) {
+        WebViewController *wvc = segue.destinationViewController;
+        wvc.websiteUrl = self.chosenRestaurantDictionary[@"website_url"];
     }
 }
 @end

@@ -86,7 +86,10 @@
 
 - (void)friendsSetter
 {
-    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
+    if ([self.currentUser[@"friends"] count] != 0)
+    {
+        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
+    }
 }
 
 - (void)countReviewsAndRecommendations
@@ -213,6 +216,10 @@
     [friendsThatAcceptedQuery whereKey:@"friends" containsAllObjectsInArray:currentUserArray];
     [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFUser *newFriend in objects) {
+            if ([newFriend isEqual:self.currentUser])
+            {
+                continue;
+            }
             [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
             [self.currentUser saveInBackground];
         }

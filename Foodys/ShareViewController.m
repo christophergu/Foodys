@@ -172,6 +172,22 @@
 
 #pragma mark - button methods
 
+- (IBAction)onTelephoneButtonPressed:(id)sender
+{
+    NSString *phNo = self.chosenRestaurantDictionary[@"phone"];
+    NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
+    
+    if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
+    {
+        [[UIApplication sharedApplication] openURL:phoneUrl];
+    }
+    else
+    {
+        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [calert show];
+    }
+}
+
 - (IBAction)onEndEditingAllButtonPressed:(id)sender
 {
     [self.myTextView endEditing:YES];

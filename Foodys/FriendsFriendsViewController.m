@@ -43,13 +43,15 @@
     [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         self.currentFriendUser = objects.firstObject;
         
+        cell.usernameLabel.text = self.currentFriendUser[@"username"];
+        cell.rankLabel.text = self.currentFriendUser[@"rank"];
+        
         [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if (!error) {
                 UIImage *photo = [UIImage imageWithData:data];
                 cell.friendImageView.image = photo;
                 cell.friendDetailImageView.alpha = 0.5;
                 cell.friendDetailImageView.image = photo;
-                cell.usernameLabel.text = self.currentFriendUser[@"username"];
             }
         }];
     }];
@@ -64,17 +66,17 @@
 {
     CollectionViewCellWithImageThatFlips *cell = (CollectionViewCellWithImageThatFlips *)[collectionView cellForItemAtIndexPath:indexPath];
 
-    if (![self.currentFriendUser[@"username"] isEqualToString:self.currentUser[@"username"]])
-    {
-        cell.addFriendButton.hidden = NO;
-        cell.addFriendButton.enabled = YES;
-        cell.addFriendButton.friendUser = self.friendsFriendsArray[indexPath.row];
-    }
-    else
+    if ([cell.usernameLabel.text isEqualToString:self.currentUser[@"username"]])
     {
         cell.addFriendButton.hidden = YES;
         cell.addFriendButton.enabled = NO;
         cell.usernameLabel.text = @"YOU";
+    }
+    else
+    {
+        cell.addFriendButton.hidden = NO;
+        cell.addFriendButton.enabled = YES;
+        cell.addFriendButton.friendUser = self.friendsFriendsArray[indexPath.row];
     }
     
     if (cell.flipped == NO)
