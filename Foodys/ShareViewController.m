@@ -37,6 +37,9 @@
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) PFObject *reviewedRestaurant;
 
+@property (strong, nonatomic) NSMutableArray *friendsToRecommendTo;
+@property (strong, nonatomic) PFObject *recommendation;
+
 @end
 
 @implementation ShareViewController
@@ -56,6 +59,8 @@
     self.chooseFriendsDoneButton.enabled = NO;
     
     self.sliderIntValue = 50;
+    
+    self.friendsToRecommendTo = [NSMutableArray new];
 }
 
 -(void)setUpBasicElementsForThisView
@@ -117,7 +122,7 @@
 {
     NSLog(@"length %lu",(unsigned long)self.cumulativeRestaurantRatingLabel.text.length);
     // the blank text length is 6 by default, 7 with a percent sign
-    if (self.cumulativeRestaurantRatingLabel.text.length == 7 || self.cumulativeRestaurantRatingLabel.text.length == 0)
+    if (self.cumulativeRestaurantRatingLabel.text.length == 0)
     {
         self.cumulativeRestaurantRatingsTextView.alpha = 0.0;
         self.cumulativeRestaurantRatingLabel.alpha = 0.0;
@@ -150,6 +155,19 @@
     
     cell.textLabel.text = arrayHolder.firstObject[@"username"];
     return cell;
+}
+
+
+// add friends to send your recommendation to
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *selectedCell = [(UITableView *)tableView cellForRowAtIndexPath:indexPath];
+    selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    [self.friendsToRecommendTo addObject: self.currentUser[@"friends"][indexPath.row]];
+    
+    [self.myTableView reloadData];
+    selectedCell.showsReorderControl = YES;
 }
 
 #pragma mark - button methods
@@ -208,6 +226,12 @@
                      completion:^(BOOL finished){
                          self.chooseFriendsDoneButton.enabled = NO;
                      }];
+    
+    self.recommendation = [PFObject objectWithClassName:@"Recommendation"];
+    for (PFUser *receiver in self.friendsToRecommendTo)
+    {
+        [self.recommendation addUniqueObject:receiver forKey:@"receivers"];
+    }
 }
 
 - (IBAction)onDoneButtonPressed:(id)sender
@@ -215,23 +239,33 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
     
-    PFObject *publicPost = [PFObject objectWithClassName:@"PublicPost"];
-    publicPost[@"author"] = self.currentUser[@"username"];
-    publicPost[@"authorObjectId"] = self.currentUser.objectId;
-    publicPost[@"date"] = [formatter dateFromString:self.dateLabel.text];
-    publicPost[@"title"] = self.subjectTextField.text;
-    publicPost[@"body"] = self.myTextView.text;
-    int rating = [self.sliderScoreLabel.text integerValue];
-    publicPost[@"rating"] = @(rating);
-    publicPost[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
-    [publicPost saveInBackground];
-    
-    [self.currentUser addUniqueObject:publicPost forKey:@"postsMade"];
-    [self.currentUser saveInBackground];
-    
-    
-    
-    
+    if (self.cameForFriend)
+    {
+        self.recommendation[@"name"]=self.chosenRestaurantDictionary[@"name"];
+        self.recommendation[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
+        
+//        // loop through friends to see if they should have recommendations added
+//        [self.currentUser addUniqueObject:self.recommendation forKey:@"recommendations"];
+//        [self.currentUser saveInBackground];
+        
+        [self.recommendation saveInBackground];
+    }
+    else
+    {
+        PFObject *publicPost = [PFObject objectWithClassName:@"PublicPost"];
+        publicPost[@"author"] = self.currentUser[@"username"];
+        publicPost[@"authorObjectId"] = self.currentUser.objectId;
+        publicPost[@"date"] = [formatter dateFromString:self.dateLabel.text];
+        publicPost[@"title"] = self.subjectTextField.text;
+        publicPost[@"body"] = self.myTextView.text;
+        int rating = [self.sliderScoreLabel.text integerValue];
+        publicPost[@"rating"] = @(rating);
+        publicPost[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
+        [publicPost saveInBackground];
+        
+        [self.currentUser addUniqueObject:publicPost forKey:@"postsMade"];
+        [self.currentUser saveInBackground];
+    }
     
     PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
     [reviewedRestaurantQuery whereKey:@"name" equalTo:self.subjectTextField.text];

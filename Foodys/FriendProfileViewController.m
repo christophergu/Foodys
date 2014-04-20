@@ -61,6 +61,7 @@
             if (!error) {
                 UIImage *photo = [UIImage imageWithData:data];
                 self.avatarImageView.image = photo;
+                self.avatarImageView.clipsToBounds = YES;
             }
         }];
     }
