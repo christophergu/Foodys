@@ -29,6 +29,10 @@
     self.currentUser = [PFUser currentUser];
     self.bookmarksArray = [NSMutableArray new];
     self.recommendationsArray = [NSMutableArray new];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
     [self retrieveBookmarks];
     [self retrieveRecommendations];
 }
@@ -41,10 +45,13 @@
     for (int i = 0; i < bookmarkCount; i++)
     {
         PFObject *bookmark = self.currentUser[@"bookmarks"][i];
-        [bookmark fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            [self.bookmarksArray addObject:bookmark];
-            
-            [self.myTableView reloadData];
+        [bookmark fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+        {
+            if (![self.bookmarksArray containsObject:bookmark])
+            {
+                [self.bookmarksArray addObject:bookmark];
+                [self.myTableView reloadData];
+            }
         }];
     }
 }
@@ -57,10 +64,13 @@
     for (int i = 0; i < recommendationCount; i++)
     {
         PFObject *recommendation = self.currentUser[@"recommendations"][i];
-        [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            [self.recommendationsArray addObject:recommendation];
-            
-            [self.myTableView reloadData];
+        [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+        {
+            if (![self.recommendationsArray containsObject:recommendation])
+            {
+                [self.recommendationsArray addObject:recommendation];
+                [self.myTableView reloadData];
+            }
         }];
     }
 }
