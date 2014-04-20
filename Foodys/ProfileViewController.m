@@ -165,6 +165,7 @@
             [self.myTableView reloadData];
         }];
     }
+    [self.myTableView reloadData];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
