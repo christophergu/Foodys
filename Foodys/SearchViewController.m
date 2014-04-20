@@ -22,7 +22,7 @@
 @property CLLocationManager *locationManager;
 @property (strong, nonatomic) LogInViewController *modalLogInViewController;
 @property (strong, nonatomic) SignInViewController *modalSignInViewController;
-@property (strong, nonatomic) NSArray *searchResultsArray;
+@property (strong, nonatomic) NSMutableArray *searchResultsArray;
 
 @property (strong, nonatomic) NSArray *pickerArray;
 
@@ -70,7 +70,7 @@
 //    british,
 //    african
     
-    self.pickerArray = @[@"american", @"chinese", @"italian", @"german", @"japanese"];
+    self.pickerArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi"];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -103,19 +103,19 @@
 
 - (void)foodSearch
 {
-    self.searchResultsArray = nil;
+    self.searchResultsArray = [NSMutableArray new];
     
     NSMutableString *itemSearchString = nil;
-    itemSearchString = [@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
+    itemSearchString = [@"http://api.locu.com/v1_0/menu_item/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
     
-    NSString *cuisineTextForSearch;
+    NSString *nameFoodForSearch;
     NSString *locationTextForSearch;
     
     if (!(self.stringForSelectedPickerRow.length < 1))
     {
-        cuisineTextForSearch = [NSString stringWithFormat:@"&cuisine=%@",self.stringForSelectedPickerRow];
-        cuisineTextForSearch = [cuisineTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        [itemSearchString appendString:cuisineTextForSearch];
+        nameFoodForSearch = [NSString stringWithFormat:@"&name=%@",self.stringForSelectedPickerRow];
+        nameFoodForSearch = [nameFoodForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        [itemSearchString appendString:nameFoodForSearch];
     }
     
     if (self.locationManager.location)
@@ -138,7 +138,23 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        self.searchResultsArray = intermediateDictionary[@"objects"];
+        
+        NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:intermediateDictionary[@"objects"]];
+        NSArray *searchResultsArrayWithVenueMultiples = orderedSet.array;
+        
+//        NSLog(@"%@",self.searchResultsArray);
+        NSMutableArray *venues = [NSMutableArray new];
+        
+        for (NSDictionary *result in searchResultsArrayWithVenueMultiples)
+        {
+            
+            if (![venues containsObject:result[@"venue"][@"name"]])
+            {
+                [self.searchResultsArray addObject:result];
+                [venues addObject:result[@"venue"][@"name"]];
+            }
+        }
+        NSLog(@"%@",self.searchResultsArray);
         
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];

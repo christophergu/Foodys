@@ -347,7 +347,6 @@
                                             <outlet property="addressLabel" destination="sy6-GB-Mwg" id="btk-n8-frm"/>
                                             <outlet property="distanceLabel" destination="9NX-Oo-4V8" id="qfh-qn-TgM"/>
                                             <outlet property="restaurantTitle" destination="Fec-ES-4VQ" id="YAd-19-bgb"/>
-                                            <segue destination="cM8-7k-1gT" kind="push" identifier="RestaurantViewControllerSegue" id="x6Y-Dp-pb2"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -392,6 +391,7 @@
                         <outlet property="myMapView" destination="Bel-gf-qPZ" id="dN3-cf-Bjl"/>
                         <outlet property="mySegmentedControl" destination="YYZ-Z9-cwG" id="kAp-IY-EhL"/>
                         <outlet property="myTableView" destination="0XK-f8-cbj" id="6fi-Tm-p60"/>
+                        <segue destination="cM8-7k-1gT" kind="push" identifier="RestaurantViewControllerSegue" id="Htr-aG-CF1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBz-8A-0db" userLabel="First Responder" sceneMemberID="firstResponder"/>

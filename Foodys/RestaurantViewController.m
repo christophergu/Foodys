@@ -88,7 +88,7 @@
     self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     self.myAtmosphereImageView.clipsToBounds = YES;
 
-    [self loadFlickrImageForAtmosphere];
+//    [self loadFlickrImageForAtmosphere];
     [self getVenueDetail];
     
     self.sunLabel.alpha = 0.0;
@@ -286,42 +286,42 @@
 
 #pragma mark - flickr method
 
-- (void)loadFlickrImageForAtmosphere
-{
-    NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
-    
-    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
-                                    apiKey,
-                                    self.chosenRestaurantDictionary[@"cuisine"],
-                                    self.chosenRestaurantDictionary[@"cuisine"]];
-    NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
-    NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
-    [NSURLConnection sendAsynchronousRequest:flickrSearchRequest queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-     {
-         NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-         NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
-         
-         if (flickrPhotosArray) {
-             NSDictionary *flickrElement = flickrPhotosArray.firstObject;
-             NSString *flickrURLstring = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@.jpg",
-                                          [flickrElement[@"farm"] stringValue],
-                                          flickrElement[@"server"],
-                                          flickrElement[@"id"],
-                                          flickrElement[@"secret"]];
-             NSURL * flickrImageURL = [NSURL URLWithString:flickrURLstring];
-             
-             NSData * imageData = [[NSData alloc] initWithContentsOfURL: flickrImageURL];
-             
-             self.myAtmosphereImageView.image = [UIImage imageWithData: imageData];
-         }
-         else
-         {
-             // do something else
-         }
-         
-     }];
-}
+//- (void)loadFlickrImageForAtmosphere
+//{
+//    NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
+//    
+//    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
+//                                    apiKey,
+//                                    self.chosenRestaurantDictionary[@"cuisine"],
+//                                    self.chosenRestaurantDictionary[@"cuisine"]];
+//    NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
+//    NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
+//    [NSURLConnection sendAsynchronousRequest:flickrSearchRequest queue:[NSOperationQueue mainQueue]
+//                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+//     {
+//         NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//         NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
+//         
+//         if (flickrPhotosArray) {
+//             NSDictionary *flickrElement = flickrPhotosArray.firstObject;
+//             NSString *flickrURLstring = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@.jpg",
+//                                          [flickrElement[@"farm"] stringValue],
+//                                          flickrElement[@"server"],
+//                                          flickrElement[@"id"],
+//                                          flickrElement[@"secret"]];
+//             NSURL * flickrImageURL = [NSURL URLWithString:flickrURLstring];
+//             
+//             NSData * imageData = [[NSData alloc] initWithContentsOfURL: flickrImageURL];
+//             
+//             self.myAtmosphereImageView.image = [UIImage imageWithData: imageData];
+//         }
+//         else
+//         {
+//             // do something else
+//         }
+//         
+//     }];
+//}
 
 #pragma mark - segue methods
 
