@@ -33,35 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.currentUser = [PFUser currentUser];
-    self.navigationItem.title = self.currentUser[@"username"];
-    self.rankingLabel.text = self.currentUser[@"rank"];
-
-    if (self.currentUser[@"avatar"])
-    {
-        [self.currentUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!error) {
-                UIImage *photo = [UIImage imageWithData:data];
-                self.avatarImageView.image = photo;
-            }
-        }];
-    }
-    else
-    {
-        self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
-    }
-    self.avatarImageView.clipsToBounds = YES;
-
-    [self friendsSetter];
-    
-    self.favoritesArray = [NSMutableArray new];
-    
-    if (self.currentUser[@"currentFavorite"])
-    {
-        self.favoriteTextField.text = self.currentUser[@"currentFavorite"];
-    }
-    
-    [self retrieveFavorites];
     
     self.rankings = @[@"Shy Foodie",
                       @"Novice Foodie",
@@ -76,6 +47,36 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.currentUser = [PFUser currentUser];
+    self.navigationItem.title = self.currentUser[@"username"];
+    self.rankingLabel.text = self.currentUser[@"rank"];
+    
+    if (self.currentUser[@"avatar"])
+    {
+        [self.currentUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!error) {
+                UIImage *photo = [UIImage imageWithData:data];
+                self.avatarImageView.image = photo;
+            }
+        }];
+    }
+    else
+    {
+        self.avatarImageView.image = [UIImage imageNamed:@"defaultUserImage"];
+    }
+    self.avatarImageView.clipsToBounds = YES;
+    
+    [self friendsSetter];
+    
+    self.favoritesArray = [NSMutableArray new];
+    
+    if (self.currentUser[@"currentFavorite"])
+    {
+        self.favoriteTextField.text = self.currentUser[@"currentFavorite"];
+    }
+    
+    [self retrieveFavorites];
+    
     [self countReviewsAndRecommendations];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
@@ -224,7 +225,7 @@
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
     [PFUser logOut];
-    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    [self.tabBarController setSelectedIndex:0];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
