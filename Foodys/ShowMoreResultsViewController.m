@@ -29,6 +29,8 @@
     [self mapLoad];
 }
 
+#pragma mark - segmented control methods
+
 - (IBAction)onSegmentedControlValueChanged:(id)sender
 {
     if (self.mySegmentedControl.selectedSegmentIndex == 0)
@@ -40,6 +42,8 @@
         self.myMapView.alpha = 1.0;
     }
 }
+
+#pragma mark - map methods
 
 -(void)mapLoad
 {
@@ -108,6 +112,8 @@
      ];
 }
 
+#pragma mark - table view methods
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.searchResultsArray.count;
@@ -139,8 +145,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",self.searchResultsArray[indexPath.row]);
-    
     
     NSString* streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
     NSString* localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
@@ -154,8 +158,6 @@
                                    regionString];
     venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
-    NSLog(@"%@",venueSearchString);
-    
     NSURL *url = [NSURL URLWithString: venueSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -164,7 +166,6 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
         self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
-        NSLog(@"from list %@",self.chosenRestaurantDictionary);
         
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
 
@@ -172,13 +173,14 @@
     ];
 }
 
+#pragma mark - segue methods
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)cell
 {
     RestaurantViewController *rvc = segue.destinationViewController;
     
     if (self.mySegmentedControl.selectedSegmentIndex == 1)
     {
-        NSLog(@"from map %@",self.chosenRestaurantDictionary);
         rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
     }
     else if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])

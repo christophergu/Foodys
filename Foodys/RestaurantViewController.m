@@ -235,7 +235,7 @@
     }
 }
 
-#pragma mark - venue method
+#pragma mark - venue detail helper method
 
 - (void)getVenueDetail
 {
@@ -249,30 +249,65 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         self.restaurantResultsDictionary = intermediateDictionary[@"objects"][0];
         
-        // instantiating the restaurant menu here
-        self.restaurantUnfilteredMenu = self.restaurantResultsDictionary[@"menus"][0][@"sections"][0][@"subsections"][0][@"contents"];
-        
         self.restaurantMenu = [NSMutableArray new];
         
-        for (NSDictionary *foodItem in self.restaurantUnfilteredMenu)
+        // instantiating the restaurant menu here
+        for (NSDictionary *section in self.restaurantResultsDictionary[@"menus"][0][@"sections"])
         {
-            if (foodItem[@"name"]) {
-                [self.restaurantMenu addObject:foodItem];
+            for (NSDictionary *subsection in section[@"subsections"])
+            {
+                NSArray *contentsArray = subsection[@"contents"];
+                for (NSDictionary *foodItem in contentsArray) {
+                    if (foodItem[@"name"])
+                    {
+                        NSLog(@"%@",foodItem);
+                        [self.restaurantMenu addObject:foodItem];
+                    }
+                }
             }
         }
         
         [self.myTableView reloadData];
         
-        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0))
+        int hasHoursCounter = 0;
+        
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0))
         {
             self.sundayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Sunday"][0]];
+            hasHoursCounter++;
+        }
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0))
+        {
             self.mondayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Monday"][0]];
+            hasHoursCounter++;
+        }
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0))
+        {
             self.tuesdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"][0]];
+            hasHoursCounter++;
+        }
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0))
+        {
             self.wednesdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"][0]];
+            hasHoursCounter++;
+        }
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0))
+        {
             self.thursdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Thursday"][0]];
+            hasHoursCounter++;
+        }
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0))
+        {
             self.fridayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Friday"][0]];
+            hasHoursCounter++;
+        }
+        if (!([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
+        {
             self.saturdayHoursLabel.text = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"open_hours"][@"Saturday"][0]];
-            
+            hasHoursCounter++;
+        }
+        
+        if (hasHoursCounter) {
             self.sunLabel.alpha = 1.0;
             self.monLabel.alpha = 1.0;
             self.tueLabel.alpha = 1.0;
@@ -280,7 +315,8 @@
             self.thuLabel.alpha = 1.0;
             self.friLabel.alpha = 1.0;
             self.satLabel.alpha = 1.0;
-        };
+        }
+        
     }];
 }
 

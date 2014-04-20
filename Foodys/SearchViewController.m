@@ -73,6 +73,19 @@
     self.pickerArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi"];
 }
 
+#pragma mark - check if there is a current user method
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser)
+    {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
+}
+
+#pragma mark - picker view methods
+
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
@@ -92,14 +105,9 @@
 {
     self.stringForSelectedPickerRow = self.pickerArray[row];
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser)
-    {
-        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
-    }
-}
+
+
+#pragma mark - search helper method
 
 - (void)foodSearch
 {
@@ -120,18 +128,12 @@
     
     if (self.locationManager.location)
     {
-        NSLog(@"hi");
-        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
         locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
                                  self.locationManager.location.coordinate.latitude,
                                  self.locationManager.location.coordinate.longitude];
         [itemSearchString appendString:locationTextForSearch];
     }
 
-    
-    NSLog(@"%@",itemSearchString);
-    
     NSURL *url = [NSURL URLWithString: itemSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -142,7 +144,6 @@
         NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:intermediateDictionary[@"objects"]];
         NSArray *searchResultsArrayWithVenueMultiples = orderedSet.array;
         
-//        NSLog(@"%@",self.searchResultsArray);
         NSMutableArray *venues = [NSMutableArray new];
         
         for (NSDictionary *result in searchResultsArrayWithVenueMultiples)
@@ -154,7 +155,6 @@
                 [venues addObject:result[@"venue"][@"name"]];
             }
         }
-        NSLog(@"%@",self.searchResultsArray);
         
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];
