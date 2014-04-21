@@ -248,7 +248,6 @@
                                 };
         }
         
-        NSLog(@"%@",self.chosenRestaurantDictionary);
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
 
         }

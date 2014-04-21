@@ -238,7 +238,9 @@
         
         self.restaurantResultsDictionary = intermediateDictionary[@"objects"][0];
         
-        if ((int)self.restaurantResultsDictionary[@"has_menu"] == TRUE)
+        NSString *hasMenuString = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"has_menu"]];
+        
+        if ([hasMenuString isEqualToString:@"1"])
         {
             self.restaurantMenu = [NSMutableArray new];
 
@@ -251,7 +253,6 @@
                     {
                         if (foodItem[@"name"])
                         {
-                            NSLog(@"%@",foodItem);
                             [self.restaurantMenu addObject:foodItem];
                         }
                     }

@@ -1299,6 +1299,7 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1400,6 +1401,7 @@
                         <outlet property="myTableView" destination="NaG-DQ-JPW" id="YBT-na-oqJ"/>
                         <outlet property="rankingLabel" destination="kUh-Fe-S99" id="2FX-Xd-zv0"/>
                         <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="l4x-YP-nlR"/>
+                        <segue destination="cM8-7k-1gT" kind="push" identifier="FavoriteToRestaurantSegue" id="Xgt-CN-5ft"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3D-Pe-SXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1815,8 +1817,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Xgt-CN-5ft"/>
         <segue reference="l4x-YP-nlR"/>
-        <segue reference="fdc-o9-LBs"/>
         <segue reference="NWp-EL-yek"/>
+        <segue reference="fdc-o9-LBs"/>
     </inferredMetricsTieBreakers>
 </document>

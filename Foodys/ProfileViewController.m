@@ -8,6 +8,7 @@
 
 #import "ProfileViewController.h"
 #import "FriendsViewController.h"
+#import "RestaurantViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -28,6 +29,8 @@
 
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
 @property (strong, nonatomic) NSMutableArray *recommendationsArray;
+
+@property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
 
 @end
 
@@ -207,6 +210,15 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.chosenRestaurantFavoriteDictionary = self.favoritesArray[indexPath.row][@"restaurantDictionary"];
+    
+    NSLog(@"%@",self.chosenRestaurantFavoriteDictionary);
+    
+    [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
+}
+
 -(IBAction) segmentedControlIndexChanged
 {
     switch (self.mySegmentedControl.selectedSegmentIndex)
@@ -364,6 +376,11 @@
     {        
         FriendsViewController *fvc = segue.destinationViewController;
         fvc.currentUser = self.currentUser;
+    }
+    else if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
+    {
+        RestaurantViewController *rvc = segue.destinationViewController;
+        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
     }
 }
 
