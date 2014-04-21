@@ -192,20 +192,6 @@
     }
 }
 
-- (IBAction)onBookmarkButtonPressed:(id)sender
-{
-    PFObject *bookmark = [PFObject objectWithClassName:@"Bookmark"];
-    bookmark[@"name"]=self.chosenRestaurantDictionary[@"name"];
-    bookmark[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
-    
-    [bookmark saveInBackground];
-    
-    self.currentUser = [PFUser currentUser];
-    [self.currentUser addUniqueObject:bookmark forKey:@"bookmarks"];
-    [self.currentUser saveInBackground];
-}
-
-
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
 {
     PFObject *favorite = [PFObject objectWithClassName:@"Favorite"];

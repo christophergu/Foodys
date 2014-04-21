@@ -26,6 +26,9 @@
 
 @property int numberOfReviewsAndRecommendations;
 
+@property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
+@property (strong, nonatomic) NSMutableArray *recommendationsArray;
+
 @end
 
 @implementation ProfileViewController
@@ -50,6 +53,9 @@
     self.currentUser = [PFUser currentUser];
     self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
+    
+    self.recommendationsArray = [NSMutableArray new];
+    [self retrieveRecommendations];
     
     if (self.currentUser[@"avatar"])
     {
@@ -171,15 +177,86 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.favoritesArray.count;
+    int number;
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        number = self.favoritesArray.count;
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        number = self.recommendationsArray.count;
+    }
+    
+    return number;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavoriteCellReuseID"];
-    cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+    
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+    }
+    
+    
     return cell;
 }
+
+-(IBAction) segmentedControlIndexChanged
+{
+    switch (self.mySegmentedControl.selectedSegmentIndex)
+    {
+        case 0:
+            [self.myTableView reloadData];
+            break;
+        case 1:
+            [self.myTableView reloadData];
+        default:
+            break;
+    }
+}
+
+#pragma mark - recommendation methods
+
+- (void)retrieveRecommendations
+{
+    [self autoAddReceivedRecommendations];
+    
+    int recommendationCount = [self.currentUser[@"recommendations"] count];
+    for (int i = 0; i < recommendationCount; i++)
+    {
+        PFObject *recommendation = self.currentUser[@"recommendations"][i];
+        [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+         {
+             if (![self.recommendationsArray containsObject:recommendation])
+             {
+                 [self.recommendationsArray addObject:recommendation];
+                 [self.myTableView reloadData];
+             }
+         }];
+    }
+}
+
+- (void)autoAddReceivedRecommendations
+{
+    NSArray *currentUserArray = @[self.currentUser];
+    
+    PFQuery *receivedRecommendationsQuery = [PFQuery queryWithClassName:@"Recommendation"];
+    [receivedRecommendationsQuery whereKey:@"receivers" containsAllObjectsInArray:currentUserArray];
+    [receivedRecommendationsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *recommendation in objects) {
+            [self.currentUser addUniqueObject:recommendation forKey:@"recommendations"];
+            
+            [self.currentUser save];
+        }
+    }];
+}
+
 
 #pragma mark - friend request and accept management methods
 
