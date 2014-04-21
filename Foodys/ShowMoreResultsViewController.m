@@ -221,12 +221,14 @@
 
     }
     
-    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@&region=%@",
+    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@",
                                    nameString,
                                    postalCodeString,
-                                   localityString,
-                                   regionString];
+                                   localityString];
+    
     venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSLog(@"%@",venueSearchString);
     
     NSURL *url = [NSURL URLWithString: venueSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];

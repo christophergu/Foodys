@@ -79,7 +79,7 @@
     self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
     if (self.chosenRestaurantDictionary)
     {
-        if (self.chosenRestaurantDictionary[@"street_address"])
+        if (self.chosenRestaurantDictionary[@"street_address"] && ![self.chosenRestaurantDictionary[@"region"] isEqualToString:@"_"])
         {
             self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
         }
@@ -131,8 +131,7 @@
     {
         self.cumulativeRestaurantRatingLabel.text = [NSString stringWithFormat:@"%@%%",self.reviewedRestaurant[@"rating"]];
     }
-    NSLog(@"rating %@",self.reviewedRestaurant[@"rating"]);
-    NSLog(@"label %@",self.cumulativeRestaurantRatingLabel.text);
+    
     [self cumulativeRestaurantRatingsLabelSetUp];
 }
 

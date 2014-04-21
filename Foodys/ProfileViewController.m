@@ -417,6 +417,7 @@
     {
         RestaurantViewController *rvc = segue.destinationViewController;
         rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
+        rvc.cameFromProfileFavorites = 1;
     }
 }
 

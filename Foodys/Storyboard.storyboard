@@ -706,6 +706,12 @@
                                             <action selector="onHoursButtonPressed:" destination="cM8-7k-1gT" eventType="touchUpInside" id="hsb-DL-Px6"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hours Unavailable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EcZ-UB-Tlq">
+                                        <rect key="frame" x="90" y="55" width="140" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -769,6 +775,13 @@
                                             <outlet property="delegate" destination="cM8-7k-1gT" id="Rwb-3C-g4Z"/>
                                         </connections>
                                     </tableView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Menu Unavailable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHP-qy-1mQ">
+                                        <rect key="frame" x="92" y="55" width="137" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -788,7 +801,9 @@
                         <outlet property="address" destination="Hzc-Ec-F8u" id="32A-DE-8gf"/>
                         <outlet property="friLabel" destination="dFS-h2-bvi" id="hRa-WF-dor"/>
                         <outlet property="fridayHoursLabel" destination="UPT-3n-bZA" id="Va2-rC-E5k"/>
+                        <outlet property="hoursUnavailableLabel" destination="EcZ-UB-Tlq" id="KaS-eN-xFd"/>
                         <outlet property="hoursView" destination="oRh-2K-3ld" id="2Bj-vT-Avn"/>
+                        <outlet property="menuUnavailableLabel" destination="qHP-qy-1mQ" id="jIw-MG-LCt"/>
                         <outlet property="menuView" destination="OQ9-Qm-Qo3" id="oj2-su-zwA"/>
                         <outlet property="monLabel" destination="Ry0-rC-6BN" id="g4y-dz-ITN"/>
                         <outlet property="mondayHoursLabel" destination="IrT-Ys-76g" id="XiF-2p-a8H"/>
@@ -797,6 +812,7 @@
                         <outlet property="phoneNumber" destination="dN5-Gt-ev5" id="qrp-JE-6qj"/>
                         <outlet property="satLabel" destination="Pgt-6n-MYF" id="qIT-qL-yM9"/>
                         <outlet property="saturdayHoursLabel" destination="Yjd-km-g5G" id="hfU-L4-tL7"/>
+                        <outlet property="saveToProfileButton" destination="Xv1-G7-Z0E" id="GoR-sA-ZZ3"/>
                         <outlet property="sunLabel" destination="L8g-O9-kdc" id="Sse-xh-IbA"/>
                         <outlet property="sundayHoursLabel" destination="Ee3-UO-Vpu" id="G1Q-Qm-dpg"/>
                         <outlet property="thuLabel" destination="9nc-A7-hrj" id="Di6-Fw-rd1"/>
@@ -1295,6 +1311,7 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
