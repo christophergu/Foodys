@@ -249,27 +249,31 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        
         self.restaurantResultsDictionary = intermediateDictionary[@"objects"][0];
         
-        self.restaurantMenu = [NSMutableArray new];
-        
-        // instantiating the restaurant menu here
-        for (NSDictionary *section in self.restaurantResultsDictionary[@"menus"][0][@"sections"])
+        if ((int)self.restaurantResultsDictionary[@"has_menu"] == TRUE)
         {
-            for (NSDictionary *subsection in section[@"subsections"])
+            self.restaurantMenu = [NSMutableArray new];
+
+            // instantiating the restaurant menu here
+            for (NSDictionary *section in self.restaurantResultsDictionary[@"menus"][0][@"sections"])
             {
-                for (NSDictionary *foodItem in subsection[@"contents"])
+                for (NSDictionary *subsection in section[@"subsections"])
                 {
-                    if (foodItem[@"name"])
+                    for (NSDictionary *foodItem in subsection[@"contents"])
                     {
-                        NSLog(@"%@",foodItem);
-                        [self.restaurantMenu addObject:foodItem];
+                        if (foodItem[@"name"])
+                        {
+                            NSLog(@"%@",foodItem);
+                            [self.restaurantMenu addObject:foodItem];
+                        }
                     }
                 }
             }
+            [self.myTableView reloadData];
         }
         
-        [self.myTableView reloadData];
         
         int hasHoursCounter = 0;
         
