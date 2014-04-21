@@ -122,37 +122,74 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ResultsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsReuseCellID"];
-    cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
-    cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
     
     NSDictionary *currentRestaurant = self.searchResultsArray[indexPath.row];
-
-    if (!(currentRestaurant[@"venue"][@"lat"] == nil) && !(currentRestaurant[@"venue"][@"long"] == nil))
+    
+    if (self.cameFromAdvancedSearch)
     {
-        double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
-        double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
+        cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"name"];
+        cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"street_address"];
         
-        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
-        MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        
-        float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-        
-        cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+        if (!(currentRestaurant[@"lat"] == nil) && !(currentRestaurant[@"long"] == nil))
+        {
+            double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
+            double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
+            
+            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
+            MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+            
+            float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+            
+            cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+        }
     }
-
+    else
+    {
+        cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
+        cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
+        
+        if (!(currentRestaurant[@"venue"][@"lat"] == nil) && !(currentRestaurant[@"venue"][@"long"] == nil))
+        {
+            double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
+            double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
+            
+            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
+            MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+            
+            float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+            
+            cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+        }
+    }
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString* nameString;
+    NSString* streetAddressString;
+    NSString* localityString;
+    NSString* regionString;
     
-    NSString* streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
-    NSString* localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
-    NSString* regionString = self.searchResultsArray[indexPath.row][@"venue"][@"region"];
-    //        NSString* postalCodeString = self.searchResultsArray[indexPath.row][@"venue"][@"postal_code"];
+    if (self.cameFromAdvancedSearch) {
+        nameString = self.searchResultsArray[indexPath.row][@"name"];
+        streetAddressString = self.searchResultsArray[indexPath.row][@"street_address"];
+        localityString = self.searchResultsArray[indexPath.row][@"locality"];
+        regionString = self.searchResultsArray[indexPath.row][@"region"];
+    }
+    else
+    {
+        nameString = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
+        streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
+        localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
+        regionString = self.searchResultsArray[indexPath.row][@"venue"][@"region"];
+    }
+    
+    NSLog(@"%@",streetAddressString);
     
     NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&street_address=%@&locality=%@&region=%@",
-                                   self.searchResultsArray[indexPath.row][@"venue"][@"name"],
+                                   nameString,
                                    streetAddressString,
                                    localityString,
                                    regionString];
@@ -167,6 +204,7 @@
         NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
         self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
         
+        NSLog(@"%@",self.chosenRestaurantDictionary);
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
 
         }
@@ -186,6 +224,7 @@
     else if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])
     {
         rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+        
     }
 }
 @end

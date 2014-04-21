@@ -120,7 +120,6 @@
     cell.descriptionTextView.text = currentFoodItem[@"description"];
     cell.descriptionTextView.textColor = [UIColor lightGrayColor];
     
-    NSLog(@"%@",currentFoodItem);
     return cell;
 }
 
@@ -256,8 +255,8 @@
         {
             for (NSDictionary *subsection in section[@"subsections"])
             {
-                NSArray *contentsArray = subsection[@"contents"];
-                for (NSDictionary *foodItem in contentsArray) {
+                for (NSDictionary *foodItem in subsection[@"contents"])
+                {
                     if (foodItem[@"name"])
                     {
                         NSLog(@"%@",foodItem);

@@ -155,7 +155,7 @@
                 [venues addObject:result[@"venue"][@"name"]];
             }
         }
-        
+            NSLog(@"wat");
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];
 }

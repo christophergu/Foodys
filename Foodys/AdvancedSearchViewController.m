@@ -121,7 +121,7 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         self.searchResultsArray = intermediateDictionary[@"objects"];
         
-        [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
+        [self performSegueWithIdentifier:@"AdvancedShowMoreResultsSegue" sender:self];
     }];
 }
 
@@ -290,10 +290,11 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"ShowMoreResultsSegue"]) {
+    if ([[segue identifier] isEqualToString:@"AdvancedShowMoreResultsSegue"]) {
         ShowMoreResultsViewController *smrvc = segue.destinationViewController;
         smrvc.searchResultsArray = self.searchResultsArray;
         smrvc.currentLocation = self.currentLocation;
+        smrvc.cameFromAdvancedSearch = 1;
     }
 }
 

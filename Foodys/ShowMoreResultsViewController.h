@@ -14,4 +14,6 @@
 @property (strong, nonatomic) NSArray *searchResultsArray;
 @property (strong, nonatomic) CLLocation* currentLocation;
 
+@property BOOL cameFromAdvancedSearch;
+
 @end

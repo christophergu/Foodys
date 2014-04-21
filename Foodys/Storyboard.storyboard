@@ -171,7 +171,7 @@
                         <outlet property="locationTextField" destination="jm5-U7-XOc" id="NKy-FL-JbW"/>
                         <outlet property="nameTextField" destination="Xfj-O3-nX5" id="VLa-BE-gV7"/>
                         <outlet property="searchButton" destination="wIK-Oo-zj7" id="voN-MH-q40"/>
-                        <segue destination="A1S-Mz-i4t" kind="push" identifier="ShowMoreResultsSegue" id="f1F-GM-mYT"/>
+                        <segue destination="A1S-Mz-i4t" kind="push" identifier="AdvancedShowMoreResultsSegue" id="fdc-o9-LBs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2fm-Xx-fyf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1888,7 +1888,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="l4x-YP-nlR"/>
-        <segue reference="f1F-GM-mYT"/>
+        <segue reference="fdc-o9-LBs"/>
         <segue reference="NWp-EL-yek"/>
     </inferredMetricsTieBreakers>
 </document>
