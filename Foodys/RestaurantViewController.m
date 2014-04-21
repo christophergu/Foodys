@@ -110,6 +110,7 @@
     self.satLabel.alpha = 0.0;
     
     self.menuBoolForButton = 0.0;
+    self.hoursBoolForButton = 0.0;
     
     self.menuUnavailableLabel.alpha = 0.0;
     self.hoursUnavailableLabel.alpha = 0.0;
@@ -224,46 +225,13 @@
 
 - (IBAction)onHoursButtonPressed:(id)sender
 {
-    if (!([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
-        !([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
-        !([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
-        !([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0) &&
-        !([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0) &&
-        !([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0) &&
-        !([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
-    {
-        self.hoursBoolForButton = !self.hoursBoolForButton;
-        
-        if (self.hoursBoolForButton)
-        {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseOut
-                             animations:
-             ^{
-                 self.hoursView.frame = CGRectMake(0, 221, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
-        }
-        else
-        {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseIn
-                             animations:
-             ^{
-                 self.hoursView.frame = CGRectMake(0, 382, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
-        }
-    }
-    else
+    if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
     {
         self.hoursBoolForButton = !self.hoursBoolForButton;
         
@@ -298,8 +266,42 @@
              ];
         }
     }
-    
+    else
+    {
+        self.hoursBoolForButton = !self.hoursBoolForButton;
+        
+        if (self.hoursBoolForButton)
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseOut
+                             animations:
+             ^{
+                 self.hoursView.frame = CGRectMake(0, 221, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:
+             ^{
+                 self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+
     }
+
+}
 
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
 {

@@ -316,7 +316,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="ResultsReuseCellID" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ResultsReuseCellID" rowHeight="53" id="ATO-Re-SRp" customClass="ResultsTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="53"/>
+                                        <rect key="frame" x="0.0" y="86" width="320" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ATO-Re-SRp" id="6UO-7U-s1H">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="52"/>
@@ -1429,12 +1429,11 @@
                         <outlet property="myTableView" destination="NaG-DQ-JPW" id="YBT-na-oqJ"/>
                         <outlet property="rankingLabel" destination="kUh-Fe-S99" id="2FX-Xd-zv0"/>
                         <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="l4x-YP-nlR"/>
-                        <segue destination="cM8-7k-1gT" kind="push" identifier="FavoriteToRestaurantSegue" id="Xgt-CN-5ft"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3D-Pe-SXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1000" y="1705"/>
+            <point key="canvasLocation" x="1000" y="1081"/>
         </scene>
         <!--Friends View Controller-->
         <scene sceneID="YA8-7w-SEe">
@@ -1499,7 +1498,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vMc-m3-C9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1497" y="2375"/>
+            <point key="canvasLocation" x="1497" y="1751"/>
         </scene>
         <!--Navigation Controller - Profile-->
         <scene sceneID="qw1-BT-MFQ">
@@ -1518,7 +1517,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q8W-Cl-6Yl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="474" y="1705"/>
+            <point key="canvasLocation" x="474" y="1081"/>
         </scene>
         <!--Friend Profile View Controller - User's Name Here-->
         <scene sceneID="L38-6m-ids">
@@ -1623,7 +1622,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xOR-rK-Lrf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2030" y="2375"/>
+            <point key="canvasLocation" x="2030" y="1751"/>
         </scene>
         <!--Friends Friends View Controller-->
         <scene sceneID="kfO-PL-uv1">
@@ -1726,7 +1725,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlg-3J-y1z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2434" y="2375"/>
+            <point key="canvasLocation" x="2434" y="1751"/>
         </scene>
         <!--All User Browse View Controller-->
         <scene sceneID="IcI-Ug-aqb">
@@ -1832,7 +1831,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZ5-ta-gXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2030" y="3043"/>
+            <point key="canvasLocation" x="2030" y="2419"/>
         </scene>
     </scenes>
     <resources>
@@ -1845,9 +1844,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mKG-Uw-Vn6"/>
-        <segue reference="NWp-EL-yek"/>
-        <segue reference="ttk-AO-ZX1"/>
         <segue reference="fdc-o9-LBs"/>
+        <segue reference="l4x-YP-nlR"/>
+        <segue reference="ttk-AO-ZX1"/>
+        <segue reference="NWp-EL-yek"/>
     </inferredMetricsTieBreakers>
 </document>
