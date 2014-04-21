@@ -39,6 +39,7 @@
 
 @property (strong, nonatomic) NSMutableArray *friendsToRecommendTo;
 @property (strong, nonatomic) PFObject *recommendation;
+@property (strong, nonatomic) IBOutlet UIButton *getRestaurantInfoButton;
 
 @end
 
@@ -78,19 +79,36 @@
     self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
     if (self.chosenRestaurantDictionary)
     {
-        self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
+        if (self.chosenRestaurantDictionary[@"street_address"])
+        {
+            self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
+        }
+        else
+        {
+            self.subjectTextField.text = [NSString stringWithFormat:@"%@",self.chosenRestaurantDictionary[@"name"]];
+        }
     };
     
     if (self.cameForFriend) {
         [self.recommendToFriendsButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
         self.recommendToFriendsButton.enabled = YES;
         self.recommendToFriendsButton.alpha = 1.0;
-
     }
     else
     {
         self.recommendToFriendsButton.enabled = NO;
         self.recommendToFriendsButton.alpha = 0.0;
+    }
+    
+    if (self.cameFromProfileRecommendations)
+    {
+        self.getRestaurantInfoButton.alpha = 1.0;
+        self.getRestaurantInfoButton.enabled = YES;
+    }
+    else
+    {
+        self.getRestaurantInfoButton.alpha = 0.0;
+        self.getRestaurantInfoButton.enabled = NO;
     }
     
     [self refreshRatingLabel];
@@ -172,20 +190,9 @@
 
 #pragma mark - button methods
 
-- (IBAction)onTelephoneButtonPressed:(id)sender
+- (IBAction)onGetRestaurantInfoButtonPressed:(id)sender
 {
-    NSString *phNo = self.chosenRestaurantDictionary[@"phone"];
-    NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
-    
-    if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
-    {
-        [[UIApplication sharedApplication] openURL:phoneUrl];
-    }
-    else
-    {
-        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [calert show];
-    }
+    [self performSegueWithIdentifier:@"ShareToRestaurantSegue" sender:self];
 }
 
 - (IBAction)onEndEditingAllButtonPressed:(id)sender
@@ -325,5 +332,14 @@
          [self.reviewedRestaurant saveInBackground];
      }];
 };
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShareToRestaurantSegue"])
+    {
+        RestaurantViewController *rvc = segue.destinationViewController;
+        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+    }
+}
 
 @end

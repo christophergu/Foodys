@@ -570,12 +570,12 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Fg-Ra-XLQ">
-                                <rect key="frame" x="9" y="346" width="300" height="1"/>
+                                <rect key="frame" x="9" y="366" width="300" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XZf-yj-Tj8">
-                                <rect key="frame" x="9" y="221" width="155" height="58"/>
+                                <rect key="frame" x="9" y="230" width="155" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Post to News Feed">
@@ -586,7 +586,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Y7I-20-eoQ">
-                                <rect key="frame" x="163" y="222" width="146" height="57"/>
+                                <rect key="frame" x="163" y="231" width="146" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Message a Friend">
@@ -597,7 +597,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xv1-G7-Z0E">
-                                <rect key="frame" x="83" y="279" width="146" height="68"/>
+                                <rect key="frame" x="83" y="288" width="146" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Favorite">
@@ -970,25 +970,8 @@
                                     <action selector="onDoneButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="lOG-iG-bKC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQ6-p6-a21">
-                                <rect key="frame" x="20" y="417" width="98" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Get Directions">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5QA-qf-2aU">
-                                <rect key="frame" x="20" y="441" width="134" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Call this Restaurant">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onTelephoneButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="XGl-b3-hEV"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="JES-f7-nSb">
-                                <rect key="frame" x="223" y="417" width="84" height="54"/>
+                                <rect key="frame" x="63" y="437" width="194" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -1038,6 +1021,17 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDQ-0h-i8M">
+                                <rect key="frame" x="113" y="399" width="95" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="Get More Info">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onGetRestaurantInfoButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="X6k-wi-tj6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1056,6 +1050,7 @@
                         <outlet property="cumulativeRestaurantRatingLabel" destination="87X-Wu-tBf" id="pKv-rv-hA3"/>
                         <outlet property="cumulativeRestaurantRatingsTextView" destination="QeA-gX-cMH" id="r1Y-RI-Egd"/>
                         <outlet property="dateLabel" destination="tNv-jP-LXl" id="7SU-A9-fCc"/>
+                        <outlet property="getRestaurantInfoButton" destination="fDQ-0h-i8M" id="DP8-px-mMi"/>
                         <outlet property="mySlider" destination="i5P-p5-jBy" id="0nR-Ng-VqG"/>
                         <outlet property="myTableView" destination="8r9-Pn-wsS" id="RZl-Ay-ZlN"/>
                         <outlet property="myTextView" destination="19n-sR-eoB" id="cw3-ao-3eX"/>
@@ -1064,6 +1059,7 @@
                         <outlet property="subjectTextField" destination="0pA-57-EFj" id="x5r-P1-IFc"/>
                         <outlet property="wouldGoAgainButton" destination="rfr-uR-CcL" id="1lJ-7Q-K4T"/>
                         <outlet property="wouldGoAgainYesNoLabel" destination="jEN-QA-kOj" id="yOh-Tb-hN1"/>
+                        <segue destination="cM8-7k-1gT" kind="push" identifier="ShareToRestaurantSegue" id="ttk-AO-ZX1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tvP-yR-Brr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1299,7 +1295,6 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1369,6 +1364,18 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fin-AA-FyW">
                                 <rect key="frame" x="0.0" y="178" width="324" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Usf-nR-kv3">
+                                        <rect key="frame" x="278" y="3" width="40" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Edit">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onEditButtonPressed:" destination="Bg0-Kt-1wg" eventType="touchUpInside" id="Jdb-8H-6XA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wwZ-k4-ADx">
@@ -1817,9 +1824,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Xgt-CN-5ft"/>
-        <segue reference="l4x-YP-nlR"/>
         <segue reference="NWp-EL-yek"/>
+        <segue reference="ttk-AO-ZX1"/>
+        <segue reference="l4x-YP-nlR"/>
         <segue reference="fdc-o9-LBs"/>
     </inferredMetricsTieBreakers>
 </document>

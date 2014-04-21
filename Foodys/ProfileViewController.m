@@ -32,6 +32,8 @@
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
 
+@property BOOL isEditModeEnabled;
+
 @end
 
 @implementation ProfileViewController
@@ -89,7 +91,41 @@
     [self countReviewsAndRecommendations];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
+    self.isEditModeEnabled = NO;
 }
+
+#pragma mark - edit methods / table view edit methods
+
+- (IBAction)onEditButtonPressed:(UIButton *)sender
+{
+    self.isEditModeEnabled = !self.isEditModeEnabled;
+    
+    if (self.isEditModeEnabled) {
+        [sender setTitle:@"Done" forState:UIControlStateNormal];
+        [self.myTableView setEditing:YES animated:YES];
+        [self.myTableView deleteRowsAtIndexPaths:self.myTableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else
+    {
+        [sender setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.myTableView setEditing:NO animated:YES];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [self.favoritesArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+//    UITableViewCell *cellToMove = [items objectAtIndex:sourceIndexPath.row];
+//    [items removeObjectAtIndex:sourceIndexPath.row];
+//    [items insertObject:cellToMove atIndex:destinationIndexPath.row];
+//}
 
 #pragma mark - populate view methods
 

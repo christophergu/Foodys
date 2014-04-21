@@ -11,5 +11,7 @@
 @interface ShareViewController : UIViewController
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
 @property BOOL cameForFriend;
+@property BOOL cameToPost;
+@property BOOL cameFromProfileRecommendations;
 
 @end

@@ -359,6 +359,7 @@
     if ([[segue identifier] isEqualToString:@"SharePostViewControllerSegue"]) {
         ShareViewController *svc = segue.destinationViewController;
         svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+        svc.cameToPost = 1;
     }
     else if ([[segue identifier] isEqualToString:@"ShareFriendViewControllerSegue"]) {
         ShareViewController *svc = segue.destinationViewController;
