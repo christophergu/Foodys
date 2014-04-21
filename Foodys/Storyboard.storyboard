@@ -171,6 +171,7 @@
                         <outlet property="nameTextField" destination="Xfj-O3-nX5" id="VLa-BE-gV7"/>
                         <outlet property="searchButton" destination="wIK-Oo-zj7" id="voN-MH-q40"/>
                         <segue destination="A1S-Mz-i4t" kind="push" identifier="AdvancedShowMoreResultsSegue" id="fdc-o9-LBs"/>
+                        <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="YEd-Yr-MJN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2fm-Xx-fyf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -315,7 +316,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="ResultsReuseCellID" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ResultsReuseCellID" rowHeight="53" id="ATO-Re-SRp" customClass="ResultsTableViewCell">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="53"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ATO-Re-SRp" id="6UO-7U-s1H">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="52"/>
@@ -391,6 +392,7 @@
                         <outlet property="mySegmentedControl" destination="YYZ-Z9-cwG" id="kAp-IY-EhL"/>
                         <outlet property="myTableView" destination="0XK-f8-cbj" id="6fi-Tm-p60"/>
                         <segue destination="cM8-7k-1gT" kind="push" identifier="RestaurantViewControllerSegue" id="Htr-aG-CF1"/>
+                        <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="Iy4-uV-JB7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBz-8A-0db" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -822,6 +824,7 @@
                         <outlet property="websiteURL" destination="eEs-4f-xkM" id="XHK-UW-him"/>
                         <outlet property="wedLabel" destination="ZmJ-fh-3VE" id="UiK-LD-llC"/>
                         <outlet property="wednesdayHoursLabel" destination="xb0-UZ-18x" id="OpH-Fh-gVc"/>
+                        <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="kh1-Jg-Rho"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gi8-aI-6y6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1076,6 +1079,7 @@
                         <outlet property="wouldGoAgainButton" destination="rfr-uR-CcL" id="1lJ-7Q-K4T"/>
                         <outlet property="wouldGoAgainYesNoLabel" destination="jEN-QA-kOj" id="yOh-Tb-hN1"/>
                         <segue destination="cM8-7k-1gT" kind="push" identifier="ShareToRestaurantSegue" id="ttk-AO-ZX1"/>
+                        <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="mKG-Uw-Vn6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tvP-yR-Brr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1841,9 +1845,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="mKG-Uw-Vn6"/>
         <segue reference="NWp-EL-yek"/>
         <segue reference="ttk-AO-ZX1"/>
-        <segue reference="l4x-YP-nlR"/>
         <segue reference="fdc-o9-LBs"/>
     </inferredMetricsTieBreakers>
 </document>

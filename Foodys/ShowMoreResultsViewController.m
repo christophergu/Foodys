@@ -10,6 +10,7 @@
 #import "RestaurantViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "ResultsTableViewCell.h"
+#import <Parse/Parse.h>
 
 @interface ShowMoreResultsViewController ()<UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
@@ -27,6 +28,14 @@
     [super viewDidLoad];
     self.myMapView.alpha = 0.0;
     [self mapLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
 }
 
 #pragma mark - segmented control methods

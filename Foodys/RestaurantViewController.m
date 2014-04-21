@@ -116,6 +116,14 @@
 
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
+}
+
 #pragma mark - tableview delegate methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -114,6 +114,14 @@
     [self refreshRatingLabel];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
+}
+
 #pragma mark - refreshing the rating label methods
 
 -(void)refreshRatingLabel

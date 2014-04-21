@@ -85,6 +85,10 @@
     {
         self.favoriteTextField.text = self.currentUser[@"currentFavorite"];
     }
+    else
+    {
+        self.favoriteTextField.text = @"";
+    }
     
     [self retrieveFavorites];
     
@@ -356,7 +360,9 @@
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
     [PFUser logOut];
+    
     [self.tabBarController setSelectedIndex:0];
+//    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
