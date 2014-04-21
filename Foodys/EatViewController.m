@@ -7,6 +7,7 @@
 //
 
 #import "EatViewController.h"
+#import "RestaurantViewController.h"
 #import <Parse/Parse.h>
 
 @interface EatViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -17,6 +18,7 @@
 
 @property (strong, nonatomic) NSMutableArray *recommendationsArray;
 @property (strong, nonatomic) IBOutlet UITableView *myRecommendationsTableView;
+@property (strong, nonatomic) NSDictionary *chosenRestaurantBookmarkDictionary;
 
 @end
 
@@ -123,6 +125,13 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.chosenRestaurantBookmarkDictionary = self.bookmarksArray[indexPath.row];
+    
+    [self performSegueWithIdentifier:@"BookmarkToRestaurantSegue" sender:self];
+}
+
 -(IBAction) segmentedControlIndexChanged
 {
     switch (self.mySegmentedControl.selectedSegmentIndex)
@@ -134,6 +143,15 @@
             [self.myTableView reloadData];
         default:
             break;
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"BookmarkToRestaurantSegue"])
+    {
+        RestaurantViewController *rvc = segue.destinationViewController;
+        rvc.chosenRestaurantDictionary = self.chosenRestaurantBookmarkDictionary;
     }
 }
 

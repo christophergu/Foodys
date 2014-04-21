@@ -83,12 +83,10 @@
         self.address.alpha = 0.0;
     }
 
-
-
     self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     self.myAtmosphereImageView.clipsToBounds = YES;
 
-//    [self loadFlickrImageForAtmosphere];
+    [self loadFlickrImageForAtmosphere];
     [self getVenueDetail];
     
     self.sunLabel.alpha = 0.0;
@@ -114,7 +112,8 @@
     RestaurantMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCellReuseID"];
     NSDictionary *currentFoodItem = self.restaurantMenu[indexPath.row];
     cell.nameLabel.text = currentFoodItem[@"name"];
-    if (currentFoodItem[@"price"]) {
+    if (currentFoodItem[@"price"])
+    {
         cell.priceLabel.text = [NSString stringWithFormat:@"$%@",currentFoodItem[@"price"]];
     }
     cell.descriptionTextView.text = currentFoodItem[@"description"];
@@ -134,13 +133,13 @@
         [UIView animateWithDuration:0.5
                               delay:0.0
                             options: UIViewAnimationOptionCurveEaseOut
-                         animations:^
-                            {
-                             self.menuView.frame = CGRectMake(0, 64, 320, 514);
-                            }
-                         completion:^(BOOL finished)
-                            {
-                            }
+                         animations:
+                        ^{
+                            self.menuView.frame = CGRectMake(0, 64, 320, 514);
+                        }
+                         completion:
+                        ^(BOOL finished){
+                        }
          ];
     }
     else
@@ -148,11 +147,13 @@
         [UIView animateWithDuration:0.5
                               delay:0.0
                             options: UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-                             self.menuView.frame = CGRectMake(0, 422, 320, 514);
-                         }
-                         completion:^(BOOL finished){
-                         }
+                         animations:
+                        ^{
+                            self.menuView.frame = CGRectMake(0, 422, 320, 514);
+                        }
+                         completion:
+                        ^(BOOL finished){
+                        }
          ];
     }
 }
@@ -166,13 +167,13 @@
         [UIView animateWithDuration:0.5
                               delay:0.0
                             options: UIViewAnimationOptionCurveEaseOut
-                         animations:^
-         {
-             self.hoursView.frame = CGRectMake(0, 221, 320, 514);
-         }
-                         completion:^(BOOL finished)
-         {
-         }
+                         animations:
+                        ^{
+                            self.hoursView.frame = CGRectMake(0, 221, 320, 514);
+                        }
+                         completion:
+                        ^(BOOL finished){
+                        }
          ];
     }
     else
@@ -180,11 +181,13 @@
         [UIView animateWithDuration:0.5
                               delay:0.0
                             options: UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-                             self.hoursView.frame = CGRectMake(0, 382, 320, 514);
-                         }
-                         completion:^(BOOL finished){
-                         }
+                         animations:
+                        ^{
+                            self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+                        }
+                         completion:
+                        ^(BOOL finished){
+                        }
          ];
     }
 }
@@ -321,42 +324,42 @@
 
 #pragma mark - flickr method
 
-//- (void)loadFlickrImageForAtmosphere
-//{
-//    NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
-//    
-//    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
-//                                    apiKey,
-//                                    self.chosenRestaurantDictionary[@"cuisine"],
-//                                    self.chosenRestaurantDictionary[@"cuisine"]];
-//    NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
-//    NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
-//    [NSURLConnection sendAsynchronousRequest:flickrSearchRequest queue:[NSOperationQueue mainQueue]
-//                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-//     {
-//         NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//         NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
-//         
-//         if (flickrPhotosArray) {
-//             NSDictionary *flickrElement = flickrPhotosArray.firstObject;
-//             NSString *flickrURLstring = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@.jpg",
-//                                          [flickrElement[@"farm"] stringValue],
-//                                          flickrElement[@"server"],
-//                                          flickrElement[@"id"],
-//                                          flickrElement[@"secret"]];
-//             NSURL * flickrImageURL = [NSURL URLWithString:flickrURLstring];
-//             
-//             NSData * imageData = [[NSData alloc] initWithContentsOfURL: flickrImageURL];
-//             
-//             self.myAtmosphereImageView.image = [UIImage imageWithData: imageData];
-//         }
-//         else
-//         {
-//             // do something else
-//         }
-//         
-//     }];
-//}
+- (void)loadFlickrImageForAtmosphere
+{
+    NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
+    
+    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
+                                    apiKey,
+                                    self.chosenRestaurantDictionary[@"cuisine"],
+                                    self.chosenRestaurantDictionary[@"cuisine"]];
+    NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
+    NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
+    [NSURLConnection sendAsynchronousRequest:flickrSearchRequest queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+     {
+         NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+         NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
+         
+         if (flickrPhotosArray) {
+             NSDictionary *flickrElement = flickrPhotosArray.firstObject;
+             NSString *flickrURLstring = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@.jpg",
+                                          [flickrElement[@"farm"] stringValue],
+                                          flickrElement[@"server"],
+                                          flickrElement[@"id"],
+                                          flickrElement[@"secret"]];
+             NSURL * flickrImageURL = [NSURL URLWithString:flickrURLstring];
+             
+             NSData * imageData = [[NSData alloc] initWithContentsOfURL: flickrImageURL];
+             
+             self.myAtmosphereImageView.image = [UIImage imageWithData: imageData];
+         }
+         else
+         {
+             // do something else
+         }
+         
+     }];
+}
 
 #pragma mark - segue methods
 

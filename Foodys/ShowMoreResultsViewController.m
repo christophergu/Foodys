@@ -49,18 +49,38 @@
 {
     for (NSDictionary *restaurant in self.searchResultsArray) {
         
-        NSString *restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@ %@",
-                                       restaurant[@"venue"][@"street_address"],
-                                       restaurant[@"venue"][@"locality"],
-                                       restaurant[@"venue"][@"region"],
-                                       restaurant[@"venue"][@"postal_code"]];
+        NSString *restaurantAddress;
+        
+        if (self.cameFromAdvancedSearch)
+        {
+            restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@ %@",
+                                 restaurant[@"street_address"],
+                                 restaurant[@"locality"],
+                                 restaurant[@"region"],
+                                 restaurant[@"postal_code"]];
+        }
+        else
+        {
+            restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@ %@",
+                                  restaurant[@"venue"][@"street_address"],
+                                  restaurant[@"venue"][@"locality"],
+                                  restaurant[@"venue"][@"region"],
+                                  restaurant[@"venue"][@"postal_code"]];
+        }
         
         CLGeocoder *geocoder = [CLGeocoder new];
         [geocoder geocodeAddressString:restaurantAddress completionHandler:^(NSArray *placemarks, NSError *error) {
             for (CLPlacemark* place in placemarks) {
                 MKPointAnnotation *annotation = [MKPointAnnotation new];
                 annotation.coordinate = place.location.coordinate;
-                annotation.title = restaurant[@"venue"][@"name"];
+                if (self.cameFromAdvancedSearch)
+                {
+                    annotation.title = restaurant[@"name"];
+                }
+                else
+                {
+                    annotation.title = restaurant[@"venue"][@"name"];
+                }
                 annotation.subtitle = restaurantAddress;
                 
                 [self.myMapView addAnnotation:annotation];
@@ -88,7 +108,7 @@
     NSString* regionAndPostalCodeString = [chosenPinStringArray objectAtIndex:2];
     
     NSArray* chosenPinStringArrayTwo = [regionAndPostalCodeString componentsSeparatedByString: @" "];
-    //    NSString* postalCodeString = [[chosenPinStringArrayTwo objectAtIndex: 0]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
+    NSString* postalCodeString = [[chosenPinStringArrayTwo objectAtIndex: 0]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
     NSString* regionString = [[chosenPinStringArrayTwo objectAtIndex: 1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
     
     
@@ -106,6 +126,17 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
         self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
+        
+        if (!self.chosenRestaurantDictionary)
+        {
+            self.chosenRestaurantDictionary = @{
+                                                @"name": view.annotation.title,
+                                                @"street_address": streetAddressString,
+                                                @"locality": localityString,
+                                                @"region": regionString,
+                                                @"postal_code": postalCodeString
+                                                };
+        }
         
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
     }
@@ -168,29 +199,31 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString* nameString;
-    NSString* streetAddressString;
+    NSString* postalCodeString;
     NSString* localityString;
     NSString* regionString;
+    NSString* streetAddressString;
     
     if (self.cameFromAdvancedSearch) {
         nameString = self.searchResultsArray[indexPath.row][@"name"];
-        streetAddressString = self.searchResultsArray[indexPath.row][@"street_address"];
+        postalCodeString = self.searchResultsArray[indexPath.row][@"postal_code"];
         localityString = self.searchResultsArray[indexPath.row][@"locality"];
         regionString = self.searchResultsArray[indexPath.row][@"region"];
+        streetAddressString = self.searchResultsArray[indexPath.row][@"street_address"];
     }
     else
     {
         nameString = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
-        streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
+        postalCodeString = self.searchResultsArray[indexPath.row][@"venue"][@"postal_code"];
         localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
         regionString = self.searchResultsArray[indexPath.row][@"venue"][@"region"];
+        streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
+
     }
     
-    NSLog(@"%@",streetAddressString);
-    
-    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&street_address=%@&locality=%@&region=%@",
+    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@&region=%@",
                                    nameString,
-                                   streetAddressString,
+                                   postalCodeString,
                                    localityString,
                                    regionString];
     venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
@@ -203,6 +236,17 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
         self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
+        
+        if (!self.chosenRestaurantDictionary)
+        {
+            self.chosenRestaurantDictionary = @{
+                                @"name": nameString,
+                                @"street_address": streetAddressString,
+                                @"locality": localityString,
+                                @"region": regionString,
+                                @"postal_code": postalCodeString
+                                };
+        }
         
         NSLog(@"%@",self.chosenRestaurantDictionary);
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];

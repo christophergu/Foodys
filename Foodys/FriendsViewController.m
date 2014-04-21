@@ -40,10 +40,8 @@
 
     PFUser *currentFriendUser = self.currentUser[@"friends"][indexPath.row];
     self.currentFriendUser = (PFUser *)[currentFriendUser fetchIfNeeded];
-     
-//     fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-//        NSLog(@"%@",currentFriendUser);
-//    }];
+    
+    // fetchIfNeeded
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -59,17 +57,9 @@
 - (void)loadUsers
 {
     PFQuery *query = [PFUser query];
-    
-//    for (PFUser *friend in self.currentUser[@"friends"])
-//    {
-//        [query whereKey:@"username" notEqualTo:friend[@"username"]];
-//        [query whereKey:@"username" notEqualTo:self.currentUser[@"username"]];
-//    }
-
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          self.userArray = (id)objects;
-         
      }];
 }
 

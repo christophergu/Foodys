@@ -47,30 +47,10 @@
     // locu api: aea05d0dffb636cb9aad86f6482e51035d79e84e
     // locu widget api: 71747ca57e325a86544c9edc0d96a9c5b95026f7
     
-//    peruvian,
-//    mediterranean,
-//    moroccan,
-//    persian,
-//    cambodian,
-//    "latin american",
-//    caribbean,
-//    vietnamese,
-//    "dim sum",
-//    german,
-//    "steakhouse / grill",
-//    brazilian,
-//    venezuelan,
-//    taiwanese,
-//    "middle eastern",
-//    vegan,
-//    afghan,
-//    cuban,
-//    tapas,
-//    malaysian,
-//    british,
-//    african
+    self.pickerArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi", @"taco"];
     
-    self.pickerArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi"];
+    // default
+    self.stringForSelectedPickerRow = self.pickerArray[0];
 }
 
 #pragma mark - check if there is a current user method
@@ -155,19 +135,16 @@
                 [venues addObject:result[@"venue"][@"name"]];
             }
         }
-            NSLog(@"wat");
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];
 }
 
 #pragma mark - button methods
 
-
 - (IBAction)onSearchButtonPressed:(id)sender
 {
     [self foodSearch];
 }
-
 
 #pragma mark - segue methods
 
@@ -182,7 +159,7 @@
     {
         ShowMoreResultsViewController *smrvc = segue.destinationViewController;
         smrvc.searchResultsArray = self.searchResultsArray;
-        smrvc.currentLocation = self.locationManager.location;
+        smrvc.currentLocation = self.locationManager.location;        
     }
     else if ([[segue identifier] isEqualToString:@"AdvancedSearchSegue"])
     {

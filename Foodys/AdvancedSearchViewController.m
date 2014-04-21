@@ -29,8 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -41,6 +39,8 @@
         [self performSegueWithIdentifier:@"LogInSegue" sender:self];
     }
 }
+
+#pragma mark - food search helper methods
 
 - (void)foodSearch
 {
@@ -109,9 +109,6 @@
         }
         [itemSearchString appendString:locationTextForSearch];
     }
-
-    
-    NSLog(@"%@",itemSearchString);
     
     NSURL *url = [NSURL URLWithString: itemSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -238,42 +235,14 @@
 {
     [self.cuisineTextField endEditing:YES];
     [self.nameTextField resignFirstResponder];
+    [self.locationTextField endEditing:YES];
 }
 
 #pragma mark - button methods
 
-
 - (IBAction)onSearchButtonPressed:(id)sender
 {
     [self foodSearch];
-    
-    
-    //    if (self.resultsButton.alpha == 0.0)
-    //    {
-    //        [UIView animateWithDuration:0.5
-    //                         animations:^{
-    //                             self.nameTextField.alpha = 0.0;
-    //                             self.cuisineTextField.alpha = 0.0;
-    //                             self.locationTextField.alpha = 0.0;
-    //                             self.resultsButton.alpha = 1.0;
-    //                             self.foodysSuggestionButton.alpha = 1.0;
-    //                             self.allowLocationButton.alpha = 0.0;
-    //                         } completion:^(BOOL finished) {
-    //                             [self removeHighlightingOnTextFields];
-    //                         }];
-    //    }
-    //    else if (self.resultsButton.alpha == 1.0)
-    //    {
-    //        [UIView animateWithDuration:0.5
-    //                         animations:^{
-    //                             self.resultsButton.alpha = 0.0;
-    //                             self.foodysSuggestionButton.alpha = 0.0;
-    //                             self.nameTextField.alpha = 1.0;
-    //                             self.cuisineTextField.alpha = 1.0;
-    //                             self.locationTextField.alpha = 1.0;
-    //                             self.allowLocationButton.alpha = 1.0;
-    //                         }];
-    //    }
 }
 
 -(void)removeHighlightingOnTextFields
@@ -290,7 +259,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"AdvancedShowMoreResultsSegue"]) {
+    if ([[segue identifier] isEqualToString:@"AdvancedShowMoreResultsSegue"])
+    {
         ShowMoreResultsViewController *smrvc = segue.destinationViewController;
         smrvc.searchResultsArray = self.searchResultsArray;
         smrvc.currentLocation = self.currentLocation;

@@ -210,7 +210,7 @@
                                 <rect key="frame" x="85" y="210" width="150" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7q6-dC-4HH">
                                 <rect key="frame" x="139" y="286" width="43" height="30"/>
@@ -257,7 +257,7 @@
                                 <rect key="frame" x="85" y="210" width="150" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ndA-bU-UUV">
                                 <rect key="frame" x="85" y="248" width="150" height="30"/>
@@ -1327,6 +1327,7 @@
                     <connections>
                         <outlet property="mySegmentedControl" destination="Ova-uf-ZiZ" id="9D2-BC-Hbg"/>
                         <outlet property="myTableView" destination="13f-m7-BIs" id="AfG-8Q-BQz"/>
+                        <segue destination="cM8-7k-1gT" kind="push" identifier="BookmarkToRestaurantSegue" id="eIA-tT-dek"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8oU-6J-Gfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1887,6 +1888,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="eIA-tT-dek"/>
         <segue reference="l4x-YP-nlR"/>
         <segue reference="fdc-o9-LBs"/>
         <segue reference="NWp-EL-yek"/>
