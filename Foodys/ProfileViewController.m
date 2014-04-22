@@ -259,7 +259,12 @@
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-        NSLog(@"hi");
+//        self.chosenRestaurantRecommendationDictionary = self.recommendationsArray[indexPath.row][@"restaurantDictionary"];
+//        
+//        
+//        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
+//        
+//        
     }
 
     
