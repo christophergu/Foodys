@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43A04C13190566000078E5D9 /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A04C12190566000078E5D9 /* NewsTableViewCell.m */; };
 		43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */; };
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
 		43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E4130419003E2A008D7431 /* RecommendViewController.m */; };
@@ -66,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		43A04C11190566000078E5D9 /* NewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
+		43A04C12190566000078E5D9 /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsTableViewCell.h; sourceTree = "<group>"; };
 		43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewCell.m; sourceTree = "<group>"; };
 		43E412FD18FF397D008D7431 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
@@ -244,12 +247,14 @@
 				DFF936FD19043BBD00843509 /* WebViewController.m */,
 				DF14E30E18FEDD6800E4DDCF /* ShareViewController.h */,
 				DF14E30F18FEDD6800E4DDCF /* ShareViewController.m */,
-				43E412FD18FF397D008D7431 /* NewsViewController.h */,
-				43E412FE18FF397D008D7431 /* NewsViewController.m */,
-				DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */,
-				DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */,
 				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
 				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
+				43E412FD18FF397D008D7431 /* NewsViewController.h */,
+				43E412FE18FF397D008D7431 /* NewsViewController.m */,
+				43A04C11190566000078E5D9 /* NewsTableViewCell.h */,
+				43A04C12190566000078E5D9 /* NewsTableViewCell.m */,
+				DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */,
+				DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */,
 				DF4DB8A418FC508800C225EC /* ProfileViewController.h */,
 				DF4DB8A518FC508800C225EC /* ProfileViewController.m */,
 				DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */,
@@ -419,6 +424,7 @@
 				DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */,
 				DFF936FE19043BBD00843509 /* WebViewController.m in Sources */,
 				43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */,
+				43A04C13190566000078E5D9 /* NewsTableViewCell.m in Sources */,
 				DF14E31018FEDD6800E4DDCF /* ShareViewController.m in Sources */,
 				DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */,
 				DF0A6C2C18FF5FE90064DA6B /* NewsDetailViewController.m in Sources */,

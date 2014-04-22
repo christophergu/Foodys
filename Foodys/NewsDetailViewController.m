@@ -12,6 +12,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *subjectTextField;
+@property (strong, nonatomic) IBOutlet UILabel *yesNoLabel;
+@property (strong, nonatomic) IBOutlet UILabel *averageRating;
+@property (strong, nonatomic) IBOutlet UILabel *restaurantTitle;
 
 @end
 
@@ -32,8 +35,26 @@
     NSString *postString = [dateFormat stringFromDate:postDate];
     
     self.dateLabel.text = [NSString stringWithFormat:@"%@",postString];
-    self.subjectTextField.text = self.currentPost[@"title"];
+    self.restaurantTitle.text = self.currentPost[@"title"];
     self.myTextView.text = self.currentPost[@"body"];
+    self.yesNoLabel.text = self.currentPost[@"wouldGoAgain"];
+    self.averageRating.text = [NSString stringWithFormat:@"%@%%",self.currentPost[@"rating"]];//[NSNumber numberWithInt:@"%i,rating"];
+    
+    
+    NSLog(@"%@",self.currentPost[@"rating"]);
+    
+    if ([self.yesNoLabel.text isEqualToString:@"YES"])
+    {
+//        self.yesNoLabel.text = [NSString stringWithFormat:@"YES"];
+        self.yesNoLabel.textColor = [UIColor greenColor];
+    }
+    else if ([self.yesNoLabel.text isEqualToString:@"NO"])
+    {
+        self.yesNoLabel.textColor = [UIColor redColor];
+    }
+    
 }
+
+
 
 @end

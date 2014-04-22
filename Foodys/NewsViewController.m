@@ -9,8 +9,9 @@
 #import "NewsViewController.h"
 #import "NewsDetailViewController.h"
 #import <Parse/Parse.h>
+#import "NewsTableViewCell.h"
 
-@interface NewsViewController () <UITableViewDataSource, UITabBarDelegate>
+@interface NewsViewController () <UITableViewDataSource, UITabBarDelegate, UIImagePickerControllerDelegate>
 @property (strong,nonatomic) PFObject* currentPost;
 @property (strong,nonatomic) PFUser* currentUser;
 @property (strong,nonatomic) NSArray* currentUserPostsArray;
@@ -68,12 +69,37 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellReuseID"];
+    NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellReuseID"];
     
     self.currentPost = self.currentUserPostsArray[indexPath.row];
     
-    cell.textLabel.text = self.currentPost[@"title"];
+    cell.title.text = self.currentPost[@"title"];
     
+    cell.recommended.text = self.currentPost[@"wouldGoAgain"];
+    
+   if ([cell.recommended.text isEqualToString:@"YES"])
+    {
+        cell.recommended.textColor = [UIColor greenColor];
+    }
+    else if ([cell.recommended.text isEqualToString:@"NO"])
+    {
+        cell.recommended.textColor = [UIColor redColor];
+    }
+    
+    cell.content.text = self.currentPost[@"body"];
+    
+//    cell.avatarImageView = self.currentPost[@"avatar"];
+    
+//    cell.avatarImageView.image = [UIImage imageNamed:@"avatar"];
+    
+    PFFile *userImageFile = self.currentPost[@"avatar"];
+    [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+        if (!error) {
+            cell.avatarImageView.image = [UIImage imageWithData:imageData];
+        }
+    }];
+    
+
     return cell;
 }
 
