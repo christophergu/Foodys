@@ -38,7 +38,7 @@
 @property (strong, nonatomic) PFObject *reviewedRestaurant;
 
 @property (strong, nonatomic) NSMutableArray *friendsToRecommendTo;
-@property (strong, nonatomic) PFObject *recommendation;
+@property (strong, nonatomic) IBOutlet UIButton *getRestaurantInfoButton;
 
 @end
 
@@ -78,14 +78,20 @@
     self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
     if (self.chosenRestaurantDictionary)
     {
-        self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
+        if (self.chosenRestaurantDictionary[@"street_address"] && ![self.chosenRestaurantDictionary[@"region"] isEqualToString:@"_"])
+        {
+            self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
+        }
+        else
+        {
+            self.subjectTextField.text = [NSString stringWithFormat:@"%@",self.chosenRestaurantDictionary[@"name"]];
+        }
     };
     
     if (self.cameForFriend) {
         [self.recommendToFriendsButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
         self.recommendToFriendsButton.enabled = YES;
         self.recommendToFriendsButton.alpha = 1.0;
-
     }
     else
     {
@@ -93,7 +99,26 @@
         self.recommendToFriendsButton.alpha = 0.0;
     }
     
+    if (self.cameFromProfileRecommendations)
+    {
+        self.getRestaurantInfoButton.alpha = 1.0;
+        self.getRestaurantInfoButton.enabled = YES;
+    }
+    else
+    {
+        self.getRestaurantInfoButton.alpha = 0.0;
+        self.getRestaurantInfoButton.enabled = NO;
+    }
+    
     [self refreshRatingLabel];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
 }
 
 #pragma mark - refreshing the rating label methods
@@ -113,14 +138,12 @@
     {
         self.cumulativeRestaurantRatingLabel.text = [NSString stringWithFormat:@"%@%%",self.reviewedRestaurant[@"rating"]];
     }
-    NSLog(@"rating %@",self.reviewedRestaurant[@"rating"]);
-    NSLog(@"label %@",self.cumulativeRestaurantRatingLabel.text);
+    
     [self cumulativeRestaurantRatingsLabelSetUp];
 }
 
 -(void)cumulativeRestaurantRatingsLabelSetUp
 {
-    NSLog(@"length %lu",(unsigned long)self.cumulativeRestaurantRatingLabel.text.length);
     // the blank text length is 6 by default, 7 with a percent sign
     if (self.cumulativeRestaurantRatingLabel.text.length == 0)
     {
@@ -172,20 +195,9 @@
 
 #pragma mark - button methods
 
-- (IBAction)onTelephoneButtonPressed:(id)sender
+- (IBAction)onGetRestaurantInfoButtonPressed:(id)sender
 {
-    NSString *phNo = self.chosenRestaurantDictionary[@"phone"];
-    NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
-    
-    if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
-    {
-        [[UIApplication sharedApplication] openURL:phoneUrl];
-    }
-    else
-    {
-        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [calert show];
-    }
+    [self performSegueWithIdentifier:@"ShareToRestaurantSegue" sender:self];
 }
 
 - (IBAction)onEndEditingAllButtonPressed:(id)sender
@@ -257,12 +269,16 @@
     
     if (self.cameForFriend)
     {
-        self.recommendation[@"name"]=self.chosenRestaurantDictionary[@"name"];
-        self.recommendation[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
-        
-//        // loop through friends to see if they should have recommendations added
-//        [self.currentUser addUniqueObject:self.recommendation forKey:@"recommendations"];
-//        [self.currentUser saveInBackground];
+        self.recommendation[@"name"] = self.chosenRestaurantDictionary[@"name"];
+        self.recommendation[@"author"] = self.currentUser[@"username"];
+        self.recommendation[@"authorObjectId"] = self.currentUser.objectId;
+        self.recommendation[@"date"] = [formatter dateFromString:self.dateLabel.text];
+        self.recommendation[@"title"] = self.subjectTextField.text;
+        self.recommendation[@"body"] = self.myTextView.text;
+        int rating = [self.sliderScoreLabel.text integerValue];
+        self.recommendation[@"rating"] = @(rating);
+        self.recommendation[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
+        self.recommendation[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
         
         [self.recommendation saveInBackground];
     }
@@ -301,7 +317,6 @@
          
          if (self.cumulativeRestaurantRatingLabel.text.length == 0)
          {
-             NSLog(@"cumulative rating is nil");
              if (self.reviewedRestaurant[@"ratingCounter"] == nil) {
                  self.reviewedRestaurant[@"ratingCounter"] = @(1);
                  self.reviewedRestaurant[@"rating"] = @(self.sliderIntValue);
@@ -314,10 +329,6 @@
              self.reviewedRestaurant[@"ratingCounter"] = @(addingToTheRatingCounter);
              
              self.averagedRatingHolder = [self.cumulativeRestaurantRatingLabel.text integerValue];
-             
-             NSLog(@"average rating holder %d",self.averagedRatingHolder);
-             NSLog(@"slider int value %d",self.sliderIntValue);
-             
              self.reviewedRestaurant[@"rating"] = @((self.averagedRatingHolder*([self.reviewedRestaurant[@"ratingCounter"] intValue]-1) + self.sliderIntValue)/[self.reviewedRestaurant[@"ratingCounter"] intValue]);
          }
          
@@ -325,5 +336,14 @@
          [self.reviewedRestaurant saveInBackground];
      }];
 };
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShareToRestaurantSegue"])
+    {
+        RestaurantViewController *rvc = segue.destinationViewController;
+        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+    }
+}
 
 @end

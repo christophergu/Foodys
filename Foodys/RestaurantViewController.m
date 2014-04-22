@@ -40,6 +40,9 @@
 @property (strong, nonatomic) IBOutlet UIView *hoursView;
 @property BOOL hoursBoolForButton;
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) IBOutlet UIButton *saveToProfileButton;
+@property (strong, nonatomic) IBOutlet UILabel *menuUnavailableLabel;
+@property (strong, nonatomic) IBOutlet UILabel *hoursUnavailableLabel;
 
 @end
 
@@ -71,7 +74,7 @@
         self.websiteURL.alpha = 0.0;
     }
     
-    if (!(self.chosenRestaurantDictionary[@"street_address"] == nil)) {
+    if (self.chosenRestaurantDictionary[@"street_address"]) {
         NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
         [self.address setTitle:fullAddress forState:UIControlStateNormal];
         [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
@@ -86,6 +89,15 @@
     self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     self.myAtmosphereImageView.clipsToBounds = YES;
 
+    if (self.cameFromProfileFavorites)
+    {
+        self.saveToProfileButton.enabled = NO;
+    }
+    else
+    {
+        self.saveToProfileButton.enabled = YES;
+    }
+    
     [self loadFlickrImageForAtmosphere];
     [self getVenueDetail];
     
@@ -98,6 +110,19 @@
     self.satLabel.alpha = 0.0;
     
     self.menuBoolForButton = 0.0;
+    self.hoursBoolForButton = 0.0;
+    
+    self.menuUnavailableLabel.alpha = 0.0;
+    self.hoursUnavailableLabel.alpha = 0.0;
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
 }
 
 #pragma mark - tableview delegate methods
@@ -126,85 +151,157 @@
 
 - (IBAction)onMenuButtonPressed:(id)sender
 {
-    self.menuBoolForButton = !self.menuBoolForButton;
-    
-    if (self.menuBoolForButton)
+    NSString *hasMenuString = [NSString stringWithFormat:@"%@",self.chosenRestaurantDictionary[@"has_menu"]];
+    NSLog(@"%@",hasMenuString);
+    if ([hasMenuString isEqualToString:@"1"])
     {
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options: UIViewAnimationOptionCurveEaseOut
-                         animations:
-                        ^{
-                            self.menuView.frame = CGRectMake(0, 64, 320, 514);
-                        }
-                         completion:
-                        ^(BOOL finished){
-                        }
-         ];
+        self.menuBoolForButton = !self.menuBoolForButton;
+        
+        if (self.menuBoolForButton)
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseOut
+                             animations:
+             ^{
+                 self.menuView.frame = CGRectMake(0, 64, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:
+             ^{
+                 self.menuView.frame = CGRectMake(0, 422, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
     }
     else
     {
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options: UIViewAnimationOptionCurveEaseIn
-                         animations:
-                        ^{
-                            self.menuView.frame = CGRectMake(0, 422, 320, 514);
-                        }
-                         completion:
-                        ^(BOOL finished){
-                        }
-         ];
+        self.menuBoolForButton = !self.menuBoolForButton;
+        
+        if (self.menuBoolForButton)
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseOut
+                             animations:
+             ^{
+                 self.menuView.frame = CGRectMake(0, 362, 320, 514);
+                 self.menuUnavailableLabel.alpha = 1.0;
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:
+             ^{
+                 self.menuView.frame = CGRectMake(0, 422, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+                 self.menuUnavailableLabel.alpha = 0.0;
+             }
+             ];
+        }
     }
 }
 
 - (IBAction)onHoursButtonPressed:(id)sender
 {
-    self.hoursBoolForButton = !self.hoursBoolForButton;
-    
-    if (self.hoursBoolForButton)
+    if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0) &&
+        ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
     {
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options: UIViewAnimationOptionCurveEaseOut
-                         animations:
-                        ^{
-                            self.hoursView.frame = CGRectMake(0, 221, 320, 514);
-                        }
-                         completion:
-                        ^(BOOL finished){
-                        }
-         ];
+        self.hoursBoolForButton = !self.hoursBoolForButton;
+        
+        if (self.hoursBoolForButton)
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseOut
+                             animations:
+             ^{
+                 self.hoursView.frame = CGRectMake(0, 322, 320, 514);
+                 self.hoursUnavailableLabel.alpha = 1.0;
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:
+             ^{
+                 self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+                 self.hoursUnavailableLabel.alpha = 0.0;
+             }
+             ];
+        }
     }
     else
     {
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options: UIViewAnimationOptionCurveEaseIn
-                         animations:
-                        ^{
-                            self.hoursView.frame = CGRectMake(0, 382, 320, 514);
-                        }
-                         completion:
-                        ^(BOOL finished){
-                        }
-         ];
+        self.hoursBoolForButton = !self.hoursBoolForButton;
+        
+        if (self.hoursBoolForButton)
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseOut
+                             animations:
+             ^{
+                 self.hoursView.frame = CGRectMake(0, 221, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:
+             ^{
+                 self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+             }
+                             completion:
+             ^(BOOL finished){
+             }
+             ];
+        }
+
     }
-}
 
-- (IBAction)onBookmarkButtonPressed:(id)sender
-{
-    PFObject *bookmark = [PFObject objectWithClassName:@"Bookmark"];
-    bookmark[@"name"]=self.chosenRestaurantDictionary[@"name"];
-    bookmark[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
-    
-    [bookmark saveInBackground];
-    
-    self.currentUser = [PFUser currentUser];
-    [self.currentUser addUniqueObject:bookmark forKey:@"bookmarks"];
-    [self.currentUser saveInBackground];
 }
-
 
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
 {
@@ -249,27 +346,32 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        
         self.restaurantResultsDictionary = intermediateDictionary[@"objects"][0];
         
-        self.restaurantMenu = [NSMutableArray new];
+        NSString *hasMenuString = [NSString stringWithFormat:@"%@",self.restaurantResultsDictionary[@"has_menu"]];
         
-        // instantiating the restaurant menu here
-        for (NSDictionary *section in self.restaurantResultsDictionary[@"menus"][0][@"sections"])
+        if ([hasMenuString isEqualToString:@"1"])
         {
-            for (NSDictionary *subsection in section[@"subsections"])
+            self.restaurantMenu = [NSMutableArray new];
+
+            // instantiating the restaurant menu here
+            for (NSDictionary *section in self.restaurantResultsDictionary[@"menus"][0][@"sections"])
             {
-                for (NSDictionary *foodItem in subsection[@"contents"])
+                for (NSDictionary *subsection in section[@"subsections"])
                 {
-                    if (foodItem[@"name"])
+                    for (NSDictionary *foodItem in subsection[@"contents"])
                     {
-                        NSLog(@"%@",foodItem);
-                        [self.restaurantMenu addObject:foodItem];
+                        if (foodItem[@"name"])
+                        {
+                            [self.restaurantMenu addObject:foodItem];
+                        }
                     }
                 }
             }
+            [self.myTableView reloadData];
         }
         
-        [self.myTableView reloadData];
         
         int hasHoursCounter = 0;
         
@@ -368,6 +470,7 @@
     if ([[segue identifier] isEqualToString:@"SharePostViewControllerSegue"]) {
         ShareViewController *svc = segue.destinationViewController;
         svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+        svc.cameToPost = 1;
     }
     else if ([[segue identifier] isEqualToString:@"ShareFriendViewControllerSegue"]) {
         ShareViewController *svc = segue.destinationViewController;

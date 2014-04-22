@@ -8,6 +8,8 @@
 
 #import "ProfileViewController.h"
 #import "FriendsViewController.h"
+#import "RestaurantViewController.h"
+#import "ShareViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -25,6 +27,13 @@
 @property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
 
 @property int numberOfReviewsAndRecommendations;
+
+@property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
+@property (strong, nonatomic) NSMutableArray *recommendationsArray;
+
+@property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
+
+@property BOOL isEditModeEnabled;
 
 @end
 
@@ -51,6 +60,9 @@
     self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
     
+    self.recommendationsArray = [NSMutableArray new];
+    [self retrieveRecommendations];
+    
     if (self.currentUser[@"avatar"])
     {
         [self.currentUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -74,13 +86,51 @@
     {
         self.favoriteTextField.text = self.currentUser[@"currentFavorite"];
     }
+    else
+    {
+        self.favoriteTextField.text = @"";
+    }
     
     [self retrieveFavorites];
     
     [self countReviewsAndRecommendations];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
+    self.isEditModeEnabled = NO;
 }
+
+#pragma mark - edit methods / table view edit methods
+
+- (IBAction)onEditButtonPressed:(UIButton *)sender
+{
+    self.isEditModeEnabled = !self.isEditModeEnabled;
+    
+    if (self.isEditModeEnabled) {
+        [sender setTitle:@"Done" forState:UIControlStateNormal];
+        [self.myTableView setEditing:YES animated:YES];
+        [self.myTableView deleteRowsAtIndexPaths:self.myTableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else
+    {
+        [sender setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.myTableView setEditing:NO animated:YES];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [self.favoritesArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+//    UITableViewCell *cellToMove = [items objectAtIndex:sourceIndexPath.row];
+//    [items removeObjectAtIndex:sourceIndexPath.row];
+//    [items insertObject:cellToMove atIndex:destinationIndexPath.row];
+//}
 
 #pragma mark - populate view methods
 
@@ -171,15 +221,102 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.favoritesArray.count;
+    int number;
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        number = self.favoritesArray.count;
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        number = self.recommendationsArray.count;
+    }
+    
+    return number;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavoriteCellReuseID"];
-    cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+    
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+    }
+    
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        self.chosenRestaurantFavoriteDictionary = self.favoritesArray[indexPath.row][@"restaurantDictionary"];
+        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        NSLog(@"hi");
+    }
+
+    
+    
+    // RecommendToShareSegue
+}
+
+-(IBAction) segmentedControlIndexChanged
+{
+    switch (self.mySegmentedControl.selectedSegmentIndex)
+    {
+        case 0:
+            [self.myTableView reloadData];
+            break;
+        case 1:
+            [self.myTableView reloadData];
+        default:
+            break;
+    }
+}
+
+#pragma mark - recommendation methods
+
+- (void)retrieveRecommendations
+{
+    [self autoAddReceivedRecommendations];
+    
+    int recommendationCount = [self.currentUser[@"recommendations"] count];
+    for (int i = 0; i < recommendationCount; i++)
+    {
+        PFObject *recommendation = self.currentUser[@"recommendations"][i];
+        [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+         {
+             if (![self.recommendationsArray containsObject:recommendation])
+             {
+                 [self.recommendationsArray addObject:recommendation];
+                 [self.myTableView reloadData];
+             }
+         }];
+    }
+}
+
+- (void)autoAddReceivedRecommendations
+{
+    NSArray *currentUserArray = @[self.currentUser];
+    
+    PFQuery *receivedRecommendationsQuery = [PFQuery queryWithClassName:@"Recommendation"];
+    [receivedRecommendationsQuery whereKey:@"receivers" containsAllObjectsInArray:currentUserArray];
+    [receivedRecommendationsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *recommendation in objects) {
+            [self.currentUser addUniqueObject:recommendation forKey:@"recommendations"];
+            
+            [self.currentUser save];
+        }
+    }];
+}
+
 
 #pragma mark - friend request and accept management methods
 
@@ -231,7 +368,9 @@
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
     [PFUser logOut];
+    
     [self.tabBarController setSelectedIndex:0];
+//    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
@@ -287,6 +426,23 @@
     {        
         FriendsViewController *fvc = segue.destinationViewController;
         fvc.currentUser = self.currentUser;
+    }
+    else if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
+    {
+        RestaurantViewController *rvc = segue.destinationViewController;
+        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
+        rvc.cameFromProfileFavorites = 1;
+    }
+    else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
+    {
+//        ShareViewController *svc = segue.destinationViewController;
+//        PFQuery *recommendQuery = [PFQuery queryWithClassName:@"Recommend"];
+//        [recommendQuery whereKey:@"restaurantDictionary" equalTo:];
+
+        
+//        RestaurantViewController *rvc = segue.destinationViewController;
+//        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
+//        rvc.cameFromProfileFavorites = 1;
     }
 }
 

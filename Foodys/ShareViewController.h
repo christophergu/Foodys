@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface ShareViewController : UIViewController
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
+@property (strong, nonatomic) PFObject *recommendation;
 @property BOOL cameForFriend;
+@property BOOL cameToPost;
+@property BOOL cameFromProfileRecommendations;
 
 @end

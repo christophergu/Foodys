@@ -10,6 +10,7 @@
 #import "RestaurantViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "ResultsTableViewCell.h"
+#import <Parse/Parse.h>
 
 @interface ShowMoreResultsViewController ()<UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
@@ -27,6 +28,14 @@
     [super viewDidLoad];
     self.myMapView.alpha = 0.0;
     [self mapLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+    }
 }
 
 #pragma mark - segmented control methods
@@ -221,12 +230,14 @@
 
     }
     
-    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@&region=%@",
+    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@",
                                    nameString,
                                    postalCodeString,
-                                   localityString,
-                                   regionString];
+                                   localityString];
+    
     venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSLog(@"%@",venueSearchString);
     
     NSURL *url = [NSURL URLWithString: venueSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -248,7 +259,6 @@
                                 };
         }
         
-        NSLog(@"%@",self.chosenRestaurantDictionary);
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
 
         }

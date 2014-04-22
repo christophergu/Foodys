@@ -11,5 +11,6 @@
 @interface RestaurantViewController : UIViewController
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
+@property BOOL cameFromProfileFavorites;
 
 @end
