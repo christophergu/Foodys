@@ -32,6 +32,8 @@
 @property (strong, nonatomic) NSMutableArray *recommendationsArray;
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
+@property (strong, nonatomic) NSDictionary *chosenRestaurantRecommendationDictionary;
+
 
 @property BOOL isEditModeEnabled;
 
@@ -59,6 +61,7 @@
     self.currentUser = [PFUser currentUser];
     self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
+    
     
     self.recommendationsArray = [NSMutableArray new];
     [self retrieveRecommendations];
@@ -163,7 +166,7 @@
 
 - (void)rankingSetter:(int)numberOfReviewsAndRecommendations
 {
-    if (numberOfReviewsAndRecommendations == 0)
+    if (numberOfReviewsAndRecommendations == 0 )
     {
         self.currentUser[@"rank"] = self.rankings[0];
     }
@@ -191,7 +194,7 @@
     {
         self.currentUser[@"rank"] = self.rankings[6];
     }
-    else if (numberOfReviewsAndRecommendations < 28)
+    else if (numberOfReviewsAndRecommendations > 23)
     {
         self.currentUser[@"rank"] = self.rankings[7];
     }
@@ -259,12 +262,8 @@
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-//        self.chosenRestaurantRecommendationDictionary = self.recommendationsArray[indexPath.row][@"restaurantDictionary"];
-//        
-//        
-//        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
-//        
-//        
+        self.chosenRestaurantRecommendationDictionary = self.recommendationsArray[indexPath.row][@"restaurantDictionary"];
+        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
     }
 
     
@@ -375,7 +374,6 @@
     [PFUser logOut];
     
     [self.tabBarController setSelectedIndex:0];
-//    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
@@ -440,14 +438,13 @@
     }
     else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
     {
-//        ShareViewController *svc = segue.destinationViewController;
-//        PFQuery *recommendQuery = [PFQuery queryWithClassName:@"Recommend"];
-//        [recommendQuery whereKey:@"restaurantDictionary" equalTo:];
-
-        
-//        RestaurantViewController *rvc = segue.destinationViewController;
-//        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
-//        rvc.cameFromProfileFavorites = 1;
+        ShareViewController *svc = segue.destinationViewController;
+        PFQuery *recommendQuery = [PFQuery queryWithClassName:@"Recommend"];
+        [recommendQuery whereKey:@"restaurantDictionary" equalTo:self.chosenRestaurantRecommendationDictionary];
+        [recommendQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            svc.recommendation = objects.firstObject;
+            NSLog(@"%@",svc.recommendation);
+        }];
     }
 }
 
