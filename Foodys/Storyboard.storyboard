@@ -1315,7 +1315,6 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1403,7 +1402,7 @@
                                 <rect key="frame" x="58" y="180" width="213" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="Favorites"/>
+                                    <segment title="Bookmarked"/>
                                     <segment title="Recommended"/>
                                 </segments>
                                 <connections>
@@ -1428,7 +1427,8 @@
                         <outlet property="mySegmentedControl" destination="wwZ-k4-ADx" id="Uja-XD-ye8"/>
                         <outlet property="myTableView" destination="NaG-DQ-JPW" id="YBT-na-oqJ"/>
                         <outlet property="rankingLabel" destination="kUh-Fe-S99" id="2FX-Xd-zv0"/>
-                        <segue destination="d44-jI-TxM" kind="push" identifier="LogInSegue" id="l4x-YP-nlR"/>
+                        <segue destination="cM8-7k-1gT" kind="push" identifier="FavoriteToRestaurantSegue" id="zKF-Wz-zN4"/>
+                        <segue destination="Pty-GU-GcG" kind="push" identifier="RecommendToShareSegue" id="aQs-us-9HC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3D-Pe-SXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1844,9 +1844,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="mKG-Uw-Vn6"/>
+        <segue reference="aQs-us-9HC"/>
+        <segue reference="zKF-Wz-zN4"/>
         <segue reference="fdc-o9-LBs"/>
-        <segue reference="l4x-YP-nlR"/>
-        <segue reference="ttk-AO-ZX1"/>
-        <segue reference="NWp-EL-yek"/>
     </inferredMetricsTieBreakers>
 </document>

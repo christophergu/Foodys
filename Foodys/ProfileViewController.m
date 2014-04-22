@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import "FriendsViewController.h"
 #import "RestaurantViewController.h"
+#import "ShareViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -246,17 +247,24 @@
         cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
     }
     
-    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.chosenRestaurantFavoriteDictionary = self.favoritesArray[indexPath.row][@"restaurantDictionary"];
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        self.chosenRestaurantFavoriteDictionary = self.favoritesArray[indexPath.row][@"restaurantDictionary"];
+        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        NSLog(@"hi");
+    }
+
     
-    NSLog(@"%@",self.chosenRestaurantFavoriteDictionary);
     
-    [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
+    // RecommendToShareSegue
 }
 
 -(IBAction) segmentedControlIndexChanged
@@ -424,6 +432,17 @@
         RestaurantViewController *rvc = segue.destinationViewController;
         rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
         rvc.cameFromProfileFavorites = 1;
+    }
+    else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
+    {
+//        ShareViewController *svc = segue.destinationViewController;
+//        PFQuery *recommendQuery = [PFQuery queryWithClassName:@"Recommend"];
+//        [recommendQuery whereKey:@"restaurantDictionary" equalTo:];
+
+        
+//        RestaurantViewController *rvc = segue.destinationViewController;
+//        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
+//        rvc.cameFromProfileFavorites = 1;
     }
 }
 
