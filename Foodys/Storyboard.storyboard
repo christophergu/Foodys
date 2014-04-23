@@ -1398,6 +1398,7 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1556,7 +1557,6 @@
                                         </view>
                                         <connections>
                                             <outlet property="friendImageView" destination="F6D-Zq-IB7" id="cUe-5O-zdb"/>
-                                            <segue destination="au0-BR-c0e" kind="push" identifier="FriendsProfileSegue" id="edj-3B-3GW"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1577,6 +1577,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="myCollectionView" destination="GBq-YZ-SqU" id="nb2-aG-LEt"/>
+                        <segue destination="au0-BR-c0e" kind="push" identifier="FriendsProfileSegue" id="BOj-Zx-ybd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vMc-m3-C9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
