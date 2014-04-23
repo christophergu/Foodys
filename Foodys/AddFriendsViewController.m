@@ -11,6 +11,9 @@
 
 @interface AddFriendsViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+@property (strong, nonatomic) PFUser *potentialFriend;
+@property (strong, nonatomic) NSMutableArray *selectedFriends;
+@property (strong, nonatomic) PFUser *currentUser;
 
 @end
 
@@ -25,18 +28,50 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendRequestCellReuseID"];
     
-    PFUser *potentialFriend = self.requestorsToAddArray[indexPath.row][@"requestor"];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", potentialFriend];
+    self.potentialFriend = self.requestorsToAddArray[indexPath.row][@"requestor"];
+    cell.textLabel.text = self.potentialFriend[@"username"];
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *selectedCell = [(UITableView *)tableView cellForRowAtIndexPath:indexPath];
+    selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    [self.selectedFriends addObject: self.requestorsToAddArray[indexPath.row][@"requestor"]];
+    
+    [self.myTableView reloadData];
+    selectedCell.showsReorderControl = YES;
+}
+
+- (IBAction)onAddSelectedFriendsButtonPressed:(id)sender
+{
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.currentUser addUniqueObject:friend forKey:@"friends"];
+        NSLog(@"%@",self.currentUser[@"friends"]);
+    }
+}
+
+- (IBAction)onDeleteSelectedFriendsButtonPressed:(id)sender
+{
+    for (PFUser *friend in self.selectedFriends)
+    {
+        if ([self.currentUser[@"friends"] containsObject:friend])
+        {
+            [self.currentUser removeObject:friend forKey:@"friends"];
+            NSLog(@"%@",self.currentUser[@"friends"]);
+        }
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    NSLog(@"aaaa %@",self.requestorsToAddArray);
+    self.selectedFriends = [NSMutableArray new];
+    self.currentUser = [PFUser currentUser];
 }
 
 @end
