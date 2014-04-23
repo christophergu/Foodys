@@ -12,7 +12,6 @@
 
 @interface FriendsFriendsViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
-@property (strong, nonatomic) PFUser *currentFriendUser;
 @property (strong, nonatomic) PFUser *currentUser;
 
 @end
@@ -23,6 +22,7 @@
 {
     [super viewDidLoad];
     self.currentUser = [PFUser currentUser];
+
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -34,26 +34,13 @@
 {
     CollectionViewCellWithImageThatFlips *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
     
-    // used to get the PFUser with the data back
-    NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",self.friendsFriendsArray[indexPath.row]];
-    NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
+    self.currentFriendUser = self.friendsFriendsArray[indexPath.row];
     
-    PFQuery *friendToIncludeQuery = [PFUser query];
-    [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
-    [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.currentFriendUser = objects.firstObject;
-        
-        cell.usernameLabel.text = self.currentFriendUser[@"username"];
-        cell.rankLabel.text = self.currentFriendUser[@"rank"];
-        
-        [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!error) {
-                UIImage *photo = [UIImage imageWithData:data];
-                cell.friendImageView.image = photo;
-                cell.friendDetailImageView.alpha = 0.5;
-                cell.friendDetailImageView.image = photo;
-            }
-        }];
+    [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *photo = [UIImage imageWithData:data];
+            cell.friendImageView.image = photo;
+        }
     }];
     
     cell.flipped = NO;

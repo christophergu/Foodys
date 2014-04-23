@@ -45,7 +45,6 @@
     
     if ([self.yesNoLabel.text isEqualToString:@"YES"])
     {
-//        self.yesNoLabel.text = [NSString stringWithFormat:@"YES"];
         self.yesNoLabel.textColor = [UIColor greenColor];
     }
     else if ([self.yesNoLabel.text isEqualToString:@"NO"])

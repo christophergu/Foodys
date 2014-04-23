@@ -29,6 +29,13 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *myPickerView;
 @property (strong, nonatomic) NSString *stringForSelectedPickerRow;
 
+@property int numberOfReviewsAndRecommendations;
+
+@property (strong, nonatomic) NSArray *rankings;
+
+@property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+
 
 @end
 
@@ -51,18 +58,91 @@
     
     // default
     self.stringForSelectedPickerRow = self.pickerArray[0];
+    
+    
+    self.rankings = @[@"Shy Foodie",
+                      @"Novice Foodie",
+                      @"Mentor Foodie",
+                      @"Master Foodie",
+                      @"Genius Foodie",
+                      @"Celebrity Foodie",
+                      @"Rockstar Foodie",
+                      @"Superhero Foodie"];
 }
 
 #pragma mark - check if there is a current user method
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser)
+    self.currentUser = [PFUser currentUser];
+//    [self countReviewsAndRecommendations];
+
+    if (!self.currentUser)
     {
         [self performSegueWithIdentifier:@"LogInSegue" sender:self];
     }
 }
+
+//- (void)countReviewsAndRecommendations
+//{
+//    NSLog(@"username %@",self.currentUser[@"username"]);
+//    
+//    self.numberOfReviewsAndRecommendations = 0;
+//    PFQuery *userPostQuery = [PFQuery queryWithClassName:@"PublicPost"];
+//    [userPostQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
+//    
+//    [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+//        self.numberOfReviewsAndRecommendations += number;
+//        
+//        PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
+//        [userRecommendationQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
+//        
+//        [userRecommendationQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+//            self.numberOfReviewsAndRecommendations += number;
+//            [self rankingSetter:self.numberOfReviewsAndRecommendations];
+//        }];
+//    }];
+//}
+//
+//- (void)rankingSetter:(int)numberOfReviewsAndRecommendations
+//{
+//    if (numberOfReviewsAndRecommendations == 0)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[0];
+//    }
+//    else if (numberOfReviewsAndRecommendations < 4)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[1];
+//    }
+//    else if (numberOfReviewsAndRecommendations < 8)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[2];
+//    }
+//    else if (numberOfReviewsAndRecommendations < 12)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[3];
+//    }
+//    else if (numberOfReviewsAndRecommendations < 16)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[4];
+//    }
+//    else if (numberOfReviewsAndRecommendations < 20)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[5];
+//    }
+//    else if (numberOfReviewsAndRecommendations < 24)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[6];
+//    }
+//    else if (numberOfReviewsAndRecommendations > 23)
+//    {
+//        self.currentUser[@"rank"] = self.rankings[7];
+//    }
+//    
+//    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        self.rankingLabel.text = self.currentUser[@"rank"];
+//    }];
+//}
 
 #pragma mark - picker view methods
 
@@ -121,14 +201,10 @@
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
-        NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:intermediateDictionary[@"objects"]];
-        NSArray *searchResultsArrayWithVenueMultiples = orderedSet.array;
-        
         NSMutableArray *venues = [NSMutableArray new];
         
-        for (NSDictionary *result in searchResultsArrayWithVenueMultiples)
+        for (NSDictionary *result in intermediateDictionary[@"objects"])
         {
-            
             if (![venues containsObject:result[@"venue"][@"name"]])
             {
                 [self.searchResultsArray addObject:result];

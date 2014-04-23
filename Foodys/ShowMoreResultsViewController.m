@@ -213,56 +213,50 @@
     NSString* regionString;
     NSString* streetAddressString;
     
-    if (self.cameFromAdvancedSearch) {
-        nameString = self.searchResultsArray[indexPath.row][@"name"];
-        postalCodeString = self.searchResultsArray[indexPath.row][@"postal_code"];
-        localityString = self.searchResultsArray[indexPath.row][@"locality"];
-        regionString = self.searchResultsArray[indexPath.row][@"region"];
-        streetAddressString = self.searchResultsArray[indexPath.row][@"street_address"];
-    }
-    else
-    {
+    if (!self.cameFromAdvancedSearch) {
         nameString = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
         postalCodeString = self.searchResultsArray[indexPath.row][@"venue"][@"postal_code"];
         localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
         regionString = self.searchResultsArray[indexPath.row][@"venue"][@"region"];
         streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
-
+    
+        NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@",
+                                       nameString,
+                                       postalCodeString,
+                                       localityString];
+        
+        venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        
+        NSLog(@"%@",venueSearchString);
+        
+        NSURL *url = [NSURL URLWithString: venueSearchString];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            NSError *error;
+            NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
+            self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
+            
+            if (!self.chosenRestaurantDictionary)
+            {
+                self.chosenRestaurantDictionary = @{
+                                    @"name": nameString,
+                                    @"street_address": streetAddressString,
+                                    @"locality": localityString,
+                                    @"region": regionString,
+                                    @"postal_code": postalCodeString
+                                    };
+            }
+            [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
+            }
+        ];
     }
-    
-    NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@",
-                                   nameString,
-                                   postalCodeString,
-                                   localityString];
-    
-    venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    
-    NSLog(@"%@",venueSearchString);
-    
-    NSURL *url = [NSURL URLWithString: venueSearchString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSError *error;
-        NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
-        self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
-        
-        if (!self.chosenRestaurantDictionary)
-        {
-            self.chosenRestaurantDictionary = @{
-                                @"name": nameString,
-                                @"street_address": streetAddressString,
-                                @"locality": localityString,
-                                @"region": regionString,
-                                @"postal_code": postalCodeString
-                                };
-        }
-        
+    else
+    {
+        self.chosenRestaurantDictionary = self.searchResultsArray[indexPath.row];
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
-
-        }
-    ];
+    }
 }
 
 #pragma mark - segue methods
