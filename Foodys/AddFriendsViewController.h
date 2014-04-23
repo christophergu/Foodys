@@ -10,4 +10,6 @@
 
 @interface AddFriendsViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
+
 @end
