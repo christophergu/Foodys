@@ -317,7 +317,6 @@
     }];
 }
 
-
 #pragma mark - friend request and accept management methods
 
 - (void)acceptFriends
@@ -329,11 +328,9 @@
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          NSArray *requestorsToAddArray = objects;
-         
          if (requestorsToAddArray.firstObject)
          {
              [self.currentUser addUniqueObject:requestorsToAddArray.firstObject[@"requestor"] forKey:@"friends"];
-             
              [self.currentUser saveInBackground];
          }
      }];
@@ -348,17 +345,34 @@
     [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFUser *newFriend in objects)
         {
-//            UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Received!"
-//                                                                       message:[NSString stringWithFormat:@"You have new friends!"]
-//                                                                      delegate:self
-//                                                             cancelButtonTitle:@"OK"
-//                                                             otherButtonTitles:nil];
-//            [friendAddedAlert show];
-                        
+            int beforeCount = [self.currentUser[@"friends"] count];
             [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
+            int afterCount = [self.currentUser[@"friends"] count];
             [self.currentUser saveInBackground];
+            
+            if (beforeCount != afterCount)
+            {
+                UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Accepted!"
+                                                                           message:[NSString stringWithFormat:@"You have new friends!"]
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"OK"
+                                                                 otherButtonTitles:nil];
+                [friendAddedAlert show];
+            }
         }
     }];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSLog(@"alerttt");
+    }
+    else
+    {
+        NSLog(@"zeroo");
+    }
 }
 
 #pragma mark - button methods
