@@ -1702,6 +1702,7 @@
                         <outlet property="friendsCounterLabel" destination="tAq-0x-LwO" id="dkC-ON-XNn"/>
                         <outlet property="myTableView" destination="Jsg-bn-9pI" id="xhU-wn-BKP"/>
                         <outlet property="rankingLabel" destination="Ah4-Rw-3Sx" id="ten-0N-Ehw"/>
+                        <segue destination="cM8-7k-1gT" kind="push" identifier="FavoriteToRestaurantSegue" id="94m-tQ-6MG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xOR-rK-Lrf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1928,9 +1929,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mKG-Uw-Vn6"/>
         <segue reference="aQs-us-9HC"/>
-        <segue reference="zKF-Wz-zN4"/>
+        <segue reference="mKG-Uw-Vn6"/>
         <segue reference="fdc-o9-LBs"/>
+        <segue reference="94m-tQ-6MG"/>
     </inferredMetricsTieBreakers>
 </document>

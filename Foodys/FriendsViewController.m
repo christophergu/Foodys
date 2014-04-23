@@ -75,8 +75,6 @@
 {
     int favoriteCount = [self.currentUser[@"friends"][indexPath.row][@"favorites"] count];
     
-    NSLog(@"favorites %@",self.currentUser[@"friends"][indexPath.row][@"favorites"]);
-    
     self.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
     
     if (favoriteCount > 0)
@@ -87,9 +85,7 @@
             [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                 if (![self.favoritesArray containsObject:favorite[@"restaurantDictionary"]]) {
                     [self.favoritesArray addObject:favorite[@"restaurantDictionary"]];
-                }
-                NSLog(@"favorites array %@",self.favoritesArray);
-                
+                }                
                 [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
             }];
         }

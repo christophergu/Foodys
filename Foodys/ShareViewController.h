@@ -15,5 +15,6 @@
 @property BOOL cameForFriend;
 @property BOOL cameToPost;
 @property BOOL cameFromProfileRecommendations;
+@property (strong, nonatomic) PFObject *chosenRestaurantRecommendationObject;
 
 @end

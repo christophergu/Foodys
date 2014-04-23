@@ -60,6 +60,8 @@
     
     self.sliderIntValue = 50;
     
+    NSLog(@"%@",self.chosenRestaurantDictionary);
+    
     self.friendsToRecommendTo = [NSMutableArray new];
 }
 
@@ -101,14 +103,30 @@
     
     if (self.cameFromProfileRecommendations)
     {
+        self.subjectTextField.enabled = NO;
+        self.myTextView.text = self.chosenRestaurantRecommendationObject[@"body"];
+        [self.myTextView setUserInteractionEnabled:NO];
+        self.mySlider.value = [self.chosenRestaurantRecommendationObject[@"rating"] floatValue];
+        self.sliderScoreLabel.text = [NSString stringWithFormat:@"%@",self.chosenRestaurantRecommendationObject[@"rating"]];
+        self.mySlider.enabled = NO;
         self.getRestaurantInfoButton.alpha = 1.0;
         self.getRestaurantInfoButton.enabled = YES;
+        self.wouldGoAgainYesNoLabel.text = self.chosenRestaurantRecommendationObject[@"wouldGoAgain"];
+        if ([self.wouldGoAgainYesNoLabel.text isEqualToString:@"YES"]) {
+            self.wouldGoAgainYesNoLabel.textColor = [UIColor greenColor];
+        }
+        else
+        {
+            self.wouldGoAgainYesNoLabel.textColor = [UIColor redColor];
+        };
+        // disable done button
     }
     else
     {
         self.getRestaurantInfoButton.alpha = 0.0;
         self.getRestaurantInfoButton.enabled = NO;
     }
+    
     
     [self refreshRatingLabel];
 }
