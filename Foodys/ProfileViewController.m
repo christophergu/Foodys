@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSMutableArray *recommendationsArray;
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
+@property (strong, nonatomic) PFObject *chosenRestaurantRecommendationObject;
 
 @property BOOL isEditModeEnabled;
 
@@ -259,17 +260,9 @@
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-//        self.chosenRestaurantRecommendationDictionary = self.recommendationsArray[indexPath.row][@"restaurantDictionary"];
-//        
-//        
-//        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
-//        
-//        
+        self.chosenRestaurantRecommendationObject = self.recommendationsArray[indexPath.row];
+        [self performSegueWithIdentifier:@"RecommendToShareSegue" sender:self];
     }
-
-    
-    
-    // RecommendToShareSegue
 }
 
 -(IBAction) segmentedControlIndexChanged
@@ -437,14 +430,10 @@
     }
     else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
     {
-//        ShareViewController *svc = segue.destinationViewController;
-//        PFQuery *recommendQuery = [PFQuery queryWithClassName:@"Recommend"];
-//        [recommendQuery whereKey:@"restaurantDictionary" equalTo:];
-
-        
-//        RestaurantViewController *rvc = segue.destinationViewController;
-//        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
-//        rvc.cameFromProfileFavorites = 1;
+        ShareViewController *svc = segue.destinationViewController;
+        svc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
+        svc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
+        svc.cameFromProfileRecommendations = 1;
     }
 }
 

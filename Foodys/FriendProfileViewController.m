@@ -8,6 +8,7 @@
 
 #import "FriendProfileViewController.h"
 #import "FriendsFriendsViewController.h"
+#import "RestaurantViewController.h"
 
 @interface FriendProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -20,6 +21,8 @@
 @property (strong, nonatomic) NSArray *rankings;
 @property int numberOfReviewsAndRecommendations;
 @property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+
+@property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
 
 
 @end
@@ -90,7 +93,6 @@
         self.userArray = objects.firstObject[@"friends"];
     }];
     
-    NSLog(@"friends profile %@",self.favoritesArray);
     [self.myTableView reloadData];
 }
 
@@ -115,6 +117,12 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        self.chosenRestaurantFavoriteDictionary = self.favoritesArray[indexPath.row];
+        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
+}
+
 #pragma mark - segue methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -124,6 +132,12 @@
         FriendsFriendsViewController *fvc = segue.destinationViewController;
         
         fvc.friendsFriendsArray = self.userArray;
+    }
+    else if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
+    {
+        RestaurantViewController *rvc = segue.destinationViewController;
+        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
+        rvc.cameFromProfileFavorites = 1;
     }
 }
 
