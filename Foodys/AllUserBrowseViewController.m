@@ -125,10 +125,10 @@
 
     PFObject *friendRequest = [PFObject objectWithClassName:@"FriendRequest"];
     [friendRequest setObject:currentUser forKey:@"requestor"];
-    [friendRequest setObject:self.currentFriendUser forKey:@"requestee"];
+    [friendRequest setObject:sender.friendUser forKey:@"requestee"];
     
     UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Sent!"
-                                                          message:[NSString stringWithFormat:@"You invited %@ to be your friend!",self.currentFriendUser[@"username"]]
+                                                          message:[NSString stringWithFormat:@"You invited %@ to be your friend!",sender.friendUser[@"username"]]
                                                          delegate:self
                                                 cancelButtonTitle:@"OK"
                                                 otherButtonTitles:nil];

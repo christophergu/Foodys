@@ -11,6 +11,7 @@
 		43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */; };
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
 		DF0A6C2C18FF5FE90064DA6B /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */; };
+		DF0B3A7419083BFD00EFCF43 /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */; };
 		DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */; };
 		DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */; };
 		DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */; };
@@ -74,6 +75,8 @@
 		43E412FE18FF397D008D7431 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailViewController.h; sourceTree = "<group>"; };
 		DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
+		DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsViewController.h; sourceTree = "<group>"; };
+		DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsViewController.m; sourceTree = "<group>"; };
 		DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
 		DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileViewController.m; sourceTree = "<group>"; };
 		DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendsViewController.h; sourceTree = "<group>"; };
@@ -233,6 +236,8 @@
 				DFFC0A5C19033ECE009F582A /* EatViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
 				43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */,
+				DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */,
+				DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */,
 				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
 				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
 				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
@@ -411,6 +416,7 @@
 				43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
 				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,
+				DF0B3A7419083BFD00EFCF43 /* AddFriendsViewController.m in Sources */,
 				DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */,
 				DF11A01918FDBF3A00CAB607 /* AddFriendButton.m in Sources */,
 				DFE1B0FE1900E9CA0090F929 /* RestaurantMenuTableViewCell.m in Sources */,
@@ -548,6 +554,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foodys/Foodys-Prefix.pch";
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -567,6 +574,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foodys/Foodys-Prefix.pch";
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
