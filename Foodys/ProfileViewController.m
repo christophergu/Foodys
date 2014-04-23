@@ -10,6 +10,7 @@
 #import "FriendsViewController.h"
 #import "RestaurantViewController.h"
 #import "ShareViewController.h"
+#import "AddFriendsViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -34,6 +35,9 @@
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
 @property (strong, nonatomic) NSDictionary *chosenRestaurantRecommendationDictionary;
 @property (strong, nonatomic) PFObject *chosenRestaurantRecommendationObject;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
+
+@property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
 
 @property BOOL isEditModeEnabled;
 
@@ -54,6 +58,12 @@
                       @"Rockstar Foodie",
                       @"Superhero Foodie"];
 
+    // hiding the choose friends button
+    self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    self.addFriendButton.enabled = NO;
+    
+    self.requestorsToAddArray = [NSMutableArray new];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -138,7 +148,8 @@
 #pragma mark - populate view methods
 
 - (void)friendsSetter
-{    
+{
+    NSLog(@"friendsetter %@",self.currentUser[@"friends"]);
     if ([self.currentUser[@"friends"] count] != 0)
     {
         self.friendsCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self.currentUser[@"friends"] count]];
@@ -323,15 +334,22 @@
 {
     PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
     [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+    
     [friendRequestQuery includeKey:@"requestor"];
     
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         NSArray *requestorsToAddArray = objects;
-         if (requestorsToAddArray.firstObject)
+         self.requestorsToAddArray = objects;
+         
+         NSLog(@"%@",objects);
+         
+         if (self.requestorsToAddArray.firstObject)
          {
-             [self.currentUser addUniqueObject:requestorsToAddArray.firstObject[@"requestor"] forKey:@"friends"];
-             [self.currentUser saveInBackground];
+             self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
+             self.addFriendButton.enabled = YES;
+             
+//             [self.currentUser addUniqueObject:requestorsToAddArray.firstObject[@"requestor"] forKey:@"friends"];
+//             [self.currentUser saveInBackground];
          }
      }];
 }
@@ -345,9 +363,9 @@
     [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFUser *newFriend in objects)
         {
-            int beforeCount = [self.currentUser[@"friends"] count];
+            int beforeCount = (int)[self.currentUser[@"friends"] count];
             [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
-            int afterCount = [self.currentUser[@"friends"] count];
+            int afterCount = (int)[self.currentUser[@"friends"] count];
             [self.currentUser saveInBackground];
             
             if (beforeCount != afterCount)
@@ -450,6 +468,11 @@
         svc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
         svc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
         svc.cameFromProfileRecommendations = 1;
+    }
+    else if ([[segue identifier] isEqualToString:@"AddFriendsSegue"])
+    {
+        AddFriendsViewController *afvc = segue.destinationViewController;
+        afvc.requestorsToAddArray = self.requestorsToAddArray;
     }
 }
 
