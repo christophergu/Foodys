@@ -337,7 +337,7 @@
     
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         self.requestorsToAddArray = objects;
+         self.requestorsToAddArray = [objects mutableCopy];
          
          NSLog(@"%@",objects);
          

@@ -1525,7 +1525,7 @@
             </objects>
             <point key="canvasLocation" x="1000" y="1081"/>
         </scene>
-        <!--Add Friends View Controller-->
+        <!--Add Friends View Controller - Title-->
         <scene sceneID="eH6-wV-RDa">
             <objects>
                 <viewController id="j9D-va-5yw" customClass="AddFriendsViewController" sceneMemberID="viewController">
@@ -1559,13 +1559,42 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Title" id="Iix-1k-lKr">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="d0p-lg-s9G">
+                            <view key="customView" contentMode="scaleToFill" id="tXe-LQ-g9C">
+                                <rect key="frame" x="154" y="5" width="150" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5RB-24-RC7">
+                                        <rect key="frame" x="72" y="-5" width="78" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <items>
+                                            <barButtonItem systemItem="add" id="DqS-RB-ddp">
+                                                <connections>
+                                                    <action selector="onAddSelectedFriendsButtonPressed:" destination="j9D-va-5yw" id="2YC-UA-nbX"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="trash" id="b1h-NQ-zmG">
+                                                <connections>
+                                                    <action selector="onDeleteSelectedFriendsButtonPressed:" destination="j9D-va-5yw" id="WeO-ug-bj4"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="myTableView" destination="cjA-QX-Iu2" id="X1I-jP-MQx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UeI-QE-JsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1497" y="1081"/>
+            <point key="canvasLocation" x="1658" y="1081"/>
         </scene>
         <!--Friends View Controller-->
         <scene sceneID="YA8-7w-SEe">
