@@ -138,10 +138,10 @@
 #pragma mark - populate view methods
 
 - (void)friendsSetter
-{
+{    
     if ([self.currentUser[@"friends"] count] != 0)
     {
-        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
+        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self.currentUser[@"friends"] count]];
     }
 }
 
@@ -333,18 +333,12 @@
     [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          NSArray *requestorsToAddArray = objects;
-         for (PFObject *requestorsAndRequestees in requestorsToAddArray) {
+         
+         if (requestorsToAddArray.firstObject)
+         {
+             [self.currentUser addUniqueObject:requestorsToAddArray.firstObject[@"requestor"] forKey:@"friends"];
              
-             // the objects that were fetched were _NSarrayM objects so this refetches the objects as PFUser objects
-             NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",requestorsAndRequestees[@"requestor"]];
-             NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
-             
-             PFQuery *friendToIncludeQuery = [PFUser query];
-             [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
-             [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                 [self.currentUser addUniqueObject:objects.firstObject forKey:@"friends"];
-                 [self.currentUser saveInBackground];
-             }];
+             [self.currentUser saveInBackground];
          }
      }];
 }
@@ -356,11 +350,15 @@
     PFQuery *friendsThatAcceptedQuery = [PFUser query];
     [friendsThatAcceptedQuery whereKey:@"friends" containsAllObjectsInArray:currentUserArray];
     [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFUser *newFriend in objects) {
-            if ([newFriend isEqual:self.currentUser])
-            {
-                continue;
-            }
+        for (PFUser *newFriend in objects)
+        {
+//            UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Received!"
+//                                                                       message:[NSString stringWithFormat:@"You have new friends!"]
+//                                                                      delegate:self
+//                                                             cancelButtonTitle:@"OK"
+//                                                             otherButtonTitles:nil];
+//            [friendAddedAlert show];
+                        
             [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
             [self.currentUser saveInBackground];
         }

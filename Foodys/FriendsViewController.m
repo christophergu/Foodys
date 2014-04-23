@@ -16,6 +16,10 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentFriendUser;
 @property (strong, nonatomic) NSArray *userArray;
+@property int numberOfReviewsAndRecommendations;
+@property (strong, nonatomic) NSArray *rankings;
+@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+@property (strong, nonatomic) NSString *rankingStringForLabel;
 
 @end
 
@@ -25,6 +29,15 @@
 {
     [super viewDidLoad];
     [self loadUsers];
+    
+    self.rankings = @[@"Shy Foodie",
+                      @"Novice Foodie",
+                      @"Mentor Foodie",
+                      @"Master Foodie",
+                      @"Genius Foodie",
+                      @"Celebrity Foodie",
+                      @"Rockstar Foodie",
+                      @"Superhero Foodie"];
 }
 
 #pragma mark - collection view delegate methods
@@ -38,10 +51,7 @@
 {
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
 
-    PFUser *currentFriendUser = self.currentUser[@"friends"][indexPath.row];
-    self.currentFriendUser = (PFUser *)[currentFriendUser fetchIfNeeded];
-    
-    // fetchIfNeeded
+    self.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -63,6 +73,63 @@
      }];
 }
 
+- (void)countReviewsAndRecommendations
+{
+    self.numberOfReviewsAndRecommendations = 0;
+    PFQuery *userPostQuery = [PFQuery queryWithClassName:@"PublicPost"];
+    [userPostQuery whereKey:@"author" equalTo:self.currentFriendUser[@"username"]];
+    
+    [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        self.numberOfReviewsAndRecommendations += number;
+        
+        PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
+        [userRecommendationQuery whereKey:@"author" equalTo:self.currentFriendUser[@"username"]];
+        
+        [userRecommendationQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+            self.numberOfReviewsAndRecommendations += number;
+            [self rankingSetter:self.numberOfReviewsAndRecommendations];
+        }];
+    }];
+}
+
+- (void)rankingSetter:(int)numberOfReviewsAndRecommendations
+{
+    if (numberOfReviewsAndRecommendations == 0)
+    {
+        self.rankingStringForLabel = self.rankings[0];
+    }
+    else if (numberOfReviewsAndRecommendations < 4)
+    {
+        self.rankingStringForLabel = self.rankings[1];
+    }
+    else if (numberOfReviewsAndRecommendations < 8)
+    {
+        self.rankingStringForLabel = self.rankings[2];
+    }
+    else if (numberOfReviewsAndRecommendations < 12)
+    {
+        self.rankingStringForLabel = self.rankings[3];
+    }
+    else if (numberOfReviewsAndRecommendations < 16)
+    {
+        self.rankingStringForLabel = self.rankings[4];
+    }
+    else if (numberOfReviewsAndRecommendations < 20)
+    {
+        self.rankingStringForLabel = self.rankings[5];
+    }
+    else if (numberOfReviewsAndRecommendations < 24)
+    {
+        self.rankingStringForLabel = self.rankings[6];
+    }
+    else if (numberOfReviewsAndRecommendations > 23)
+    {
+        self.rankingStringForLabel = self.rankings[7];
+    }
+    
+    NSLog(@" this one is the actual method consider notifications %@",self.rankingStringForLabel);
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
@@ -72,6 +139,8 @@
         NSIndexPath *indexPath = [self.myCollectionView indexPathForCell:sender];
         
         fpvc.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
+        [self countReviewsAndRecommendations];
+//        fpvc.rankingStringForLabel = self.rankingStringForLabel;
     }
     if ([[segue identifier] isEqualToString:@"AllUserBrowseSegue"])
     {

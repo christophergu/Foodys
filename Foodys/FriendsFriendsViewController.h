@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface FriendsFriendsViewController : UIViewController
 @property (strong, nonatomic) NSArray *friendsFriendsArray;
+@property (strong, nonatomic) PFUser *currentFriendUser;
 
 @end
