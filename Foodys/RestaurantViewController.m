@@ -141,9 +141,17 @@
     {
         cell.priceLabel.text = [NSString stringWithFormat:@"$%@",currentFoodItem[@"price"]];
     }
-    cell.descriptionTextView.text = currentFoodItem[@"description"];
-    cell.descriptionTextView.textColor = [UIColor lightGrayColor];
-    
+    if (!(currentFoodItem[@"description"] == nil))
+    {
+        cell.descriptionTextView.text = currentFoodItem[@"description"];
+        cell.descriptionTextView.textColor = [UIColor lightGrayColor];
+        [cell.descriptionTextView setUserInteractionEnabled:YES];
+    }
+    else
+    {
+        [cell.descriptionTextView setUserInteractionEnabled:NO];
+    }
+
     return cell;
 }
 
