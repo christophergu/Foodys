@@ -50,7 +50,19 @@
     for (PFUser *friend in self.selectedFriends)
     {
         [self.currentUser addUniqueObject:friend forKey:@"friends"];
-        NSLog(@"%@",self.currentUser[@"friends"]);
+        [self.currentUser saveInBackground];
+        
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+             [self.myTableView reloadData];
+         }];
     }
 }
 
@@ -58,11 +70,17 @@
 {
     for (PFUser *friend in self.selectedFriends)
     {
-        if ([self.currentUser[@"friends"] containsObject:friend])
-        {
-            [self.currentUser removeObject:friend forKey:@"friends"];
-            NSLog(@"%@",self.currentUser[@"friends"]);
-        }
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+             [self.myTableView reloadData];
+         }];
     }
 }
 

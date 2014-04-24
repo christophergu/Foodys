@@ -305,6 +305,7 @@
         PFObject *publicPost = [PFObject objectWithClassName:@"PublicPost"];
         publicPost[@"author"] = self.currentUser[@"username"];
         publicPost[@"authorObjectId"] = self.currentUser.objectId;
+        publicPost[@"avatar"] = self.currentUser[@"avatar"];
         publicPost[@"date"] = [formatter dateFromString:self.dateLabel.text];
         publicPost[@"title"] = self.subjectTextField.text;
         publicPost[@"body"] = self.myTextView.text;
