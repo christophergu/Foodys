@@ -74,6 +74,7 @@
     
     self.recommendationsArray = [NSMutableArray new];
     [self retrieveRecommendations];
+    [self friendsSetter];
     
     if (self.currentUser[@"avatar"])
     {
@@ -90,7 +91,6 @@
     }
     self.avatarImageView.clipsToBounds = YES;
     
-    [self friendsSetter];
     
     self.favoritesArray = [NSMutableArray new];
     
@@ -120,7 +120,7 @@
     }];
 }
 
-#pragma mark - edit methods / table view edit methods
+#pragma mark - table view delete methods
 
 - (IBAction)onEditButtonPressed:(UIButton *)sender
 {
@@ -153,7 +153,7 @@
 //    [items insertObject:cellToMove atIndex:destinationIndexPath.row];
 //}
 
-#pragma mark - populate view methods
+#pragma mark - helper populate view methods
 
 - (void)friendsSetter
 {
@@ -223,8 +223,6 @@
     }];
 }
 
-#pragma mark - table view methods
-
 - (void)retrieveFavorites
 {
     int favoriteCount = [self.currentUser[@"favorites"] count];
@@ -240,6 +238,8 @@
     }
     [self.myTableView reloadData];
 }
+
+#pragma mark - table view methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -263,10 +263,26 @@
     if(self.mySegmentedControl.selectedSegmentIndex==0)
     {
         cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+        
+//        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+//        [reviewedRestaurantQuery whereKey:@"name" containsString:self.favoritesArray[indexPath.row][@"name"]];
+//        
+//        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//         {
+//             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%%", objects.firstObject[@"rating"]];
+//         }];
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
         cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+        
+//        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+//        [reviewedRestaurantQuery whereKey:@"name" containsString:self.recommendationsArray[indexPath.row][@"name"]];
+//        
+//        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//         {
+//             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%%", objects.firstObject[@"rating"]];
+//         }];
     }
     
     return cell;
@@ -285,6 +301,8 @@
         [self performSegueWithIdentifier:@"RecommendToShareSegue" sender:self];
     }
 }
+
+#pragma mark - segmented control method
 
 -(IBAction) segmentedControlIndexChanged
 {
