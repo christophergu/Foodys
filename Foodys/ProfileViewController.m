@@ -144,27 +144,51 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [self.favoritesArray removeObjectAtIndex:indexPath.row];
         
-        PFQuery *favoriteToDeleteQuery = [PFQuery queryWithClassName:@"Favorite"];
-        [favoriteToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"favorites"][indexPath.row][@"name"]];
-        [favoriteToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-         {
-             NSLog(@"objects %@", objects.firstObject);
-             [objects.firstObject deleteInBackground];
-             //             [self.myTableView reloadData];
-         }];
-        
-        
-        NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
-        [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
-        if ([self.currentUser[@"favorites"]count] == 0)
+        if(self.mySegmentedControl.selectedSegmentIndex==0)
         {
-            [self.currentUser removeObjectForKey:@"favorites"];
-            [self.currentUser saveInBackground];
+            [self.favoritesArray removeObjectAtIndex:indexPath.row];
+            
+            PFQuery *favoriteToDeleteQuery = [PFQuery queryWithClassName:@"Favorite"];
+            [favoriteToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"favorites"][indexPath.row][@"name"]];
+            [favoriteToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+             {
+                 NSLog(@"objects %@", objects.firstObject);
+                 [objects.firstObject deleteInBackground];
+                 //             [self.myTableView reloadData];
+             }];
+            
+            
+            NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
+            [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
+            if ([self.currentUser[@"favorites"]count] == 0)
+            {
+                [self.currentUser removeObjectForKey:@"favorites"];
+                [self.currentUser saveInBackground];
+            }
         }
-
-
+        else if(self.mySegmentedControl.selectedSegmentIndex==1)
+        {
+            [self.recommendationsArray removeObjectAtIndex:indexPath.row];
+            
+            PFQuery *recommendationToDeleteQuery = [PFQuery queryWithClassName:@"Recommendation"];
+            [recommendationToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"recommendations"][indexPath.row][@"name"]];
+            [recommendationToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+             {
+                 NSLog(@"objects %@", objects.firstObject);
+                 [objects.firstObject deleteInBackground];
+                 //             [self.myTableView reloadData];
+             }];
+            
+            
+            NSLog(@"recommendation to delete %@",self.currentUser[@"recommendations"][indexPath.row][@"name"]);
+            [self.currentUser[@"recommendations"] removeObjectIdenticalTo:self.currentUser[@"recommendations"][indexPath.row]];
+            if ([self.currentUser[@"recommendations"]count] == 0)
+            {
+                [self.currentUser removeObjectForKey:@"recommendations"];
+                [self.currentUser saveInBackground];
+            }
+        }
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
