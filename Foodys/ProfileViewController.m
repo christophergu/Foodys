@@ -17,7 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
-@property (strong, nonatomic) NSArray *userArray;
+@property (strong, nonatomic) NSArray *userFriendsArray;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *favoritesArray;
 
@@ -62,7 +62,6 @@
     self.addFriendButton.enabled = NO;
     
     self.requestorsToAddArray = [NSMutableArray new];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -108,6 +107,15 @@
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
     self.isEditModeEnabled = NO;
+    
+    // this is loaded for the friends friends vc page, so it isn't slow
+    PFQuery *currentUserFriendsQuery = [PFUser query];
+    [currentUserFriendsQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+    [currentUserFriendsQuery includeKey:@"friends"];
+    
+    [currentUserFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        self.userFriendsArray = objects.firstObject[@"friends"];
+    }];
 }
 
 #pragma mark - edit methods / table view edit methods
@@ -147,8 +155,8 @@
 
 - (void)friendsSetter
 {
-    NSLog(@"friendsetter %@",self.currentUser[@"friends"]);
-    if ([self.currentUser[@"friends"] count] != 0)
+    // have to check for null instead of nil here
+    if (![self.currentUser[@"friends"] isEqual:[NSNull null]])
     {
         self.friendsCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self.currentUser[@"friends"] count]];
     }
@@ -339,15 +347,15 @@
      {
          self.requestorsToAddArray = [objects mutableCopy];
          
-         NSLog(@"%@",objects);
-         
          if (self.requestorsToAddArray.firstObject)
          {
              self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
              self.addFriendButton.enabled = YES;
-             
-//             [self.currentUser addUniqueObject:requestorsToAddArray.firstObject[@"requestor"] forKey:@"friends"];
-//             [self.currentUser saveInBackground];
+         }
+         else
+         {
+             self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+             self.addFriendButton.enabled = NO;
          }
      }];
 }
@@ -453,6 +461,7 @@
     {        
         FriendsViewController *fvc = segue.destinationViewController;
         fvc.currentUser = self.currentUser;
+        fvc.userFriendsArray = self.userFriendsArray;
     }
     else if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
     {

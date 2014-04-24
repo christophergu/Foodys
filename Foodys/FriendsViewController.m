@@ -48,14 +48,25 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.currentUser[@"friends"] count];
+    int numberOfItems;
+    
+    // have to check for null instead of nil here
+    if ([self.currentUser[@"friends"] isEqual:[NSNull null]])
+        numberOfItems = 0;
+    else
+    {
+        numberOfItems = [self.currentUser[@"friends"] count];
+    }
+    
+    return numberOfItems;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
 
-    self.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
+    self.currentFriendUser = self.userFriendsArray[indexPath.row];
+    NSLog(@"from user friends array %@",self.currentFriendUser);
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {

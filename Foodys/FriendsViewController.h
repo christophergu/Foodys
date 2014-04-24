@@ -11,5 +11,6 @@
 
 @interface FriendsViewController : UIViewController
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) NSArray *userFriendsArray;
 
 @end
