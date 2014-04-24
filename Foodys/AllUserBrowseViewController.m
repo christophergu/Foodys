@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentFriendUser;
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) NSMutableArray *friendsNamesArray;
 
 @end
 
@@ -22,6 +23,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.friendsNamesArray = [NSMutableArray new];
+    
+    // because this current user line is too slow for this purpose when its in view will appear
+    self.currentUser = [PFUser currentUser];
+    
+    PFQuery *getFriendsNamesQuery = [PFUser query];
+    [getFriendsNamesQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+    [getFriendsNamesQuery includeKey:@"friends"];
+    
+    [getFriendsNamesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        NSArray *friendsArrayFromQuery = objects.firstObject[@"friends"];
+        for (PFUser *friend in friendsArrayFromQuery)
+        {
+            [self.friendsNamesArray addObject: friend[@"username"]];
+        }
+    }];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -74,6 +94,15 @@
         cell.addFriendButton.hidden = NO;
         cell.addFriendButton.enabled = YES;
         cell.addFriendButton.friendUser = self.userArray[indexPath.row];
+    }
+    
+    for (NSString *usernameString in self.friendsNamesArray)
+    {
+        if ([cell.usernameLabel.text isEqualToString:usernameString])
+        {
+            cell.addFriendButton.hidden = YES;
+            cell.addFriendButton.enabled = NO;
+        }
     }
     
     if (cell.flipped == NO)
