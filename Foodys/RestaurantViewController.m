@@ -437,11 +437,12 @@
 - (void)loadFlickrImageForAtmosphere
 {
     NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
+    NSString *name = self.chosenRestaurantDictionary[@"name"];
     
-    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
+    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
                                     apiKey,
-                                    self.chosenRestaurantDictionary[@"cuisine"],
-                                    self.chosenRestaurantDictionary[@"cuisine"]];
+                                    [name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
+    
     NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
     NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
     [NSURLConnection sendAsynchronousRequest:flickrSearchRequest queue:[NSOperationQueue mainQueue]
