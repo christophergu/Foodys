@@ -24,7 +24,6 @@
 @property (strong, nonatomic) SignInViewController *modalSignInViewController;
 @property (strong, nonatomic) NSMutableArray *searchResultsArray;
 
-@property (strong, nonatomic) NSArray *pickerArray;
 
 @property (strong, nonatomic) IBOutlet UIPickerView *myPickerView;
 @property (strong, nonatomic) NSString *stringForSelectedPickerRow;
@@ -153,6 +152,7 @@
     if ([[segue identifier] isEqualToString:@"RestaurantViewControllerSegue"])
     {
         RestaurantViewController *rvc = segue.destinationViewController;
+//        rvc.chosenRestaurantDictionary = ?.searchTerm;
         rvc.chosenRestaurantDictionary = self.searchResultsArray.firstObject;
     }
     else if ([[segue identifier] isEqualToString:@"ShowMoreResultsSegue"])
