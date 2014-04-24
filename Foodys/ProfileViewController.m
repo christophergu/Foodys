@@ -146,10 +146,6 @@
     {
         [self.favoritesArray removeObjectAtIndex:indexPath.row];
         
-        NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
-        [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
-        [self.currentUser saveInBackground];
-        
         PFQuery *favoriteToDeleteQuery = [PFQuery queryWithClassName:@"Favorite"];
         [favoriteToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"favorites"][indexPath.row][@"name"]];
         [favoriteToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -158,6 +154,17 @@
              [objects.firstObject deleteInBackground];
              //             [self.myTableView reloadData];
          }];
+        
+        
+        NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
+        [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
+        if ([self.currentUser[@"favorites"]count] == 0)
+        {
+            [self.currentUser removeObjectForKey:@"favorites"];
+            [self.currentUser saveInBackground];
+        }
+
+
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
