@@ -1581,12 +1581,12 @@
                                         <items>
                                             <barButtonItem systemItem="add" id="DqS-RB-ddp">
                                                 <connections>
-                                                    <action selector="onAddSelectedFriendsButtonPressed:" destination="j9D-va-5yw" id="2YC-UA-nbX"/>
+                                                    <segue destination="Ef7-hk-Pyg" kind="unwind" unwindAction="unwindAfterAdd:" id="i1X-eP-Hkk"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem systemItem="trash" id="b1h-NQ-zmG">
                                                 <connections>
-                                                    <action selector="onDeleteSelectedFriendsButtonPressed:" destination="j9D-va-5yw" id="WeO-ug-bj4"/>
+                                                    <segue destination="Ef7-hk-Pyg" kind="unwind" unwindAction="unwindAfterReject:" id="2Nn-9K-ED7"/>
                                                 </connections>
                                             </barButtonItem>
                                         </items>
@@ -1602,6 +1602,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UeI-QE-JsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ef7-hk-Pyg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1658" y="1081"/>
         </scene>

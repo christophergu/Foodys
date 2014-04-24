@@ -84,6 +84,7 @@
 
 - (void)retrieveFavorites:(NSIndexPath *)indexPath
 {
+
     int favoriteCount = [self.currentUser[@"friends"][indexPath.row][@"favorites"] count];
     
     self.currentFriendUser = self.currentUser[@"friends"][indexPath.row];

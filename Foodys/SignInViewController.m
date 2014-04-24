@@ -46,6 +46,7 @@
     user.username = self.usernameTextField.text;
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
+    user[@"rank"] = @"Shy Foodie";
     
     UIImage *pickedImage = [UIImage imageNamed:@"defaultUserImage"];
     NSData* data = UIImageJPEGRepresentation(pickedImage,1.0f);

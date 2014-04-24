@@ -13,6 +13,7 @@
 @interface FriendsFriendsViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) NSMutableArray *friendsNamesArray;
 
 @end
 
@@ -22,7 +23,19 @@
 {
     [super viewDidLoad];
     self.currentUser = [PFUser currentUser];
-
+    
+    PFQuery *getFriendsNamesQuery = [PFUser query];
+    [getFriendsNamesQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+    [getFriendsNamesQuery includeKey:@"friends"];
+    
+    [getFriendsNamesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         NSArray *friendsArrayFromQuery = objects.firstObject[@"friends"];
+         for (PFUser *friend in friendsArrayFromQuery)
+         {
+             [self.friendsNamesArray addObject: friend[@"username"]];
+         }
+     }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -36,10 +49,15 @@
     
     self.currentFriendUser = self.friendsFriendsArray[indexPath.row];
     
+    cell.usernameLabel.text = self.currentFriendUser[@"username"];
+    cell.rankLabel.text = self.currentFriendUser[@"rank"];
+    
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             UIImage *photo = [UIImage imageWithData:data];
             cell.friendImageView.image = photo;
+            cell.friendDetailImageView.alpha = 0.5;
+            cell.friendDetailImageView.image = photo;
         }
     }];
     
@@ -64,6 +82,15 @@
         cell.addFriendButton.hidden = NO;
         cell.addFriendButton.enabled = YES;
         cell.addFriendButton.friendUser = self.friendsFriendsArray[indexPath.row];
+    }
+    
+    for (NSString *usernameString in self.friendsNamesArray)
+    {
+        if ([cell.usernameLabel.text isEqualToString:usernameString])
+        {
+            cell.addFriendButton.hidden = YES;
+            cell.addFriendButton.enabled = NO;
+        }
     }
     
     if (cell.flipped == NO)

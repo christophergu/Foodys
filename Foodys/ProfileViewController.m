@@ -41,6 +41,8 @@
 
 @property BOOL isEditModeEnabled;
 
+@property (strong, nonatomic) NSMutableArray *selectedFriends;
+
 @end
 
 @implementation ProfileViewController
@@ -500,6 +502,51 @@
     {
         AddFriendsViewController *afvc = segue.destinationViewController;
         afvc.requestorsToAddArray = self.requestorsToAddArray;
+    }
+}
+
+- (IBAction)unwindAfterAdd:(UIStoryboardSegue *)unwindSegue
+{
+    AddFriendsViewController *afvc = unwindSegue.sourceViewController;
+    self.selectedFriends = afvc.selectedFriends;
+    
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.currentUser addUniqueObject:friend forKey:@"friends"];
+        [self.currentUser saveInBackground];
+        
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+//             [self.myTableView reloadData];
+         }];
+    }
+}
+
+- (IBAction)unwindAfterReject:(UIStoryboardSegue *)unwindSegue
+{
+    AddFriendsViewController *afvc = unwindSegue.sourceViewController;
+    self.selectedFriends = afvc.selectedFriends;
+    
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+//             [self.myTableView reloadData];
+         }];
     }
 }
 
