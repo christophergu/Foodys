@@ -145,6 +145,20 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         [self.favoritesArray removeObjectAtIndex:indexPath.row];
+        
+        NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
+        [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
+        [self.currentUser saveInBackground];
+        
+        PFQuery *favoriteToDeleteQuery = [PFQuery queryWithClassName:@"Favorite"];
+        [favoriteToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"favorites"][indexPath.row][@"name"]];
+        [favoriteToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             NSLog(@"objects %@", objects.firstObject);
+             [objects.firstObject deleteInBackground];
+             //             [self.myTableView reloadData];
+         }];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
@@ -472,7 +486,7 @@
         }
     }];
     
-    [user saveInBackground];
+    [user save];
 }
 
 #pragma mark - segue methods

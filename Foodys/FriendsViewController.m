@@ -84,29 +84,35 @@
 
 - (void)retrieveFavorites:(NSIndexPath *)indexPath
 {
-
-    int favoriteCount = [self.currentUser[@"friends"][indexPath.row][@"favorites"] count];
     
-    self.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
-    
-    if (favoriteCount > 0)
-    {
-        for (int i = 0; i < favoriteCount; i++)
+//    NSLog(@"%@",[self.currentUser[@"friends"][indexPath.row][@"favorites"] class]);
+    PFObject* friend = self.currentUser[@"friends"][indexPath.row];
+                        
+    [friend fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        int favoriteCount = [object[@"favorites"] count];
+        
+        self.currentFriendUser = self.currentUser[@"friends"][indexPath.row];
+        
+        if (favoriteCount > 0 )
         {
-            PFObject *favorite = self.currentUser[@"friends"][indexPath.row][@"favorites"][i];
-            [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                if (![self.favoritesArray containsObject:favorite[@"restaurantDictionary"]]) {
-                    [self.favoritesArray addObject:favorite[@"restaurantDictionary"]];
-                }                
-                [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
-            }];
+            for (int i = 0; i < favoriteCount; i++)
+            {
+                PFObject *favorite = self.currentUser[@"friends"][indexPath.row][@"favorites"][i];
+                [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    if (![self.favoritesArray containsObject:favorite[@"restaurantDictionary"]]) {
+                        [self.favoritesArray addObject:favorite[@"restaurantDictionary"]];
+                    }
+                    [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
+                }];
+            }
         }
-    }
-    else
-    {
-        self.favoritesArray = [NSMutableArray new];
-        [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
-    }
+        else
+        {
+            self.favoritesArray = [NSMutableArray new];
+            [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
+        }
+    }];
+                        
 }
 
 #pragma mark - segue methods or related
