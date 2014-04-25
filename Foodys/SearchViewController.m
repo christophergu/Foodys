@@ -16,7 +16,7 @@
 #import <Parse/Parse.h>
 #import "AdvancedSearchViewController.h"
 
-@interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *searchButton;
 
 @property CLLocationManager *locationManager;
@@ -24,10 +24,7 @@
 @property (strong, nonatomic) SignInViewController *modalSignInViewController;
 @property (strong, nonatomic) NSMutableArray *searchResultsArray;
 
-@property (strong, nonatomic) NSArray *pickerArray;
-
-@property (strong, nonatomic) IBOutlet UIPickerView *myPickerView;
-@property (strong, nonatomic) NSString *stringForSelectedPickerRow;
+@property (strong, nonatomic) NSArray *suggestionsArray;
 
 @property int numberOfReviewsAndRecommendations;
 
@@ -35,8 +32,12 @@
 
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+@property (strong, nonatomic) IBOutlet UITextField *cuisineTextField;
+
+@property (strong, nonatomic) CLLocation* currentLocation;
 
 @property BOOL venueSearch;
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @end
 
@@ -51,15 +52,13 @@
     self.locationManager.delegate = self;
     
     [self.locationManager startUpdatingLocation];
+    
+    self.currentLocation = self.locationManager.location;
 
     // locu api: aea05d0dffb636cb9aad86f6482e51035d79e84e
     // locu widget api: 71747ca57e325a86544c9edc0d96a9c5b95026f7
     
-    self.pickerArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi", @"taco"];
-    
-    // default
-    self.stringForSelectedPickerRow = self.pickerArray[0];
-    
+    self.suggestionsArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi", @"taco"];
     
     self.rankings = @[@"Shy Foodie",
                       @"Novice Foodie",
@@ -78,93 +77,144 @@
     self.currentUser = [PFUser currentUser];
 }
 
-//- (void)countReviewsAndRecommendations
-//{
-//    NSLog(@"username %@",self.currentUser[@"username"]);
-//    
-//    self.numberOfReviewsAndRecommendations = 0;
-//    PFQuery *userPostQuery = [PFQuery queryWithClassName:@"PublicPost"];
-//    [userPostQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
-//    
-//    [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-//        self.numberOfReviewsAndRecommendations += number;
-//        
-//        PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
-//        [userRecommendationQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
-//        
-//        [userRecommendationQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-//            self.numberOfReviewsAndRecommendations += number;
-//            [self rankingSetter:self.numberOfReviewsAndRecommendations];
-//        }];
-//    }];
-//}
-//
-//- (void)rankingSetter:(int)numberOfReviewsAndRecommendations
-//{
-//    if (numberOfReviewsAndRecommendations == 0)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[0];
-//    }
-//    else if (numberOfReviewsAndRecommendations < 4)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[1];
-//    }
-//    else if (numberOfReviewsAndRecommendations < 8)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[2];
-//    }
-//    else if (numberOfReviewsAndRecommendations < 12)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[3];
-//    }
-//    else if (numberOfReviewsAndRecommendations < 16)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[4];
-//    }
-//    else if (numberOfReviewsAndRecommendations < 20)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[5];
-//    }
-//    else if (numberOfReviewsAndRecommendations < 24)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[6];
-//    }
-//    else if (numberOfReviewsAndRecommendations > 23)
-//    {
-//        self.currentUser[@"rank"] = self.rankings[7];
-//    }
-//    
-//    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        self.rankingLabel.text = self.currentUser[@"rank"];
-//    }];
-//}
+#pragma mark - table view methods
 
-#pragma mark - picker view methods
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.suggestionsArray.count;
 }
 
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.pickerArray count];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SuggestionCellReuseID"];
+    cell.textLabel.text = self.suggestionsArray[indexPath.row];
+    
+    return cell;
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.pickerArray[row];
+    NSString *selectedSuggestionFoodItem = self.suggestionsArray[indexPath.row];
+    
+    [self suggestionFoodSearch:selectedSuggestionFoodItem];
 }
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    self.stringForSelectedPickerRow = self.pickerArray[row];
-}
-
 
 #pragma mark - search helper method
 
 - (void)foodSearch
+{
+    self.searchResultsArray = nil;
+    
+    NSMutableString *itemSearchString = nil;
+    itemSearchString = [@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
+    
+    [self nameAutoCorrect];
+    
+    NSString *nameTextForSearch;
+    NSString *cuisineTextForSearch;
+    NSString *locationTextForSearch;
+    NSString *regionTextForSearch;
+
+//    if (![self.cuisineTextField.text isEqualToString:@""])
+//    {
+//        cuisineTextForSearch = [NSString stringWithFormat:@"&cuisine=%@",self.cuisineTextField.text];
+//        cuisineTextForSearch = [cuisineTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//        [itemSearchString appendString:cuisineTextForSearch];
+//    }
+    
+    if (![self.cuisineTextField.text isEqualToString:@""])
+    {
+        nameTextForSearch = [NSString stringWithFormat:@"&name=%@",self.cuisineTextField.text];
+        nameTextForSearch = [nameTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        [itemSearchString appendString:nameTextForSearch];
+    }
+    
+//    if ([self.locationTextField.text isEqualToString:@""])
+//    {
+        if (self.locationManager.location)
+        {
+            NSLog(@"hi");
+            NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
+            NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
+            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=1000000",
+                                     self.locationManager.location.coordinate.latitude,
+                                     self.locationManager.location.coordinate.longitude];
+            
+            NSLog(@"%@",self.locationManager.location);
+            [itemSearchString appendString:locationTextForSearch];
+        }
+//    }
+//    else if (![self.locationTextField.text isEqualToString:@""])
+//    {
+//        if ([self.locationTextField.text intValue] <= 99999 && !(self.locationTextField.text.intValue == 0))
+//        {
+//            locationTextForSearch = [NSString stringWithFormat:@"&postal_code=%@",self.locationTextField.text];
+//        }
+//        else if ([self.locationTextField.text rangeOfString:@","].location == NSNotFound)
+//        {
+//            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",self.locationTextField.text];
+//            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//        }
+//        else if ([self.locationTextField.text rangeOfString:@","].location)
+//        {
+//            NSArray* searchedStringArray = [self.locationTextField.text componentsSeparatedByString: @","];
+//            NSString* locationWord = [searchedStringArray objectAtIndex: 0];
+//            NSString* regionWord = [searchedStringArray objectAtIndex: 1];
+//            regionWord = [regionWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//            
+//            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",locationWord];
+//            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//            
+//            regionTextForSearch = [NSString stringWithFormat:@"&region=%@",regionWord];
+//            [itemSearchString appendString:regionTextForSearch];
+//        }
+//        [itemSearchString appendString:locationTextForSearch];
+//    }
+    
+    NSLog(@"%@",itemSearchString);
+    
+    NSURL *url = [NSURL URLWithString: itemSearchString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSError *error;
+        NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        self.searchResultsArray = intermediateDictionary[@"objects"];
+        
+        NSLog(@"%@",intermediateDictionary);
+        
+        self.venueSearch = 1;
+        [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
+    }];
+}
+
+-(void)nameAutoCorrect
+{
+//    if ([self.nameTextField.text isEqualToString:@"macdonalds"] ||
+//        [self.nameTextField.text isEqualToString:@"macdonald's"] ||
+//        [self.nameTextField.text isEqualToString:@"mcdonalds"])
+//    {
+//        self.nameTextField.text = @"McDonald's";
+//    }
+//    else if ([self.nameTextField.text isEqualToString:@"wendys"])
+//    {
+//        self.nameTextField.text = @"Wendy's";
+//    }
+//    else if ([self.nameTextField.text isEqualToString:@"chikfila"] ||
+//             [self.nameTextField.text isEqualToString:@"chickfila"] ||
+//             [self.nameTextField.text isEqualToString:@"chickfilla"] ||
+//             [self.nameTextField.text isEqualToString:@"chick-fill-a"])
+//    {
+//        self.nameTextField.text = @"Chick-fil-a";
+//    }
+//    else if ([self.nameTextField.text isEqualToString:@"burgerking"] ||
+//             [self.nameTextField.text isEqualToString:@"burger-king"])
+//    {
+//        self.nameTextField.text = @"Burger King";
+//    }
+}
+
+- (void)suggestionFoodSearch:(NSString *)selectedSuggestedFoodItem;
 {
     self.searchResultsArray = [NSMutableArray new];
     
@@ -174,12 +224,9 @@
     NSString *nameFoodForSearch;
     NSString *locationTextForSearch;
     
-    if (!(self.stringForSelectedPickerRow.length < 1))
-    {
-        nameFoodForSearch = [NSString stringWithFormat:@"&name=%@",self.stringForSelectedPickerRow];
-        nameFoodForSearch = [nameFoodForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        [itemSearchString appendString:nameFoodForSearch];
-    }
+    nameFoodForSearch = [NSString stringWithFormat:@"&name=%@",selectedSuggestedFoodItem];
+    nameFoodForSearch = [nameFoodForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    [itemSearchString appendString:nameFoodForSearch];
     
     if (self.locationManager.location)
     {
@@ -206,21 +253,17 @@
                 [venues addObject:result[@"venue"][@"name"]];
             }
         }
+        self.venueSearch = 0;
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];
 }
 
--(void)sendSearchRequest
-{
-    
-}
-
 #pragma mark - button methods
 
-- (IBAction)onSearchButtonPressed:(id)sender
-{
+- (IBAction)cuisineTextFieldDidEndOnExitButtonPressed:(id)sender {
     [self foodSearch];
 }
+
 
 - (IBAction)onSearchNearbyButtonPressed:(id)sender
 {
@@ -273,11 +316,20 @@
         {
             smrvc.cameFromAdvancedSearch = 1;
         }
+        else
+        {
+            smrvc.cameFromAdvancedSearch = 0;
+        }
     }
-    else if ([[segue identifier] isEqualToString:@"AdvancedSearchSegue"])
+    else if ([[segue identifier] isEqualToString:@"SuggestionToResultsSegue"])
     {
-        AdvancedSearchViewController *asvc = segue.destinationViewController;
-        asvc.currentLocation = self.locationManager.location;
+        NSIndexPath *indexPath = [self.myTableView indexPathForCell:sender];
+        NSString *selectedSuggestionFoodItem = self.suggestionsArray[indexPath.row];
+        
+        [self suggestionFoodSearch:selectedSuggestionFoodItem];
+        
+        ShowMoreResultsViewController *smrvc = segue.destinationViewController;
+        smrvc.searchResultsArray = self.searchResultsArray;
     }
 }
 

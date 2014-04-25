@@ -80,7 +80,7 @@
     self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
     if (self.chosenRestaurantDictionary)
     {
-        if (self.chosenRestaurantDictionary[@"street_address"] && ![self.chosenRestaurantDictionary[@"region"] isEqualToString:@"_"])
+        if (self.chosenRestaurantDictionary[@"street_address"]!= (id)[NSNull null] && ![self.chosenRestaurantDictionary[@"region"] isEqualToString:@"_"])
         {
             self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
         }
