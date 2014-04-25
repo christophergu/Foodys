@@ -52,7 +52,7 @@
 {
     [super viewDidLoad];
 
-    if (!(self.chosenRestaurantDictionary[@"phone"] == nil))
+    if ((self.chosenRestaurantDictionary[@"phone"] != (id)[NSNull null]))
     {
         [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
         self.phoneNumber.enabled = YES;
@@ -63,7 +63,7 @@
         self.phoneNumber.alpha = 0.0;
     }
     
-    if (!(self.chosenRestaurantDictionary[@"website_url"] == nil))
+    if ((self.chosenRestaurantDictionary[@"website_url"] != (id)[NSNull null]))
     {
         [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
         self.websiteURL.enabled = YES;
@@ -74,7 +74,7 @@
         self.websiteURL.alpha = 0.0;
     }
     
-    if (self.chosenRestaurantDictionary[@"street_address"]) {
+    if (self.chosenRestaurantDictionary[@"street_address"] != (id)[NSNull null]) {
         NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
         [self.address setTitle:fullAddress forState:UIControlStateNormal];
         [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
@@ -439,7 +439,7 @@
     NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
     NSString *name = self.chosenRestaurantDictionary[@"name"];
     
-    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
+    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=1&format=json&nojsoncallback=1",
                                     apiKey,
                                     [name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
     

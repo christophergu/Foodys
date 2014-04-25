@@ -168,7 +168,18 @@
     if (self.cameFromAdvancedSearch)
     {
         cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"name"];
-        cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"street_address"];
+        
+        if (self.searchResultsArray[indexPath.row][@"street_address"] != (id)[NSNull null])
+        {
+            cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"street_address"];
+        }
+        else
+        {
+            cell.addressLabel.text = @"";
+        }
+
+        
+        NSLog(@"%@",self.searchResultsArray[indexPath.row][@"street_address"]);
         
         if (!(currentRestaurant[@"lat"] == nil) && !(currentRestaurant[@"long"] == nil))
         {
