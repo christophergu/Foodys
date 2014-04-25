@@ -36,6 +36,7 @@
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
 
+@property BOOL venueSearch;
 
 @end
 
@@ -209,11 +210,48 @@
     }];
 }
 
+-(void)sendSearchRequest
+{
+    
+}
+
 #pragma mark - button methods
 
 - (IBAction)onSearchButtonPressed:(id)sender
 {
     [self foodSearch];
+}
+
+- (IBAction)onSearchNearbyButtonPressed:(id)sender
+{
+    NSMutableString *itemSearchString = nil;
+    itemSearchString = [@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
+    
+    NSString *locationTextForSearch;
+    
+    if (self.locationManager.location)
+    {
+        NSLog(@"hi");
+        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
+        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
+        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=10000",
+                                 self.locationManager.location.coordinate.latitude,
+                                 self.locationManager.location.coordinate.longitude];
+        [itemSearchString appendString:locationTextForSearch];
+    }
+    
+    NSURL *url = [NSURL URLWithString: itemSearchString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSError *error;
+        NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        NSLog(@"%@",intermediateDictionary);
+        self.searchResultsArray = intermediateDictionary[@"objects"];
+        
+        self.venueSearch = 1;
+        [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
+    }];
 }
 
 #pragma mark - segue methods
@@ -229,7 +267,12 @@
     {
         ShowMoreResultsViewController *smrvc = segue.destinationViewController;
         smrvc.searchResultsArray = self.searchResultsArray;
-        smrvc.currentLocation = self.locationManager.location;        
+        smrvc.currentLocation = self.locationManager.location;
+        
+        if (self.venueSearch)
+        {
+            smrvc.cameFromAdvancedSearch = 1;
+        }
     }
     else if ([[segue identifier] isEqualToString:@"AdvancedSearchSegue"])
     {
