@@ -18,6 +18,9 @@
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
+@property (strong, nonatomic) NSMutableArray *recommendedOverlapArray;
+
+@property (strong, nonatomic) PFUser *currentUser;
 
 @end
 
@@ -28,14 +31,29 @@
     [super viewDidLoad];
     self.myMapView.alpha = 0.0;
     [self mapLoad];
+    
+    self.recommendedOverlapArray = [NSMutableArray new];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser) {
-        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
-    }
+    self.currentUser = [PFUser currentUser];
+    
+    PFQuery *recommendationsQuery = [PFUser query];
+    [recommendationsQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+    [recommendationsQuery includeKey:@"recommendations"];
+    [recommendationsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *recommendation in objects.firstObject[@"recommendations"])
+        {
+            for (NSDictionary *searchResultDictionary in self.searchResultsArray)
+            {
+                if ([searchResultDictionary[@"venue"][@"name"] isEqualToString:recommendation[@"name"]])
+                {
+                    [self.recommendedOverlapArray addObject: recommendation];
+                }
+            }
+        }
+    }];
 }
 
 #pragma mark - segmented control methods
@@ -46,10 +64,12 @@
     {
         self.myMapView.alpha = 0.0;
     }
-    else if (self.mySegmentedControl.selectedSegmentIndex == 1)
+    else if (self.mySegmentedControl.selectedSegmentIndex == 2)
     {
         self.myMapView.alpha = 1.0;
     }
+    
+    [self.myTableView reloadData];
 }
 
 #pragma mark - map methods
@@ -156,61 +176,82 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.searchResultsArray.count;
+    int number;
+    
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
+    {
+        number = self.searchResultsArray.count;
+    }
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
+    {
+        number = self.recommendedOverlapArray.count;
+    }
+    
+    return number;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ResultsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsReuseCellID"];
     
-    NSDictionary *currentRestaurant = self.searchResultsArray[indexPath.row];
     
-    if (self.cameFromAdvancedSearch)
+    if(self.mySegmentedControl.selectedSegmentIndex==0)
     {
-        cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"name"];
+        NSDictionary *currentRestaurant = self.searchResultsArray[indexPath.row];
         
-        if (self.searchResultsArray[indexPath.row][@"street_address"] != (id)[NSNull null])
+        if (self.cameFromAdvancedSearch)
         {
-            cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"street_address"];
+            cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"name"];
+            
+            if (self.searchResultsArray[indexPath.row][@"street_address"] != (id)[NSNull null])
+            {
+                cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"street_address"];
+            }
+            else
+            {
+                cell.addressLabel.text = @"";
+            }
+            
+            NSLog(@"%@",self.searchResultsArray[indexPath.row][@"street_address"]);
+            
+            if (!(currentRestaurant[@"lat"] == nil) && !(currentRestaurant[@"long"] == nil))
+            {
+                double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
+                double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
+                
+                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
+                MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+                
+                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+                
+                cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+            }
         }
         else
         {
-            cell.addressLabel.text = @"";
-        }
-
-        
-        NSLog(@"%@",self.searchResultsArray[indexPath.row][@"street_address"]);
-        
-        if (!(currentRestaurant[@"lat"] == nil) && !(currentRestaurant[@"long"] == nil))
-        {
-            double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
-            double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
+            cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
+            cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
             
-            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
-            MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-            
-            float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-            
-            cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+            if (!(currentRestaurant[@"venue"][@"lat"] == nil) && !(currentRestaurant[@"venue"][@"long"] == nil))
+            {
+                double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
+                double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
+                
+                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
+                MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+                
+                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+                
+                cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+            }
         }
     }
-    else
+    else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-        cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
-        cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
-        
-        if (!(currentRestaurant[@"venue"][@"lat"] == nil) && !(currentRestaurant[@"venue"][@"long"] == nil))
-        {
-            double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
-            double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
-            
-            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
-            MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-            
-            float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-            
-            cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
-        }
+        PFObject *currentRecommendedRestaurantObject = self.recommendedOverlapArray[indexPath.row];
+        cell.restaurantTitle.text = currentRecommendedRestaurantObject[@"restaurantDictionary"][@"name"];
+        cell.addressLabel.text = currentRecommendedRestaurantObject[@"restaurantDictionary"][@"street_address"];
+        cell.distanceLabel.text = [NSString stringWithFormat:@"Recommended by %@",currentRecommendedRestaurantObject[@"author"]];
     }
     
     return cell;
@@ -276,7 +317,7 @@
 {
     RestaurantViewController *rvc = segue.destinationViewController;
     
-    if (self.mySegmentedControl.selectedSegmentIndex == 1)
+    if (self.mySegmentedControl.selectedSegmentIndex == 2)
     {
         rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
     }
