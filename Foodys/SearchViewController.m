@@ -75,12 +75,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
-//    [self countReviewsAndRecommendations];
-
-    if (!self.currentUser)
-    {
-        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
-    }
 }
 
 //- (void)countReviewsAndRecommendations

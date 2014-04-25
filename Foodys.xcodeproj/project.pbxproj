@@ -224,10 +224,14 @@
 			children = (
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
-				DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */,
-				DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */,
+				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
+				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
+				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
+				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
 				DF4DB89818FC4EFF00C225EC /* SearchViewController.h */,
 				DF4DB89918FC4EFF00C225EC /* SearchViewController.m */,
+				DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */,
+				DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */,
 				DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */,
 				DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */,
 				DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */,
@@ -239,16 +243,12 @@
 				DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */,
 				DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */,
 				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
-				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
-				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
 				DF4DB8A918FC706D00C225EC /* ShowMoreResultsViewController.h */,
 				DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */,
 				DFF936FC19043BBD00843509 /* WebViewController.h */,
 				DFF936FD19043BBD00843509 /* WebViewController.m */,
 				DF14E30E18FEDD6800E4DDCF /* ShareViewController.h */,
 				DF14E30F18FEDD6800E4DDCF /* ShareViewController.m */,
-				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
-				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
 				43E412FD18FF397D008D7431 /* NewsViewController.h */,
 				43E412FE18FF397D008D7431 /* NewsViewController.m */,
 				43A04C11190566000078E5D9 /* NewsTableViewCell.h */,
@@ -503,7 +503,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -535,7 +535,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -556,7 +556,7 @@
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -576,7 +576,7 @@
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

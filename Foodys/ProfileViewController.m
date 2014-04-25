@@ -64,7 +64,6 @@
     self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     self.addFriendButton.enabled = NO;
     
-    self.requestorsToAddArray = [NSMutableArray new];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -73,10 +72,11 @@
     self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
     
+    self.requestorsToAddArray = [NSMutableArray new];
+    [self friendsSetter];
     
     self.recommendationsArray = [NSMutableArray new];
-    [self retrieveRecommendations];
-    [self friendsSetter];
+    [self autoAddReceivedRecommendations];
     
     if (self.currentUser[@"avatar"])
     {
@@ -353,38 +353,21 @@
 
 -(IBAction) segmentedControlIndexChanged
 {
-    switch (self.mySegmentedControl.selectedSegmentIndex)
-    {
-        case 0:
-            [self.myTableView reloadData];
-            break;
-        case 1:
-            [self.myTableView reloadData];
-        default:
-            break;
-    }
+    [self.myTableView reloadData];
+
+//    switch (self.mySegmentedControl.selectedSegmentIndex)
+//    {
+//        case 0:
+//            [self.myTableView reloadData];
+//            break;
+//        case 1:
+//            [self.myTableView reloadData];
+//        default:
+//            break;
+//    }
 }
 
 #pragma mark - recommendation methods
-
-- (void)retrieveRecommendations
-{
-    [self autoAddReceivedRecommendations];
-    
-    int recommendationCount = [self.currentUser[@"recommendations"] count];
-    for (int i = 0; i < recommendationCount; i++)
-    {
-        PFObject *recommendation = self.currentUser[@"recommendations"][i];
-        [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
-         {
-             if (![self.recommendationsArray containsObject:recommendation])
-             {
-                 [self.recommendationsArray addObject:recommendation];
-                 [self.myTableView reloadData];
-             }
-         }];
-    }
-}
 
 - (void)autoAddReceivedRecommendations
 {
@@ -398,6 +381,19 @@
             
             [self.currentUser save];
         }
+        int recommendationCount = [self.currentUser[@"recommendations"] count];
+        for (int i = 0; i < recommendationCount; i++)
+        {
+            PFObject *recommendation = self.currentUser[@"recommendations"][i];
+            [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+             {
+                 if (![self.recommendationsArray containsObject:recommendation])
+                 {
+                     [self.recommendationsArray addObject:recommendation];
+                 }
+             }];
+        }
+        [self.myTableView reloadData];
     }];
 }
 
@@ -470,9 +466,9 @@
 
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
-    [PFUser logOut];
+//    [PFUser logOut];
     
-    [self.tabBarController setSelectedIndex:0];
+//    [self.tabBarController setSelectedIndex:0];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender

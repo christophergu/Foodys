@@ -12,6 +12,7 @@
 @interface LogInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (strong, nonatomic) PFUser *currentUser;
 
 @end
 
@@ -20,8 +21,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.navigationController.navigationBarHidden = YES;
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (self.currentUser)
+    {
+        [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
+    }
+    
+
+}
+
+
 
 - (IBAction)onLogInButtonPressed:(id)sender
 {
@@ -30,7 +44,7 @@
       if (user)
       {
           NSLog(@"logged in");
-          [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+          [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
       }
       else
       {
@@ -38,6 +52,10 @@
             [logInFailAlert show];
       }
     }];
+    
+
+    [self.passwordTextField endEditing:YES];
+    [self.usernameTextField endEditing:YES];
 }
 
 - (IBAction)onSignUpButtonPressed:(id)sender
@@ -55,4 +73,12 @@
     [self.usernameTextField endEditing:YES];
     [self.passwordTextField endEditing:YES];
 }
+
+- (IBAction)unwindToBeginning:(UIStoryboardSegue *)unwindSegue
+{
+    [PFUser logOut];
+    self.usernameTextField.text = @"";
+    self.passwordTextField.text = @"";
+}
+
 @end
