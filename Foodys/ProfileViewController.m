@@ -64,6 +64,10 @@
     self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     self.addFriendButton.enabled = NO;
     
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -112,14 +116,14 @@
     [self autoAddFriendsThatAccepted];
     self.isEditModeEnabled = NO;
     
-    // this is loaded for the friends friends vc page, so it isn't slow
-    PFQuery *currentUserFriendsQuery = [PFUser query];
-    [currentUserFriendsQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
-    [currentUserFriendsQuery includeKey:@"friends"];
-    
-    [currentUserFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.userFriendsArray = objects.firstObject[@"friends"];
-    }];
+//    // this is loaded for the friends friends vc page, so it isn't slow
+//    PFQuery *currentUserFriendsQuery = [PFUser query];
+//    [currentUserFriendsQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+//    [currentUserFriendsQuery includeKey:@"friends"];
+//    
+//    [currentUserFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        self.userFriendsArray = objects.firstObject[@"friends"];
+//    }];
 }
 
 #pragma mark - table view delete methods
@@ -520,13 +524,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"FriendsCollectionSegue"])
-    {        
-        FriendsViewController *fvc = segue.destinationViewController;
-        fvc.currentUser = self.currentUser;
-        fvc.userFriendsArray = self.userFriendsArray;
-    }
-    else if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
+    if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
     {
         RestaurantViewController *rvc = segue.destinationViewController;
         rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;

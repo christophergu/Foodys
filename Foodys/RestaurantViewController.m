@@ -115,6 +115,9 @@
     self.menuUnavailableLabel.alpha = 0.0;
     self.hoursUnavailableLabel.alpha = 0.0;
 
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -186,7 +189,7 @@
                                 options: UIViewAnimationOptionCurveEaseIn
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 422, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 448, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -205,7 +208,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 362, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 388, 320, 514);
                  self.menuUnavailableLabel.alpha = 1.0;
              }
                              completion:
@@ -220,7 +223,7 @@
                                 options: UIViewAnimationOptionCurveEaseIn
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 422, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 448, 320, 514);
              }
                              completion:
              ^(BOOL finished){

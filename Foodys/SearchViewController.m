@@ -17,7 +17,6 @@
 #import "AdvancedSearchViewController.h"
 
 @interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) IBOutlet UIButton *searchButton;
 
 @property CLLocationManager *locationManager;
 @property (strong, nonatomic) LogInViewController *modalLogInViewController;
@@ -68,6 +67,11 @@
                       @"Celebrity Foodie",
                       @"Rockstar Foodie",
                       @"Superhero Foodie"];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
 }
 
 #pragma mark - check if there is a current user method

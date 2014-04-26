@@ -23,6 +23,9 @@
 
 @property (strong, nonatomic) NSMutableArray *favoritesArray;
 
+@property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) NSArray *userFriendsArray;
+
 @end
 
 @implementation FriendsViewController
@@ -42,6 +45,15 @@
                       @"Superhero Foodie"];
     
     self.favoritesArray = [NSMutableArray new];
+    self.myCollectionView.backgroundColor = [UIColor whiteColor];
+    
+    self.currentUser = [PFUser currentUser];
+    self.userFriendsArray = self.currentUser[@"friends"];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
 }
 
 #pragma mark - collection view delegate methods
@@ -66,6 +78,8 @@
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
 
     self.currentFriendUser = self.userFriendsArray[indexPath.row];
+    [self.currentFriendUser fetchIfNeeded];
+    
     NSLog(@"from user friends array %@",self.currentFriendUser);
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {

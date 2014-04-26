@@ -39,6 +39,10 @@
     self.recommendedOverlapArray = [NSMutableArray new];
     
     [self mapLoadOnMap:self.myMapView withArray:self.searchResultsArray];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -151,7 +155,12 @@
             for (CLPlacemark* place in placemarks) {
                 MKPointAnnotation *annotation = [MKPointAnnotation new];
                 annotation.coordinate = place.location.coordinate;
-                if (self.cameFromAdvancedSearch)
+                
+                if([restaurant isKindOfClass:[PFObject class]])
+                {
+                    annotation.title = restaurant[@"restaurantDictionary"][@"name"];
+                }
+                else if (self.cameFromAdvancedSearch)
                 {
                     annotation.title = restaurant[@"name"];
                 }
@@ -192,7 +201,6 @@
     NSString* postalCodeString = [[chosenPinStringArrayTwo objectAtIndex: 0]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
     NSString* regionString = [[chosenPinStringArrayTwo objectAtIndex: 1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
     
-    
     NSString *pinRestaurantSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&street_address=%@&locality=%@&region=%@",
                                            view.annotation.title,
                                            streetAddressString,
@@ -202,7 +210,8 @@
     NSURL *url = [NSURL URLWithString: pinRestaurantSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+    {
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
@@ -221,7 +230,7 @@
         
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
     }
-     ];
+    ];
 }
 
 #pragma mark - table view methods
