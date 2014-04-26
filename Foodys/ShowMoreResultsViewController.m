@@ -36,11 +36,9 @@
 
     self.mapDisplayBool = 0;
     
-    [self mapLoadOnMap:self.myMapView withArray:self.searchResultsArray];
-    [self mapLoadOnMap:self.myRecommendedMapView withArray:self.recommendedOverlapArray];
-
-    
     self.recommendedOverlapArray = [NSMutableArray new];
+    
+    [self mapLoadOnMap:self.myMapView withArray:self.searchResultsArray];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -63,6 +61,8 @@
                 }
             }
         }
+        [self mapLoadOnMap:self.myRecommendedMapView withArray:self.recommendedOverlapArray];
+
     }];
 }
 
@@ -87,9 +87,6 @@
 #pragma mark - map methods
 - (IBAction)onMapButtonPressed:(id)sender
 {
-    NSLog(@"pressed");
-    NSLog(@"bool %hhd",self.mapDisplayBool);
-    
     self.mapDisplayBool = !self.mapDisplayBool;
     
     if (self.mapDisplayBool)
@@ -114,15 +111,25 @@
 
 -(void)mapLoadOnMap:(MKMapView *)mapView withArray:(id)arrayToUse
 {
-//    [self.myMapView removeAnnotations:self.myMapView.annotations];
+    NSLog(@"mapView %@", mapView);
+    NSLog(@"arrayToUse %@", [arrayToUse class]);
     
-    NSLog(@"mapload");
+
+    
     
     for (NSDictionary *restaurant in arrayToUse) {
         
         NSString *restaurantAddress;
+
         
-        if (self.cameFromAdvancedSearch)
+        if ([restaurant isKindOfClass:[PFObject class]]) {
+            restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@ %@",
+                                 restaurant[@"restaurantDictionary"][@"street_address"],
+                                 restaurant[@"restaurantDictionary"][@"locality"],
+                                 restaurant[@"restaurantDictionary"][@"region"],
+                                 restaurant[@"restaurantDictionary"][@"postal_code"]];
+        }
+        else if (self.cameFromAdvancedSearch)
         {
             restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@ %@",
                                  restaurant[@"street_address"],
@@ -155,9 +162,9 @@
                 annotation.subtitle = restaurantAddress;
                 
                 [mapView addAnnotation:annotation];
-                [mapView showAnnotations:mapView.annotations animated:YES];
-
             }
+            [mapView showAnnotations:mapView.annotations animated:NO];
+
         }];
 
     }
@@ -225,11 +232,11 @@
     
     if(self.mySegmentedControl.selectedSegmentIndex==0)
     {
-        number = self.searchResultsArray.count;
+        number = (int)self.searchResultsArray.count;
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-        number = self.recommendedOverlapArray.count;
+        number = (int)self.recommendedOverlapArray.count;
     }
     
     return number;
@@ -267,7 +274,7 @@
                 MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
                 MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
                 
-                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+//                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
                 
                 cell.distanceLabel.text = @"";//[NSString stringWithFormat:@"%d meters", (int)distance];
             }
@@ -285,7 +292,7 @@
                 MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
                 MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
                 
-                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
+//                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
                 
                 cell.distanceLabel.text = @"";//[NSString stringWithFormat:@"%d meters", (int)distance];
             }
