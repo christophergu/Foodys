@@ -14,6 +14,8 @@
 
 @interface ShowMoreResultsViewController ()<UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
+@property (strong, nonatomic) IBOutlet MKMapView *myRecommendedMapView;
+@property BOOL mapDisplayBool;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
 
@@ -30,13 +32,21 @@
 {
     [super viewDidLoad];
     self.myMapView.alpha = 0.0;
-    [self mapLoad];
+    self.myRecommendedMapView.alpha = 0.0;
+
+    self.mapDisplayBool = 0;
+    
+    [self mapLoadOnMap:self.myMapView withArray:self.searchResultsArray];
+    [self mapLoadOnMap:self.myRecommendedMapView withArray:self.recommendedOverlapArray];
+
     
     self.recommendedOverlapArray = [NSMutableArray new];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+
+    
     self.currentUser = [PFUser currentUser];
     
     PFQuery *recommendationsQuery = [PFUser query];
@@ -60,23 +70,55 @@
 
 - (IBAction)onSegmentedControlValueChanged:(id)sender
 {
-    if (self.mySegmentedControl.selectedSegmentIndex == 0)
+    if (self.mapDisplayBool == 1 && self.myMapView.alpha == 1.0)
     {
         self.myMapView.alpha = 0.0;
+        self.myRecommendedMapView.alpha = 1.0;
     }
-    else if (self.mySegmentedControl.selectedSegmentIndex == 2)
+    else if (self.mapDisplayBool == 1 && self.myMapView.alpha == 0.0)
     {
         self.myMapView.alpha = 1.0;
+        self.myRecommendedMapView.alpha = 0.0;
     }
     
     [self.myTableView reloadData];
 }
 
 #pragma mark - map methods
-
--(void)mapLoad
+- (IBAction)onMapButtonPressed:(id)sender
 {
-    for (NSDictionary *restaurant in self.searchResultsArray) {
+    NSLog(@"pressed");
+    NSLog(@"bool %hhd",self.mapDisplayBool);
+    
+    self.mapDisplayBool = !self.mapDisplayBool;
+    
+    if (self.mapDisplayBool)
+    {
+        if (self.mySegmentedControl.selectedSegmentIndex == 0)
+        {
+            self.myMapView.alpha = 1.0;
+            self.myRecommendedMapView.alpha = 0.0;
+        }
+        else if (self.mySegmentedControl.selectedSegmentIndex == 1)
+        {
+            self.myMapView.alpha = 0.0;
+            self.myRecommendedMapView.alpha = 1.0;
+        }
+    }
+    else
+    {
+        self.myMapView.alpha = 0.0;
+        self.myRecommendedMapView.alpha = 0.0;
+    }
+}
+
+-(void)mapLoadOnMap:(MKMapView *)mapView withArray:(id)arrayToUse
+{
+//    [self.myMapView removeAnnotations:self.myMapView.annotations];
+    
+    NSLog(@"mapload");
+    
+    for (NSDictionary *restaurant in arrayToUse) {
         
         NSString *restaurantAddress;
         
@@ -112,11 +154,14 @@
                 }
                 annotation.subtitle = restaurantAddress;
                 
-                [self.myMapView addAnnotation:annotation];
+                [mapView addAnnotation:annotation];
+                [mapView showAnnotations:mapView.annotations animated:YES];
+
             }
-            [self.myMapView showAnnotations:self.myMapView.annotations animated:YES];
         }];
+
     }
+
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -224,7 +269,7 @@
                 
                 float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
                 
-                cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+                cell.distanceLabel.text = @"";//[NSString stringWithFormat:@"%d meters", (int)distance];
             }
         }
         else
@@ -242,7 +287,7 @@
                 
                 float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
                 
-                cell.distanceLabel.text = [NSString stringWithFormat:@"%d meters", (int)distance];
+                cell.distanceLabel.text = @"";//[NSString stringWithFormat:@"%d meters", (int)distance];
             }
         }
     }
@@ -317,11 +362,11 @@
 {
     RestaurantViewController *rvc = segue.destinationViewController;
     
-    if (self.mySegmentedControl.selectedSegmentIndex == 2)
-    {
-        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
-    }
-    else if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])
+//    if (self.mySegmentedControl.selectedSegmentIndex == 2)
+//    {
+//        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
+//    }
+    if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])
     {
         rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
         
