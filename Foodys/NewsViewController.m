@@ -78,7 +78,6 @@
     self.currentPost = self.currentUserPostsArray[indexPath.row];
     
     cell.title.text = self.currentPost[@"title"];
-    
     cell.recommended.text = self.currentPost[@"wouldGoAgain"];
     
    if ([cell.recommended.text isEqualToString:@"YES"])
@@ -90,7 +89,12 @@
         cell.recommended.textColor = [UIColor redColor];
     }
     
+    cell.reviewerNameLabel.text = self.currentPost[@"author"];
     cell.content.text = self.currentPost[@"body"];
+    cell.content.layer.cornerRadius=8.0f;
+    cell.content.layer.masksToBounds=YES;
+    cell.content.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
+    cell.content.layer.borderWidth= 1.0f;
     
 //    cell.avatarImageView = self.currentPost[@"avatar"];
     
