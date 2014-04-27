@@ -217,16 +217,19 @@
         [defriendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              NSLog(@"objects %@",objects.firstObject);
-             [objects.firstObject deleteInBackground];
-             
-             [self.currentUser removeObject:friend forKey:@"friends"];
-             if ([self.currentUser[@"friends"]count] == 0)
+             if (objects.firstObject)
              {
-                 [self.currentUser removeObjectForKey:@"friends"];
+                 [objects.firstObject deleteInBackground];
+                 
+                 [self.currentUser removeObject:friend forKey:@"friends"];
+                 if ([self.currentUser[@"friends"]count] == 0)
+                 {
+                     [self.currentUser removeObjectForKey:@"friends"];
+                 }
+                 [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                     [self.myCollectionView reloadData];
+                 }];
              }
-             [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                 [self.myCollectionView reloadData];
-             }];
          }];
     }
 }

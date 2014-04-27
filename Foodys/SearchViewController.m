@@ -38,6 +38,8 @@
 @property BOOL venueSearch;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
+@property (strong, nonatomic) NSString *locationCoordinatesString;
+
 @end
 
 @implementation SearchViewController
@@ -53,9 +55,6 @@
     [self.locationManager startUpdatingLocation];
     
     self.currentLocation = self.locationManager.location;
-
-    // locu api: aea05d0dffb636cb9aad86f6482e51035d79e84e
-    // locu widget api: 71747ca57e325a86544c9edc0d96a9c5b95026f7
     
     self.suggestionsArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi", @"taco"];
     
@@ -79,6 +78,13 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
+    
+//    self.locationCoordinatesString = [NSString stringWithFormat:@"%.1f,%.1f",
+//                                      self.locationManager.location.coordinate.latitude,
+//                                      self.locationManager.location.coordinate.longitude];
+//    NSLog(@"lcs %@",self.locationCoordinatesString);
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationNotification" object:self.locationCoordinatesString];
+
 }
 
 #pragma mark - table view methods
@@ -115,16 +121,7 @@
     [self nameAutoCorrect];
     
     NSString *nameTextForSearch;
-    NSString *cuisineTextForSearch;
     NSString *locationTextForSearch;
-    NSString *regionTextForSearch;
-
-//    if (![self.cuisineTextField.text isEqualToString:@""])
-//    {
-//        cuisineTextForSearch = [NSString stringWithFormat:@"&cuisine=%@",self.cuisineTextField.text];
-//        cuisineTextForSearch = [cuisineTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-//        [itemSearchString appendString:cuisineTextForSearch];
-//    }
     
     if (![self.cuisineTextField.text isEqualToString:@""])
     {
@@ -133,47 +130,18 @@
         [itemSearchString appendString:nameTextForSearch];
     }
     
-//    if ([self.locationTextField.text isEqualToString:@""])
-//    {
-        if (self.locationManager.location)
-        {
-            NSLog(@"hi");
-            NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-            NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
-            locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=1000000",
-                                     self.locationManager.location.coordinate.latitude,
-                                     self.locationManager.location.coordinate.longitude];
-            
-            NSLog(@"%@",self.locationManager.location);
-            [itemSearchString appendString:locationTextForSearch];
-        }
-//    }
-//    else if (![self.locationTextField.text isEqualToString:@""])
-//    {
-//        if ([self.locationTextField.text intValue] <= 99999 && !(self.locationTextField.text.intValue == 0))
-//        {
-//            locationTextForSearch = [NSString stringWithFormat:@"&postal_code=%@",self.locationTextField.text];
-//        }
-//        else if ([self.locationTextField.text rangeOfString:@","].location == NSNotFound)
-//        {
-//            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",self.locationTextField.text];
-//            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-//        }
-//        else if ([self.locationTextField.text rangeOfString:@","].location)
-//        {
-//            NSArray* searchedStringArray = [self.locationTextField.text componentsSeparatedByString: @","];
-//            NSString* locationWord = [searchedStringArray objectAtIndex: 0];
-//            NSString* regionWord = [searchedStringArray objectAtIndex: 1];
-//            regionWord = [regionWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-//            
-//            locationTextForSearch = [NSString stringWithFormat:@"&locality=%@",locationWord];
-//            locationTextForSearch = [locationTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-//            
-//            regionTextForSearch = [NSString stringWithFormat:@"&region=%@",regionWord];
-//            [itemSearchString appendString:regionTextForSearch];
-//        }
-//        [itemSearchString appendString:locationTextForSearch];
-//    }
+    if (self.locationManager.location)
+    {
+        NSLog(@"hi");
+        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
+        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
+        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=1000000",
+                                 self.locationManager.location.coordinate.latitude,
+                                 self.locationManager.location.coordinate.longitude];
+        
+        NSLog(@"%@",self.locationManager.location);
+        [itemSearchString appendString:locationTextForSearch];
+    }
     
     NSLog(@"%@",itemSearchString);
     

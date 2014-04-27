@@ -46,6 +46,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *menuUnavailableLabel;
 @property (strong, nonatomic) IBOutlet UILabel *hoursUnavailableLabel;
 @property (strong, nonatomic) IBOutlet UIButton *reviewButton;
+@property (strong, nonatomic) IBOutlet UIButton *locationButton;
+@property (strong, nonatomic) NSString *locationCoordinatesString;
+@property (strong, nonatomic) NSMutableString *locationSearchString;
 
 @end
 
@@ -130,11 +133,21 @@
     self.reviewButton.layer.masksToBounds=YES;
     self.reviewButton.tintColor = [UIColor whiteColor];
     
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(locationCoordinatesStringMethod:)
+//                                                 name:@"locationNotification"
+//                                               object:nil];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
+
+//-(void)locationCoordinatesStringMethod:(NSNotification *)notification
+//{
+//    self.locationCoordinatesString = notification.object;
+//    NSLog(@"work? %@",self.locationCoordinatesString);
+//}
 
 #pragma mark - tableview delegate methods
 
@@ -337,6 +350,25 @@
     [self.currentUser saveInBackground];
 }
 
+- (IBAction)onLocationButtonPressed:(id)sender
+{
+//    self.locationSearchString = [@"https://www.google.com/maps" mutableCopy];
+//    
+//    if (self.locationManager.location)
+//    {
+//        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=1000000",
+//                                 self.locationManager.location.coordinate.latitude,
+//                                 self.locationManager.location.coordinate.longitude];
+//        
+//        NSLog(@"%@",self.locationManager.location);
+//        [locationSearchString appendString:locationTextForSearch];
+//    }
+//    
+//    @"https://www.google.com/maps";     // /dir/long,lat/self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"streetAddress"],self.chosenRestaurantDictionary[@"locality"],self.chosenRestaurantDictionary[@"region"],self.chosenRestaurantDictionary[@"postal_code"]/";
+//    
+    [self performSegueWithIdentifier:@"WebSegue" sender:self];
+}
+
 #pragma mark - phone methods
 
 - (IBAction)onTelephoneButtonPressed:(id)sender
@@ -499,9 +531,9 @@
         svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
         svc.cameForFriend = 1;
     }
-    else if ([[segue identifier] isEqualToString:@"WebViewControllerSegue"]) {
+    else if ([[segue identifier] isEqualToString:@"WebSegue"]) {
         WebViewController *wvc = segue.destinationViewController;
-        wvc.websiteUrl = self.chosenRestaurantDictionary[@"website_url"];
+        wvc.websiteUrl = @"https://www.google.com/maps";     // /dir/long,lat/self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"streetAddress"],self.chosenRestaurantDictionary[@"locality"],self.chosenRestaurantDictionary[@"region"],self.chosenRestaurantDictionary[@"postal_code"]/";
     }
 }
 @end

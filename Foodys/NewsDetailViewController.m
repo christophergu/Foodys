@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *restaurantTitle;
 @property (strong, nonatomic) IBOutlet UILabel *reviewerNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (strong, nonatomic) IBOutlet UIButton *getMoreInfoButton;
 
 @end
 
@@ -29,6 +30,7 @@
 
     
     self.reviewerNameLabel.text = self.currentPost[@"author"];
+    self.getMoreInfoButton.tintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];

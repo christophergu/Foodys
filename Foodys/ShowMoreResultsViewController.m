@@ -118,12 +118,6 @@
 
 -(void)mapLoadOnMap:(MKMapView *)mapView withArray:(id)arrayToUse
 {
-    NSLog(@"mapView %@", mapView);
-    NSLog(@"arrayToUse %@", [arrayToUse class]);
-    
-
-    
-    
     for (NSDictionary *restaurant in arrayToUse) {
         
         NSString *restaurantAddress;
