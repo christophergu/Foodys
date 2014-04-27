@@ -30,6 +30,13 @@
     self.potentialFriend = self.requestorsToAddArray[indexPath.row][@"requestor"];
     cell.textLabel.text = self.potentialFriend[@"username"];
     
+    [self.potentialFriend[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *photo = [UIImage imageWithData:data];
+            cell.imageView.image = photo;
+        }
+    }];
+    
     return cell;
 }
 

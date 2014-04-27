@@ -27,10 +27,13 @@
 @property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
 
 @property (strong, nonatomic) PFUser *currentUser;
-@property (strong, nonatomic) NSArray *userFriendsArray;
+@property (strong, nonatomic) NSMutableArray *userFriendsArray;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
 
 @property (strong, nonatomic) NSMutableArray *selectedFriends;
+@property (strong, nonatomic) NSString *reviewsCounterString;
+
+@property (strong, nonatomic) PFUser *friendUserToDelete;
 
 
 @end
@@ -55,7 +58,6 @@
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     
     self.currentUser = [PFUser currentUser];
-    self.userFriendsArray = self.currentUser[@"friends"];
     
     // hiding the choose friends button
     self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
@@ -64,11 +66,17 @@
     self.requestorsToAddArray = [NSMutableArray new];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
+    [self autoDeleteFriendsThatDefriended];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.userFriendsArray = self.currentUser[@"friends"];
 }
 
 #pragma mark - collection view delegate methods
@@ -94,8 +102,6 @@
 
     self.currentFriendUser = self.userFriendsArray[indexPath.row];
     [self.currentFriendUser fetchIfNeeded];
-    
-    NSLog(@"from user friends array %@",self.currentFriendUser);
     
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -193,22 +199,49 @@
                                                                  cancelButtonTitle:@"OK"
                                                                  otherButtonTitles:nil];
                 [friendAddedAlert show];
+                
+                NSLog(@"auto friends %@", self.currentUser[@"friends"]);
             }
         }
     }];
 }
 
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void)autoDeleteFriendsThatDefriended;
 {
-    if (buttonIndex == 1)
+    for (PFUser *friend in self.currentUser[@"friends"])
     {
-        NSLog(@"alerttt");
-    }
-    else
-    {
-        NSLog(@"zeroo");
+        PFQuery *defriendRequestQuery = [PFQuery queryWithClassName:@"DefriendRequest"];
+        [defriendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [defriendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [defriendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             NSLog(@"objects %@",objects.firstObject);
+             [objects.firstObject deleteInBackground];
+             
+             [self.currentUser removeObject:friend forKey:@"friends"];
+             if ([self.currentUser[@"friends"]count] == 0)
+             {
+                 [self.currentUser removeObjectForKey:@"friends"];
+             }
+             [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                 [self.myCollectionView reloadData];
+             }];
+         }];
     }
 }
+
+//- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex == 1)
+//    {
+//        NSLog(@"alerttt");
+//    }
+//    else
+//    {
+//        NSLog(@"zeroo");
+//    }
+//}
 
 #pragma mark - segue methods or related
 
@@ -229,6 +262,8 @@
     
     [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
         self.numberOfReviewsAndRecommendations += number;
+        self.reviewsCounterString = [NSString stringWithFormat:@"%d Reviews", self.numberOfReviewsAndRecommendations];
+
         
         PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
         [userRecommendationQuery whereKey:@"author" equalTo:self.currentFriendUser[@"username"]];
@@ -276,12 +311,19 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FriendRankNotification" object:self.rankingStringForLabel];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FriendReviewCounterNotification" object:self.reviewsCounterString];
 }
 
 - (IBAction)unwindAfterAdd:(UIStoryboardSegue *)unwindSegue
 {
     AddFriendsViewController *afvc = unwindSegue.sourceViewController;
     self.selectedFriends = afvc.selectedFriends;
+    
+    
+    // need to update self.userfriendsarray
+    
+    
     
     for (PFUser *friend in self.selectedFriends)
     {
@@ -322,6 +364,48 @@
          }];
     }
 }
+
+- (IBAction)unwindAfterDeletingFriend:(UIStoryboardSegue *)unwindSegue
+{
+    FriendProfileViewController *fpvc = unwindSegue.sourceViewController;
+    self.friendUserToDelete = fpvc.currentFriendUser;
+    
+    PFQuery *friendArrayQuery = [PFUser query];
+    [friendArrayQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+    [friendArrayQuery includeKey:@"friends"];
+    
+    NSMutableArray *friendToDeleteArray = [NSMutableArray new];
+    
+    [friendArrayQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         for (PFUser *friend in objects.firstObject[@"friends"]) {
+             if ([friend[@"username"] isEqualToString:self.friendUserToDelete[@"username"]])
+             {
+                 NSLog(@"friend %@",friend);
+                 NSLog(@"delete friend %@", self.friendUserToDelete);
+                 [friendToDeleteArray addObject:self.friendUserToDelete];
+             }
+         }
+         
+         [self.currentUser removeObjectsInArray:friendToDeleteArray forKey:@"friends"];
+         if ([self.currentUser[@"friends"]count] == 0)
+         {
+             [self.currentUser removeObjectForKey:@"friends"];
+         }
+         NSLog(@"after delete %@",self.currentUser[@"friends"]);
+         [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+             [self.myCollectionView reloadData];
+         }];
+     }];
+    
+    // for deleting yourself on the other user's object
+    PFObject *defriendRequest = [PFObject objectWithClassName:@"DefriendRequest"];
+    [defriendRequest setObject:self.currentUser forKey:@"requestor"];
+    [defriendRequest setObject:self.friendUserToDelete forKey:@"requestee"];
+    
+    [defriendRequest saveInBackground];
+}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

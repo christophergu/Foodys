@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *reviewsCounterLabel;
 @property (strong, nonatomic) NSArray *userArray;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UITextField *favoriteTextField;
@@ -23,6 +24,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *friendDeleteButton;
 
 
 @end
@@ -54,6 +57,13 @@
                                                  name:@"FriendRankNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reviewCounter:)
+                                                 name:@"FriendReviewCounterNotification"
+                                               object:nil];
+    
+    self.friendDeleteButton.tintColor = [UIColor whiteColor];
+    
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -64,9 +74,16 @@
     self.rankingLabel.text = notification.object;
 }
 
+- (void)reviewCounter:(NSNotification *)notification
+{
+    self.reviewsCounterLabel.text = notification.object;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationItem.title = self.currentFriendUser[@"username"];
+    self.nameLabel.text = self.currentFriendUser[@"username"];
+    
     self.rankingLabel.text = self.currentFriendUser[@"rank"];
     
     if (self.currentFriendUser[@"currentFavorite"])
@@ -104,7 +121,7 @@
 
 - (void)friendsSetter
 {
-    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentFriendUser[@"friends"] count]];
+    self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d Friends",[self.currentFriendUser[@"friends"] count]];
 }
 
 #pragma mark - table view methods
@@ -126,6 +143,7 @@
         self.chosenRestaurantFavoriteDictionary = self.favoritesArray[indexPath.row];
         [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
 }
+
 
 #pragma mark - segue methods
 
