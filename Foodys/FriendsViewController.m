@@ -9,6 +9,7 @@
 #import "FriendsViewController.h"
 #import "FriendProfileViewController.h"
 #import "AllUserBrowseViewController.h"
+#import "AddFriendsViewController.h"
 #import "CollectionViewCellWithImage.h"
 #import <Parse/Parse.h>
 
@@ -23,8 +24,14 @@
 
 @property (strong, nonatomic) NSMutableArray *favoritesArray;
 
+@property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
+
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) NSArray *userFriendsArray;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
+
+@property (strong, nonatomic) NSMutableArray *selectedFriends;
+
 
 @end
 
@@ -49,6 +56,14 @@
     
     self.currentUser = [PFUser currentUser];
     self.userFriendsArray = self.currentUser[@"friends"];
+    
+    // hiding the choose friends button
+    self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    self.addFriendButton.enabled = NO;
+    
+    self.requestorsToAddArray = [NSMutableArray new];
+    [self acceptFriends];
+    [self autoAddFriendsThatAccepted];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -129,6 +144,72 @@
                         
 }
 
+
+#pragma mark - friend request and accept management methods
+
+- (void)acceptFriends
+{
+    PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+    
+    [friendRequestQuery includeKey:@"requestor"];
+    
+    [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         self.requestorsToAddArray = [objects mutableCopy];
+         
+         if (self.requestorsToAddArray.firstObject)
+         {
+             self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
+             self.addFriendButton.enabled = YES;
+         }
+         else
+         {
+             self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+             self.addFriendButton.enabled = NO;
+         }
+     }];
+}
+
+- (void)autoAddFriendsThatAccepted
+{
+    NSArray *currentUserArray = @[self.currentUser];
+    
+    PFQuery *friendsThatAcceptedQuery = [PFUser query];
+    [friendsThatAcceptedQuery whereKey:@"friends" containsAllObjectsInArray:currentUserArray];
+    [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFUser *newFriend in objects)
+        {
+            int beforeCount = (int)[self.currentUser[@"friends"] count];
+            [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
+            int afterCount = (int)[self.currentUser[@"friends"] count];
+            [self.currentUser saveInBackground];
+            
+            if (beforeCount != afterCount)
+            {
+                UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Accepted!"
+                                                                           message:[NSString stringWithFormat:@"You have new friends!"]
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"OK"
+                                                                 otherButtonTitles:nil];
+                [friendAddedAlert show];
+            }
+        }
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSLog(@"alerttt");
+    }
+    else
+    {
+        NSLog(@"zeroo");
+    }
+}
+
 #pragma mark - segue methods or related
 
 - (void)loadUsers
@@ -197,6 +278,51 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FriendRankNotification" object:self.rankingStringForLabel];
 }
 
+- (IBAction)unwindAfterAdd:(UIStoryboardSegue *)unwindSegue
+{
+    AddFriendsViewController *afvc = unwindSegue.sourceViewController;
+    self.selectedFriends = afvc.selectedFriends;
+    
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.currentUser addUniqueObject:friend forKey:@"friends"];
+        [self.currentUser saveInBackground];
+        
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+             [self.myCollectionView reloadData];
+         }];
+    }
+}
+
+- (IBAction)unwindAfterReject:(UIStoryboardSegue *)unwindSegue
+{
+    AddFriendsViewController *afvc = unwindSegue.sourceViewController;
+    self.selectedFriends = afvc.selectedFriends;
+    
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+             [self.myCollectionView reloadData];
+         }];
+    }
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
@@ -207,10 +333,15 @@
         fpvc.favoritesArray = self.favoritesArray;
         [self countReviewsAndRecommendations];
     }
-    if ([[segue identifier] isEqualToString:@"AllUserBrowseSegue"])
+    else if ([[segue identifier] isEqualToString:@"AllUserBrowseSegue"])
     {
         AllUserBrowseViewController *aubvc = segue.destinationViewController;
         aubvc.userArray = self.userArray;
+    }
+    else if ([[segue identifier] isEqualToString:@"AddFriendsSegue"])
+    {
+        AddFriendsViewController *afvc = segue.destinationViewController;
+        afvc.requestorsToAddArray = self.requestorsToAddArray;
     }
 }
 

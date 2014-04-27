@@ -43,45 +43,45 @@
     [self.myTableView reloadData];
     selectedCell.showsReorderControl = YES;
 }
-//
-//- (IBAction)onAddSelectedFriendsButtonPressed:(id)sender
-//{
-//    for (PFUser *friend in self.selectedFriends)
-//    {
-//        [self.currentUser addUniqueObject:friend forKey:@"friends"];
-//        [self.currentUser saveInBackground];
-//        
-//        [self.selectedFriends removeObject:friend];
-//        
-//        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
-//        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
-//        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
-//        
-//        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//         {
-//             [objects.firstObject deleteInBackground];
-//             [self.myTableView reloadData];
-//         }];
-//    }
-//}
-//
-//- (IBAction)onDeleteSelectedFriendsButtonPressed:(id)sender
-//{
-//    for (PFUser *friend in self.selectedFriends)
-//    {
-//        [self.selectedFriends removeObject:friend];
-//        
-//        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
-//        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
-//        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
-//
-//        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//         {
-//             [objects.firstObject deleteInBackground];
-//             [self.myTableView reloadData];
-//         }];
-//    }
-//}
+
+- (IBAction)onAddSelectedFriendsButtonPressed:(id)sender
+{
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.currentUser addUniqueObject:friend forKey:@"friends"];
+        [self.currentUser saveInBackground];
+        
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+        
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+             [self.myTableView reloadData];
+         }];
+    }
+}
+
+- (IBAction)onDeleteSelectedFriendsButtonPressed:(id)sender
+{
+    for (PFUser *friend in self.selectedFriends)
+    {
+        [self.selectedFriends removeObject:friend];
+        
+        PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+        [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+        [friendRequestQuery whereKey:@"requestor" equalTo:friend];
+
+        [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             [objects.firstObject deleteInBackground];
+             [self.myTableView reloadData];
+         }];
+    }
+}
 
 - (void)viewDidLoad
 {

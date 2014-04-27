@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *yesNoLabel;
 @property (strong, nonatomic) IBOutlet UILabel *averageRating;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantTitle;
+@property (strong, nonatomic) IBOutlet UILabel *reviewerNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 
 @end
 
@@ -24,10 +26,8 @@
 {
     [super viewDidLoad];
 
-    self.myTextView.layer.cornerRadius=8.0f;
-    self.myTextView.layer.masksToBounds=YES;
-    self.myTextView.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
-    self.myTextView.layer.borderWidth= 1.0f;
+    
+    self.reviewerNameLabel.text = self.currentPost[@"author"];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
@@ -40,6 +40,13 @@
     self.yesNoLabel.text = self.currentPost[@"wouldGoAgain"];
     self.averageRating.text = [NSString stringWithFormat:@"%@%%",self.currentPost[@"rating"]];//[NSNumber numberWithInt:@"%i,rating"];
     
+    self.avatarImageView.clipsToBounds = YES;
+    PFFile *userImageFile = self.currentPost[@"avatar"];
+    [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+        if (!error) {
+            self.avatarImageView.image = [UIImage imageWithData:imageData];
+        }
+    }];
     
     NSLog(@"%@",self.currentPost[@"rating"]);
     

@@ -100,6 +100,7 @@
     
 //    cell.avatarImageView.image = [UIImage imageNamed:@"avatar"];
     
+    cell.avatarImageView.clipsToBounds = YES;
     PFFile *userImageFile = self.currentPost[@"avatar"];
     [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
         if (!error) {
