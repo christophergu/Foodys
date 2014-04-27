@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *reviewsCounterLabel;
 @property (strong, nonatomic) NSArray *userFriendsArray;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *favoritesArray;
@@ -39,9 +40,11 @@
 
 @property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
 
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 @property BOOL isEditModeEnabled;
 
 @property (strong, nonatomic) NSMutableArray *selectedFriends;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end
 
@@ -68,15 +71,20 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    self.mySegmentedControl.tintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.editButton.tintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
+    
+    self.nameLabel.text = self.currentUser[@"username"];
     self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
     
     self.requestorsToAddArray = [NSMutableArray new];
+    [self countReviewsAndRecommendations];
     [self friendsSetter];
     
     self.recommendationsArray = [NSMutableArray new];
@@ -111,7 +119,6 @@
     
     [self retrieveFavorites];
     
-    [self countReviewsAndRecommendations];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
     self.isEditModeEnabled = NO;
@@ -211,7 +218,7 @@
     // have to check for null instead of nil here
     if (![self.currentUser[@"friends"] isEqual:[NSNull null]])
     {
-        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self.currentUser[@"friends"] count]];
+        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%lu friends",(unsigned long)[self.currentUser[@"friends"] count]];
     }
 }
 
@@ -223,6 +230,8 @@
     
     [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
         self.numberOfReviewsAndRecommendations += number;
+        
+        self.reviewsCounterLabel.text = [NSString stringWithFormat:@"%d Reviews", self.numberOfReviewsAndRecommendations];
         
         PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
         [userRecommendationQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
