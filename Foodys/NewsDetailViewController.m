@@ -7,6 +7,7 @@
 //
 
 #import "NewsDetailViewController.h"
+#import "RestaurantViewController.h"
 
 @interface NewsDetailViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
@@ -58,9 +59,14 @@
     {
         self.yesNoLabel.textColor = [UIColor redColor];
     }
-    
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    RestaurantViewController *rvc = segue.destinationViewController;
+    NSLog(@"%@",self.currentPost[@"restaurantDictionary"]);
+    rvc.chosenRestaurantDictionary = self.currentPost[@"restaurantDictionary"];
+}
 
 
 @end

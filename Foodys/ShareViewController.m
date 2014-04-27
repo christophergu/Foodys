@@ -305,6 +305,8 @@
         publicPost[@"body"] = self.myTextView.text;
         int rating = [self.sliderScoreLabel.text integerValue];
         publicPost[@"rating"] = @(rating);
+        publicPost[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
+        
         [publicPost saveInBackground];
         
         [self.currentUser addUniqueObject:publicPost forKey:@"postsMade"];

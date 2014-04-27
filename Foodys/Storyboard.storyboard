@@ -585,6 +585,9 @@
                                 <state key="normal" title="Get More Info">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="cM8-7k-1gT" kind="push" identifier="DetailToRestaurantSegue" id="ppX-Ne-jpR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96470588239999999" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -1298,7 +1301,6 @@
                                 <rect key="frame" x="4" y="126" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjg-Ne-qmA" id="gIE-Qb-gVN">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1960,8 +1962,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="94m-tQ-6MG"/>
-        <segue reference="Bhm-sR-I30"/>
         <segue reference="aQs-us-9HC"/>
+        <segue reference="Bhm-sR-I30"/>
+        <segue reference="ppX-Ne-jpR"/>
     </inferredMetricsTieBreakers>
 </document>

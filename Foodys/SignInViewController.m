@@ -47,6 +47,8 @@
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
     user[@"rank"] = @"Shy Foodie";
+    NSDate *joinDate = [NSDate date];
+    user[@"joinDate"] = joinDate;
     
     UIImage *pickedImage = [UIImage imageNamed:@"defaultUserImage"];
     NSData* data = UIImageJPEGRepresentation(pickedImage,1.0f);
