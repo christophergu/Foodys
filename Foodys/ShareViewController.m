@@ -39,6 +39,7 @@
 
 @property (strong, nonatomic) NSMutableArray *friendsToRecommendTo;
 @property (strong, nonatomic) IBOutlet UIButton *getRestaurantInfoButton;
+@property (strong, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -63,14 +64,15 @@
     NSLog(@"%@",self.chosenRestaurantDictionary);
     
     self.friendsToRecommendTo = [NSMutableArray new];
+    
+    self.doneButton.layer.cornerRadius=4.0f;
+    self.doneButton.layer.masksToBounds=YES;
+    self.doneButton.tintColor = [UIColor whiteColor];
 }
 
 -(void)setUpBasicElementsForThisView
 {
-    self.myTextView.layer.cornerRadius=8.0f;
-    self.myTextView.layer.masksToBounds=YES;
-    self.myTextView.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
-    self.myTextView.layer.borderWidth= 1.0f;
+    self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
@@ -129,14 +131,6 @@
     
     
     [self refreshRatingLabel];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser) {
-        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
-    }
 }
 
 #pragma mark - refreshing the rating label methods
@@ -307,11 +301,10 @@
         publicPost[@"authorObjectId"] = self.currentUser.objectId;
         publicPost[@"avatar"] = self.currentUser[@"avatar"];
         publicPost[@"date"] = [formatter dateFromString:self.dateLabel.text];
-        publicPost[@"title"] = self.subjectTextField.text;
+        publicPost[@"title"] = self.chosenRestaurantDictionary[@"name"];
         publicPost[@"body"] = self.myTextView.text;
         int rating = [self.sliderScoreLabel.text integerValue];
         publicPost[@"rating"] = @(rating);
-        publicPost[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
         [publicPost saveInBackground];
         
         [self.currentUser addUniqueObject:publicPost forKey:@"postsMade"];
@@ -319,7 +312,7 @@
     }
     
     PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
-    [reviewedRestaurantQuery whereKey:@"name" equalTo:self.subjectTextField.text];
+    [reviewedRestaurantQuery whereKey:@"name" equalTo:self.chosenRestaurantDictionary[@"name"]];
     
     [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -332,7 +325,7 @@
              self.reviewedRestaurant = [PFObject objectWithClassName:@"ReviewedRestaurant"];
          }
          
-         self.reviewedRestaurant[@"name"] = self.subjectTextField.text;
+         self.reviewedRestaurant[@"name"] = self.chosenRestaurantDictionary[@"name"];
          
          if (self.cumulativeRestaurantRatingLabel.text.length == 0)
          {

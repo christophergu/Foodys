@@ -14,8 +14,10 @@
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
+@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet UILabel *restaurantNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *telephoneIndicatorLabel;
 @property (strong, nonatomic) IBOutlet UIButton *phoneNumber;
-@property (strong, nonatomic) IBOutlet UIButton *websiteURL;
 @property (strong, nonatomic) IBOutlet UIButton *address;
 @property (strong, nonatomic) NSDictionary *restaurantResultsDictionary;
 @property (strong, nonatomic) IBOutlet UILabel *sundayHoursLabel;
@@ -43,6 +45,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *saveToProfileButton;
 @property (strong, nonatomic) IBOutlet UILabel *menuUnavailableLabel;
 @property (strong, nonatomic) IBOutlet UILabel *hoursUnavailableLabel;
+@property (strong, nonatomic) IBOutlet UIButton *reviewButton;
 
 @end
 
@@ -52,33 +55,40 @@
 {
     [super viewDidLoad];
 
+    self.restaurantNameLabel.text = self.chosenRestaurantDictionary[@"name"];
+    
     if ((self.chosenRestaurantDictionary[@"phone"] != (id)[NSNull null]))
     {
         [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
+        self.phoneNumber.alpha = 1.0;
+        self.telephoneIndicatorLabel.alpha = 1.0;
         self.phoneNumber.enabled = YES;
     }
     else
     {
         self.phoneNumber.enabled = NO;
         self.phoneNumber.alpha = 0.0;
+        self.telephoneIndicatorLabel.alpha = 0.0;
     }
     
-    if ((self.chosenRestaurantDictionary[@"website_url"] != (id)[NSNull null]))
-    {
-        [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
-        self.websiteURL.enabled = YES;
-    }
-    else
-    {
-        self.websiteURL.enabled = NO;
-        self.websiteURL.alpha = 0.0;
-    }
+//    if ((self.chosenRestaurantDictionary[@"website_url"] != (id)[NSNull null]))
+//    {
+//        [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
+//        self.websiteURL.enabled = YES;
+//    }
+//    else
+//    {
+//        self.websiteURL.enabled = NO;
+//        self.websiteURL.alpha = 0.0;
+//    }
     
     if (self.chosenRestaurantDictionary[@"street_address"] != (id)[NSNull null]) {
-        NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
-        [self.address setTitle:fullAddress forState:UIControlStateNormal];
-        [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
-        self.address.enabled = YES;
+        
+        self.addressLabel.text = self.chosenRestaurantDictionary[@"street_address"];
+//        NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
+//        [self.address setTitle:fullAddress forState:UIControlStateNormal];
+//        [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
+//        self.address.enabled = YES;
     }
     else
     {
@@ -115,17 +125,15 @@
     self.menuUnavailableLabel.alpha = 0.0;
     self.hoursUnavailableLabel.alpha = 0.0;
 
+    
+    self.reviewButton.layer.cornerRadius=4.0f;
+    self.reviewButton.layer.masksToBounds=YES;
+    self.reviewButton.tintColor = [UIColor whiteColor];
+    
+    
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser) {
-        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
-    }
 }
 
 #pragma mark - tableview delegate methods
@@ -140,6 +148,8 @@
     RestaurantMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCellReuseID"];
     NSDictionary *currentFoodItem = self.restaurantMenu[indexPath.row];
     cell.nameLabel.text = currentFoodItem[@"name"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     if (currentFoodItem[@"price"])
     {
         cell.priceLabel.text = [NSString stringWithFormat:@"$%@",currentFoodItem[@"price"]];
@@ -175,7 +185,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 64, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 256, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -189,7 +199,7 @@
                                 options: UIViewAnimationOptionCurveEaseIn
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 448, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 452, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -223,7 +233,7 @@
                                 options: UIViewAnimationOptionCurveEaseIn
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 448, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 452, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -253,7 +263,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.hoursView.frame = CGRectMake(0, 322, 320, 514);
+                 self.hoursView.frame = CGRectMake(0, 354, 320, 514);
                  self.hoursUnavailableLabel.alpha = 1.0;
              }
                              completion:
@@ -268,7 +278,7 @@
                                 options: UIViewAnimationOptionCurveEaseIn
                              animations:
              ^{
-                 self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+                 self.hoursView.frame = CGRectMake(0, 414, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -288,7 +298,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.hoursView.frame = CGRectMake(0, 221, 320, 514);
+                 self.hoursView.frame = CGRectMake(0, 256, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -302,7 +312,7 @@
                                 options: UIViewAnimationOptionCurveEaseIn
                              animations:
              ^{
-                 self.hoursView.frame = CGRectMake(0, 382, 320, 514);
+                 self.hoursView.frame = CGRectMake(0, 414, 320, 514);
              }
                              completion:
              ^(BOOL finished){
