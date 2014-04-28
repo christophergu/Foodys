@@ -2054,10 +2054,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Bhm-sR-I30"/>
-        <segue reference="aQs-us-9HC"/>
-        <segue reference="ttk-AO-ZX1"/>
         <segue reference="RhK-hE-tTe"/>
+        <segue reference="ttk-AO-ZX1"/>
         <segue reference="fdc-o9-LBs"/>
     </inferredMetricsTieBreakers>
 </document>
