@@ -131,7 +131,6 @@
         nameTextForSearch = [nameTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         [itemSearchString appendString:nameTextForSearch];
     }
-
     
     if (self.locationManager.location)
     {
@@ -195,28 +194,28 @@
 
 -(void)nameAutoCorrect
 {
-//    if ([self.nameTextField.text isEqualToString:@"macdonalds"] ||
-//        [self.nameTextField.text isEqualToString:@"macdonald's"] ||
-//        [self.nameTextField.text isEqualToString:@"mcdonalds"])
-//    {
-//        self.nameTextField.text = @"McDonald's";
-//    }
-//    else if ([self.nameTextField.text isEqualToString:@"wendys"])
-//    {
-//        self.nameTextField.text = @"Wendy's";
-//    }
-//    else if ([self.nameTextField.text isEqualToString:@"chikfila"] ||
-//             [self.nameTextField.text isEqualToString:@"chickfila"] ||
-//             [self.nameTextField.text isEqualToString:@"chickfilla"] ||
-//             [self.nameTextField.text isEqualToString:@"chick-fill-a"])
-//    {
-//        self.nameTextField.text = @"Chick-fil-a";
-//    }
-//    else if ([self.nameTextField.text isEqualToString:@"burgerking"] ||
-//             [self.nameTextField.text isEqualToString:@"burger-king"])
-//    {
-//        self.nameTextField.text = @"Burger King";
-//    }
+    if ([self.cuisineTextField.text isEqualToString:@"macdonalds"] ||
+        [self.cuisineTextField.text isEqualToString:@"macdonald's"] ||
+        [self.cuisineTextField.text isEqualToString:@"mcdonalds"])
+    {
+        self.cuisineTextField.text = @"McDonald's";
+    }
+    else if ([self.cuisineTextField.text isEqualToString:@"wendys"])
+    {
+        self.cuisineTextField.text = @"Wendy's";
+    }
+    else if ([self.cuisineTextField.text isEqualToString:@"chikfila"] ||
+             [self.cuisineTextField.text isEqualToString:@"chickfila"] ||
+             [self.cuisineTextField.text isEqualToString:@"chickfilla"] ||
+             [self.cuisineTextField.text isEqualToString:@"chick-fill-a"])
+    {
+        self.cuisineTextField.text = @"Chick-fil-a";
+    }
+    else if ([self.cuisineTextField.text isEqualToString:@"burgerking"] ||
+             [self.cuisineTextField.text isEqualToString:@"burger-king"])
+    {
+        self.cuisineTextField.text = @"Burger King";
+    }
 }
 
 - (void)suggestionFoodSearch:(NSString *)selectedSuggestedFoodItem;

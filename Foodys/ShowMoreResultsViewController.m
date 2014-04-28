@@ -21,6 +21,8 @@
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
 @property (strong, nonatomic) NSMutableArray *recommendedOverlapArray;
+@property (strong, nonatomic) IBOutlet UIView *locuBackgroundView;
+@property (strong, nonatomic) IBOutlet UIImageView *locuLogo;
 
 @property (strong, nonatomic) PFUser *currentUser;
 
@@ -102,17 +104,23 @@
         {
             self.myMapView.alpha = 1.0;
             self.myRecommendedMapView.alpha = 0.0;
+//            self.locuBackgroundView.alpha = 0.0;
+//            self.locuLogo.alpha = 0.0;
         }
         else if (self.mySegmentedControl.selectedSegmentIndex == 1)
         {
             self.myMapView.alpha = 0.0;
             self.myRecommendedMapView.alpha = 1.0;
+//            self.locuBackgroundView.alpha = 1.0;
+//            self.locuLogo.alpha = 1.0;
         }
     }
     else
     {
         self.myMapView.alpha = 0.0;
         self.myRecommendedMapView.alpha = 0.0;
+//        self.locuBackgroundView.alpha = 1.0;
+//        self.locuLogo.alpha = 1.0;
     }
 }
 

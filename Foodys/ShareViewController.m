@@ -56,6 +56,7 @@
     [self cumulativeRestaurantRatingsLabelSetUp];
     
     // hiding the choose friends button
+
     self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     self.chooseFriendsDoneButton.enabled = NO;
     
@@ -68,7 +69,49 @@
     self.doneButton.layer.cornerRadius=4.0f;
     self.doneButton.layer.masksToBounds=YES;
     self.doneButton.tintColor = [UIColor whiteColor];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (self.cameForFriend)
+    {
+        self.chooseFriendToWriteView.alpha = 1.0;
+        [UIView animateWithDuration:0.5 animations:^{
+                self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
+        }];
+        self.chooseFriendsDoneButton.enabled = YES;
+    }
+    else
+    {
+        self.chooseFriendToWriteView.alpha = 0.0;
+        self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
+        self.chooseFriendsDoneButton.enabled = NO;
+    }
+}
+
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    NSLog(@"yea");
+//    if (self.cameForFriend)
+//    {
+//        NSLog(@"ra %hhd",self.cameForFriend);
+//
+//        [UIView animateWithDuration:0.5
+//                              delay:0.0
+//                            options: UIViewAnimationOptionCurveEaseIn
+//                         animations:^{
+//                             self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
+//                             self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+//                         }
+//                         completion:^(BOOL finished){
+//                             self.chooseFriendsDoneButton.enabled = YES;
+//                         }];
+//    }
+//}
 
 -(void)setUpBasicElementsForThisView
 {
@@ -300,11 +343,11 @@
         self.recommendation[@"author"] = self.currentUser[@"username"];
         self.recommendation[@"authorObjectId"] = self.currentUser.objectId;
         self.recommendation[@"date"] = [formatter dateFromString:self.dateLabel.text];
-        self.recommendation[@"title"] = self.subjectTextField.text;
+//        self.recommendation[@"title"] = self.subjectTextField.text;
         self.recommendation[@"body"] = self.myTextView.text;
         int rating = [self.sliderScoreLabel.text integerValue];
         self.recommendation[@"rating"] = @(rating);
-        self.recommendation[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
+//        self.recommendation[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
         self.recommendation[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
         
         [self.recommendation saveInBackground];
