@@ -10,8 +10,8 @@
 		43A04C13190566000078E5D9 /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A04C12190566000078E5D9 /* NewsTableViewCell.m */; };
 		43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */; };
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
-		43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E4130419003E2A008D7431 /* RecommendViewController.m */; };
 		DF0A6C2C18FF5FE90064DA6B /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */; };
+		DF0B3A7419083BFD00EFCF43 /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */; };
 		DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */; };
 		DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */; };
 		DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */; };
@@ -73,10 +73,10 @@
 		43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewCell.m; sourceTree = "<group>"; };
 		43E412FD18FF397D008D7431 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
 		43E412FE18FF397D008D7431 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
-		43E4130319003E2A008D7431 /* RecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecommendViewController.h; path = ../RecommendViewController.h; sourceTree = "<group>"; };
-		43E4130419003E2A008D7431 /* RecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecommendViewController.m; path = ../RecommendViewController.m; sourceTree = "<group>"; };
 		DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailViewController.h; sourceTree = "<group>"; };
 		DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
+		DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsViewController.h; sourceTree = "<group>"; };
+		DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsViewController.m; sourceTree = "<group>"; };
 		DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
 		DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileViewController.m; sourceTree = "<group>"; };
 		DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendsViewController.h; sourceTree = "<group>"; };
@@ -224,45 +224,45 @@
 			children = (
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
-				DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */,
-				DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */,
+				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
+				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
+				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
+				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
 				DF4DB89818FC4EFF00C225EC /* SearchViewController.h */,
 				DF4DB89918FC4EFF00C225EC /* SearchViewController.m */,
-				DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */,
-				DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */,
+				DF4DB8A918FC706D00C225EC /* ShowMoreResultsViewController.h */,
+				DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */,
 				DF4DB89B18FC4F2B00C225EC /* RestaurantViewController.h */,
 				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
-				43E4130319003E2A008D7431 /* RecommendViewController.h */,
-				43E4130419003E2A008D7431 /* RecommendViewController.m */,
+				DF14E30E18FEDD6800E4DDCF /* ShareViewController.h */,
+				DF14E30F18FEDD6800E4DDCF /* ShareViewController.m */,
+				DFF936FC19043BBD00843509 /* WebViewController.h */,
+				DFF936FD19043BBD00843509 /* WebViewController.m */,
+				43E412FD18FF397D008D7431 /* NewsViewController.h */,
+				43E412FE18FF397D008D7431 /* NewsViewController.m */,
+				DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */,
+				DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */,
+				DF4DB8A418FC508800C225EC /* ProfileViewController.h */,
+				DF4DB8A518FC508800C225EC /* ProfileViewController.m */,
+				DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */,
+				DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */,
+				DF11A01118FD9A7400CAB607 /* AllUserBrowseViewController.h */,
+				DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */,
+				DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */,
+				DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */,
+				DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */,
+				DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */,
+				DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */,
+				DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */,
+				DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */,
+				DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */,
 				DFFC0A5B19033ECE009F582A /* EatViewController.h */,
 				DFFC0A5C19033ECE009F582A /* EatViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
 				43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */,
 				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
-				DF4DB89E18FC4FBC00C225EC /* SignInViewController.h */,
-				DF4DB89F18FC4FBC00C225EC /* SignInViewController.m */,
-				DF4DB8A918FC706D00C225EC /* ShowMoreResultsViewController.h */,
-				DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */,
-				DFF936FC19043BBD00843509 /* WebViewController.h */,
-				DFF936FD19043BBD00843509 /* WebViewController.m */,
-				DF14E30E18FEDD6800E4DDCF /* ShareViewController.h */,
-				DF14E30F18FEDD6800E4DDCF /* ShareViewController.m */,
-				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
-				DF4DB8A218FC505400C225EC /* LogInViewController.m */,
-				43E412FD18FF397D008D7431 /* NewsViewController.h */,
-				43E412FE18FF397D008D7431 /* NewsViewController.m */,
 				43A04C11190566000078E5D9 /* NewsTableViewCell.h */,
 				43A04C12190566000078E5D9 /* NewsTableViewCell.m */,
-				DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */,
-				DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */,
-				DF4DB8A418FC508800C225EC /* ProfileViewController.h */,
-				DF4DB8A518FC508800C225EC /* ProfileViewController.m */,
-				DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */,
-				DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */,
-				DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */,
-				DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */,
-				DF11A01118FD9A7400CAB607 /* AllUserBrowseViewController.h */,
-				DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */,
 				DF4DB86618FC450000C225EC /* Images.xcassets */,
 				DFE1B0FC1900E9CA0090F929 /* RestaurantMenuTableViewCell.h */,
 				DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */,
@@ -405,7 +405,6 @@
 			files = (
 				DFFC0A5D19033ECE009F582A /* EatViewController.m in Sources */,
 				DF11A01618FD9F8A00CAB607 /* CollectionViewCellWithImageThatFlips.m in Sources */,
-				43E4130519003E2A008D7431 /* RecommendViewController.m in Sources */,
 				DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */,
 				DF4DB8A318FC505400C225EC /* LogInViewController.m in Sources */,
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
@@ -417,6 +416,7 @@
 				43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
 				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,
+				DF0B3A7419083BFD00EFCF43 /* AddFriendsViewController.m in Sources */,
 				DF4DB89D18FC4F2B00C225EC /* RestaurantViewController.m in Sources */,
 				DF11A01918FDBF3A00CAB607 /* AddFriendButton.m in Sources */,
 				DFE1B0FE1900E9CA0090F929 /* RestaurantMenuTableViewCell.m in Sources */,
@@ -503,7 +503,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "A6192DA6-D187-47E5-9F43-C93D9E8F2BC7";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -535,7 +535,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "A6192DA6-D187-47E5-9F43-C93D9E8F2BC7";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -554,8 +554,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foodys/Foodys-Prefix.pch";
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A6192DA6-D187-47E5-9F43-C93D9E8F2BC7";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -573,8 +574,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foodys/Foodys-Prefix.pch";
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A6192DA6-D187-47E5-9F43-C93D9E8F2BC7";
+				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

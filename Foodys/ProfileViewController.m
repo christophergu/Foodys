@@ -10,13 +10,15 @@
 #import "FriendsViewController.h"
 #import "RestaurantViewController.h"
 #import "ShareViewController.h"
+#import "AddFriendsViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
-@property (strong, nonatomic) NSArray *userArray;
+@property (strong, nonatomic) IBOutlet UILabel *reviewsCounterLabel;
+@property (strong, nonatomic) NSArray *userFriendsArray;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *favoritesArray;
 
@@ -32,8 +34,14 @@
 @property (strong, nonatomic) NSMutableArray *recommendationsArray;
 
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
+@property (strong, nonatomic) NSDictionary *chosenRestaurantRecommendationDictionary;
+@property (strong, nonatomic) PFObject *chosenRestaurantRecommendationObject;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 @property BOOL isEditModeEnabled;
+
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end
 
@@ -51,17 +59,28 @@
                       @"Celebrity Foodie",
                       @"Rockstar Foodie",
                       @"Superhero Foodie"];
-
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    self.mySegmentedControl.tintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.editButton.tintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
+    
+    self.nameLabel.text = self.currentUser[@"username"];
     self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
     
+    [self countReviewsAndRecommendations];
+    [self friendsSetter];
+    
     self.recommendationsArray = [NSMutableArray new];
-    [self retrieveRecommendations];
+    [self autoAddReceivedRecommendations];
     
     if (self.currentUser[@"avatar"])
     {
@@ -78,7 +97,6 @@
     }
     self.avatarImageView.clipsToBounds = YES;
     
-    [self friendsSetter];
     
     self.favoritesArray = [NSMutableArray new];
     
@@ -93,13 +111,11 @@
     
     [self retrieveFavorites];
     
-    [self countReviewsAndRecommendations];
-    [self acceptFriends];
-    [self autoAddFriendsThatAccepted];
+
     self.isEditModeEnabled = NO;
 }
 
-#pragma mark - edit methods / table view edit methods
+#pragma mark - table view delete methods
 
 - (IBAction)onEditButtonPressed:(UIButton *)sender
 {
@@ -121,7 +137,52 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [self.favoritesArray removeObjectAtIndex:indexPath.row];
+        
+        if(self.mySegmentedControl.selectedSegmentIndex==0)
+        {
+            [self.favoritesArray removeObjectAtIndex:indexPath.row];
+            
+            PFQuery *favoriteToDeleteQuery = [PFQuery queryWithClassName:@"Favorite"];
+            [favoriteToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"favorites"][indexPath.row][@"name"]];
+            [favoriteToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+             {
+                 NSLog(@"objects %@", objects.firstObject);
+                 [objects.firstObject deleteInBackground];
+                 //             [self.myTableView reloadData];
+             }];
+            
+            
+            NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
+            [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
+            if ([self.currentUser[@"favorites"]count] == 0)
+            {
+                [self.currentUser removeObjectForKey:@"favorites"];
+                [self.currentUser saveInBackground];
+            }
+        }
+        else if(self.mySegmentedControl.selectedSegmentIndex==1)
+        {
+            [self.recommendationsArray removeObjectAtIndex:indexPath.row];
+            
+            PFQuery *recommendationToDeleteQuery = [PFQuery queryWithClassName:@"Recommendation"];
+            [recommendationToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"recommendations"][indexPath.row][@"name"]];
+            [recommendationToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+             {
+                 NSLog(@"objects %@", objects.firstObject);
+                 [objects.firstObject deleteInBackground];
+                 //             [self.myTableView reloadData];
+             }];
+            
+            
+            NSLog(@"recommendation to delete %@",self.currentUser[@"recommendations"][indexPath.row][@"name"]);
+            [self.currentUser[@"recommendations"] removeObjectIdenticalTo:self.currentUser[@"recommendations"][indexPath.row]];
+            if ([self.currentUser[@"recommendations"]count] == 0)
+            {
+                [self.currentUser removeObjectForKey:@"recommendations"];
+                [self.currentUser saveInBackground];
+            }
+        }
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
@@ -132,13 +193,14 @@
 //    [items insertObject:cellToMove atIndex:destinationIndexPath.row];
 //}
 
-#pragma mark - populate view methods
+#pragma mark - helper populate view methods
 
 - (void)friendsSetter
 {
-    if ([self.currentUser[@"friends"] count] != 0)
+    // have to check for null instead of nil here
+    if (![self.currentUser[@"friends"] isEqual:[NSNull null]])
     {
-        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%d",[self.currentUser[@"friends"] count]];
+        self.friendsCounterLabel.text = [NSString stringWithFormat:@"%lu friends",(unsigned long)[self.currentUser[@"friends"] count]];
     }
 }
 
@@ -150,6 +212,8 @@
     
     [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
         self.numberOfReviewsAndRecommendations += number;
+        
+        self.reviewsCounterLabel.text = [NSString stringWithFormat:@"%d Reviews", self.numberOfReviewsAndRecommendations];
         
         PFQuery *userRecommendationQuery = [PFQuery queryWithClassName:@"Recommendation"];
         [userRecommendationQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
@@ -163,7 +227,7 @@
 
 - (void)rankingSetter:(int)numberOfReviewsAndRecommendations
 {
-    if (numberOfReviewsAndRecommendations == 0)
+    if (numberOfReviewsAndRecommendations == 0 )
     {
         self.currentUser[@"rank"] = self.rankings[0];
     }
@@ -191,7 +255,7 @@
     {
         self.currentUser[@"rank"] = self.rankings[6];
     }
-    else if (numberOfReviewsAndRecommendations < 28)
+    else if (numberOfReviewsAndRecommendations > 23)
     {
         self.currentUser[@"rank"] = self.rankings[7];
     }
@@ -200,8 +264,6 @@
         self.rankingLabel.text = self.currentUser[@"rank"];
     }];
 }
-
-#pragma mark - table view methods
 
 - (void)retrieveFavorites
 {
@@ -218,6 +280,8 @@
     }
     [self.myTableView reloadData];
 }
+
+#pragma mark - table view methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -241,10 +305,26 @@
     if(self.mySegmentedControl.selectedSegmentIndex==0)
     {
         cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
+        
+//        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+//        [reviewedRestaurantQuery whereKey:@"name" containsString:self.favoritesArray[indexPath.row][@"name"]];
+//        
+//        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//         {
+//             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%%", objects.firstObject[@"rating"]];
+//         }];
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
         cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+        
+//        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+//        [reviewedRestaurantQuery whereKey:@"name" containsString:self.recommendationsArray[indexPath.row][@"name"]];
+//        
+//        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//         {
+//             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%%", objects.firstObject[@"rating"]];
+//         }];
     }
     
     return cell;
@@ -259,53 +339,30 @@
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-//        self.chosenRestaurantRecommendationDictionary = self.recommendationsArray[indexPath.row][@"restaurantDictionary"];
-//        
-//        
-//        [self performSegueWithIdentifier:@"FavoriteToRestaurantSegue" sender:self];
-//        
-//        
+        self.chosenRestaurantRecommendationObject = self.recommendationsArray[indexPath.row];
+        [self performSegueWithIdentifier:@"RecommendToShareSegue" sender:self];
     }
-
-    
-    
-    // RecommendToShareSegue
 }
+
+#pragma mark - segmented control method
 
 -(IBAction) segmentedControlIndexChanged
 {
-    switch (self.mySegmentedControl.selectedSegmentIndex)
-    {
-        case 0:
-            [self.myTableView reloadData];
-            break;
-        case 1:
-            [self.myTableView reloadData];
-        default:
-            break;
-    }
+    [self.myTableView reloadData];
+
+//    switch (self.mySegmentedControl.selectedSegmentIndex)
+//    {
+//        case 0:
+//            [self.myTableView reloadData];
+//            break;
+//        case 1:
+//            [self.myTableView reloadData];
+//        default:
+//            break;
+//    }
 }
 
 #pragma mark - recommendation methods
-
-- (void)retrieveRecommendations
-{
-    [self autoAddReceivedRecommendations];
-    
-    int recommendationCount = [self.currentUser[@"recommendations"] count];
-    for (int i = 0; i < recommendationCount; i++)
-    {
-        PFObject *recommendation = self.currentUser[@"recommendations"][i];
-        [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
-         {
-             if (![self.recommendationsArray containsObject:recommendation])
-             {
-                 [self.recommendationsArray addObject:recommendation];
-                 [self.myTableView reloadData];
-             }
-         }];
-    }
-}
 
 - (void)autoAddReceivedRecommendations
 {
@@ -319,63 +376,30 @@
             
             [self.currentUser save];
         }
-    }];
-}
-
-
-#pragma mark - friend request and accept management methods
-
-- (void)acceptFriends
-{
-    PFQuery *friendRequestQuery = [PFQuery queryWithClassName:@"FriendRequest"];
-    [friendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
-    [friendRequestQuery includeKey:@"requestor"];
-    
-    [friendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         NSArray *requestorsToAddArray = objects;
-         for (PFObject *requestorsAndRequestees in requestorsToAddArray) {
-             
-             // the objects that were fetched were _NSarrayM objects so this refetches the objects as PFUser objects
-             NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",requestorsAndRequestees[@"requestor"]];
-             NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
-             
-             PFQuery *friendToIncludeQuery = [PFUser query];
-             [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
-             [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                 [self.currentUser addUniqueObject:objects.firstObject forKey:@"friends"];
-                 [self.currentUser saveInBackground];
+        int recommendationCount = [self.currentUser[@"recommendations"] count];
+        for (int i = 0; i < recommendationCount; i++)
+        {
+            PFObject *recommendation = self.currentUser[@"recommendations"][i];
+            [recommendation fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+             {
+                 if (![self.recommendationsArray containsObject:recommendation])
+                 {
+                     [self.recommendationsArray addObject:recommendation];
+                 }
              }];
-         }
-     }];
-}
-
-- (void)autoAddFriendsThatAccepted
-{
-    NSArray *currentUserArray = @[self.currentUser];
-    
-    PFQuery *friendsThatAcceptedQuery = [PFUser query];
-    [friendsThatAcceptedQuery whereKey:@"friends" containsAllObjectsInArray:currentUserArray];
-    [friendsThatAcceptedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFUser *newFriend in objects) {
-            if ([newFriend isEqual:self.currentUser])
-            {
-                continue;
-            }
-            [self.currentUser addUniqueObject:newFriend forKey:@"friends"];
-            [self.currentUser saveInBackground];
         }
+        [self.myTableView reloadData];
     }];
 }
+
 
 #pragma mark - button methods
 
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
-    [PFUser logOut];
+//    [PFUser logOut];
     
-    [self.tabBarController setSelectedIndex:0];
-//    [self performSegueWithIdentifier:@"LogInSegue" sender:self];
+//    [self.tabBarController setSelectedIndex:0];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
@@ -420,19 +444,14 @@
         }
     }];
     
-    [user saveInBackground];
+    [user save];
 }
 
 #pragma mark - segue methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"FriendsCollectionSegue"])
-    {        
-        FriendsViewController *fvc = segue.destinationViewController;
-        fvc.currentUser = self.currentUser;
-    }
-    else if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
+    if ([[segue identifier] isEqualToString:@"FavoriteToRestaurantSegue"])
     {
         RestaurantViewController *rvc = segue.destinationViewController;
         rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
@@ -440,15 +459,16 @@
     }
     else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
     {
-//        ShareViewController *svc = segue.destinationViewController;
-//        PFQuery *recommendQuery = [PFQuery queryWithClassName:@"Recommend"];
-//        [recommendQuery whereKey:@"restaurantDictionary" equalTo:];
-
-        
-//        RestaurantViewController *rvc = segue.destinationViewController;
-//        rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
-//        rvc.cameFromProfileFavorites = 1;
+        ShareViewController *svc = segue.destinationViewController;
+        svc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
+        svc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
+        svc.cameFromProfileRecommendations = 1;
     }
+
 }
+
+
+
+
 
 @end

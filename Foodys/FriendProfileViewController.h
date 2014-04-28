@@ -12,5 +12,7 @@
 @interface FriendProfileViewController : UIViewController
 
 @property (strong, nonatomic) PFUser *currentFriendUser;
+@property (strong, nonatomic) NSString *rankingStringForLabel;
+@property (strong, nonatomic) NSMutableArray *favoritesArray;
 
 @end

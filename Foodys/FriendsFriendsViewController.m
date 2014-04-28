@@ -12,8 +12,8 @@
 
 @interface FriendsFriendsViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
-@property (strong, nonatomic) PFUser *currentFriendUser;
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) NSMutableArray *friendsNamesArray;
 
 @end
 
@@ -23,6 +23,25 @@
 {
     [super viewDidLoad];
     self.currentUser = [PFUser currentUser];
+    
+    PFQuery *getFriendsNamesQuery = [PFUser query];
+    [getFriendsNamesQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+    [getFriendsNamesQuery includeKey:@"friends"];
+    
+    [getFriendsNamesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         NSArray *friendsArrayFromQuery = objects.firstObject[@"friends"];
+         for (PFUser *friend in friendsArrayFromQuery)
+         {
+             [self.friendsNamesArray addObject: friend[@"username"]];
+         }
+     }];
+    
+    self.myCollectionView.backgroundColor = [UIColor whiteColor];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -34,26 +53,18 @@
 {
     CollectionViewCellWithImageThatFlips *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
     
-    // used to get the PFUser with the data back
-    NSString *tempStringBeforeCutting = [NSString stringWithFormat:@"%@",self.friendsFriendsArray[indexPath.row]];
-    NSArray* cutStringArray = [tempStringBeforeCutting componentsSeparatedByString: @":"];
+    self.currentFriendUser = self.friendsFriendsArray[indexPath.row];
     
-    PFQuery *friendToIncludeQuery = [PFUser query];
-    [friendToIncludeQuery whereKey:@"objectId" equalTo:cutStringArray[1]];
-    [friendToIncludeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.currentFriendUser = objects.firstObject;
-        
-        cell.usernameLabel.text = self.currentFriendUser[@"username"];
-        cell.rankLabel.text = self.currentFriendUser[@"rank"];
-        
-        [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!error) {
-                UIImage *photo = [UIImage imageWithData:data];
-                cell.friendImageView.image = photo;
-                cell.friendDetailImageView.alpha = 0.5;
-                cell.friendDetailImageView.image = photo;
-            }
-        }];
+    cell.usernameLabel.text = self.currentFriendUser[@"username"];
+    cell.rankLabel.text = self.currentFriendUser[@"rank"];
+    
+    [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *photo = [UIImage imageWithData:data];
+            cell.friendImageView.image = photo;
+            cell.friendDetailImageView.alpha = 0.5;
+            cell.friendDetailImageView.image = photo;
+        }
     }];
     
     cell.flipped = NO;
@@ -77,6 +88,15 @@
         cell.addFriendButton.hidden = NO;
         cell.addFriendButton.enabled = YES;
         cell.addFriendButton.friendUser = self.friendsFriendsArray[indexPath.row];
+    }
+    
+    for (NSString *usernameString in self.friendsNamesArray)
+    {
+        if ([cell.usernameLabel.text isEqualToString:usernameString])
+        {
+            cell.addFriendButton.hidden = YES;
+            cell.addFriendButton.enabled = NO;
+        }
     }
     
     if (cell.flipped == NO)

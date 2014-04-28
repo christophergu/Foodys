@@ -39,6 +39,7 @@
 
 @property (strong, nonatomic) NSMutableArray *friendsToRecommendTo;
 @property (strong, nonatomic) IBOutlet UIButton *getRestaurantInfoButton;
+@property (strong, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -60,15 +61,18 @@
     
     self.sliderIntValue = 50;
     
+    NSLog(@"%@",self.chosenRestaurantDictionary);
+    
     self.friendsToRecommendTo = [NSMutableArray new];
+    
+    self.doneButton.layer.cornerRadius=4.0f;
+    self.doneButton.layer.masksToBounds=YES;
+    self.doneButton.tintColor = [UIColor whiteColor];
 }
 
 -(void)setUpBasicElementsForThisView
 {
-    self.myTextView.layer.cornerRadius=8.0f;
-    self.myTextView.layer.masksToBounds=YES;
-    self.myTextView.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
-    self.myTextView.layer.borderWidth= 1.0f;
+    self.navigationItem.title = self.chosenRestaurantDictionary[@"name"];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
@@ -78,7 +82,7 @@
     self.dateLabel.text = [NSString stringWithFormat:@"%@",todayString];
     if (self.chosenRestaurantDictionary)
     {
-        if (self.chosenRestaurantDictionary[@"street_address"] && ![self.chosenRestaurantDictionary[@"region"] isEqualToString:@"_"])
+        if (self.chosenRestaurantDictionary[@"street_address"]!= (id)[NSNull null] && ![self.chosenRestaurantDictionary[@"region"] isEqualToString:@"_"])
         {
             self.subjectTextField.text = [NSString stringWithFormat:@"%@ on %@",self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"street_address"]];
         }
@@ -101,8 +105,23 @@
     
     if (self.cameFromProfileRecommendations)
     {
+        self.subjectTextField.enabled = NO;
+        self.myTextView.text = self.chosenRestaurantRecommendationObject[@"body"];
+        [self.myTextView setUserInteractionEnabled:NO];
+        self.mySlider.value = [self.chosenRestaurantRecommendationObject[@"rating"] floatValue];
+        self.sliderScoreLabel.text = [NSString stringWithFormat:@"%@",self.chosenRestaurantRecommendationObject[@"rating"]];
+        self.mySlider.enabled = NO;
         self.getRestaurantInfoButton.alpha = 1.0;
         self.getRestaurantInfoButton.enabled = YES;
+        self.wouldGoAgainYesNoLabel.text = self.chosenRestaurantRecommendationObject[@"wouldGoAgain"];
+        if ([self.wouldGoAgainYesNoLabel.text isEqualToString:@"YES"]) {
+            self.wouldGoAgainYesNoLabel.textColor = [UIColor greenColor];
+        }
+        else
+        {
+            self.wouldGoAgainYesNoLabel.textColor = [UIColor redColor];
+        };
+        // disable done button
     }
     else
     {
@@ -110,15 +129,8 @@
         self.getRestaurantInfoButton.enabled = NO;
     }
     
+    
     [self refreshRatingLabel];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser) {
-        [self performSegueWithIdentifier:@"LogInSegue" sender:self];
-    }
 }
 
 #pragma mark - refreshing the rating label methods
@@ -223,6 +235,21 @@
 - (IBAction)onMySliderChanged:(UISlider *)sender
 {
     self.sliderIntValue = roundl([sender value]);
+    
+    if (self.sliderIntValue > 25 && self.sliderIntValue < 75)
+    {
+        [self.mySlider setThumbImage:[UIImage imageNamed:@"meh_icon"] forState:UIControlStateNormal];
+    }
+    else if (self.sliderIntValue > 74)
+    {
+        [self.mySlider setThumbImage:[UIImage imageNamed:@"smiley_icon"] forState:UIControlStateNormal];
+    }
+    else if (self.sliderIntValue < 26)
+    {
+        [self.mySlider setThumbImage:[UIImage imageNamed:@"frowny_icon"] forState:UIControlStateNormal];
+    }
+    
+    
     self.sliderScoreLabel.text = [NSString stringWithFormat:@"%d", self.sliderIntValue];
 }
 
@@ -287,12 +314,14 @@
         PFObject *publicPost = [PFObject objectWithClassName:@"PublicPost"];
         publicPost[@"author"] = self.currentUser[@"username"];
         publicPost[@"authorObjectId"] = self.currentUser.objectId;
+        publicPost[@"avatar"] = self.currentUser[@"avatar"];
         publicPost[@"date"] = [formatter dateFromString:self.dateLabel.text];
-        publicPost[@"title"] = self.subjectTextField.text;
+        publicPost[@"title"] = self.chosenRestaurantDictionary[@"name"];
         publicPost[@"body"] = self.myTextView.text;
         int rating = [self.sliderScoreLabel.text integerValue];
         publicPost[@"rating"] = @(rating);
-        publicPost[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
+        publicPost[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
+        
         [publicPost saveInBackground];
         
         [self.currentUser addUniqueObject:publicPost forKey:@"postsMade"];
@@ -300,7 +329,7 @@
     }
     
     PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
-    [reviewedRestaurantQuery whereKey:@"name" equalTo:self.subjectTextField.text];
+    [reviewedRestaurantQuery whereKey:@"name" equalTo:self.chosenRestaurantDictionary[@"name"]];
     
     [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -313,7 +342,7 @@
              self.reviewedRestaurant = [PFObject objectWithClassName:@"ReviewedRestaurant"];
          }
          
-         self.reviewedRestaurant[@"name"] = self.subjectTextField.text;
+         self.reviewedRestaurant[@"name"] = self.chosenRestaurantDictionary[@"name"];
          
          if (self.cumulativeRestaurantRatingLabel.text.length == 0)
          {

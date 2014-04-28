@@ -33,6 +33,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -74,7 +78,6 @@
     self.currentPost = self.currentUserPostsArray[indexPath.row];
     
     cell.title.text = self.currentPost[@"title"];
-    
     cell.recommended.text = self.currentPost[@"wouldGoAgain"];
     
    if ([cell.recommended.text isEqualToString:@"YES"])
@@ -86,12 +89,18 @@
         cell.recommended.textColor = [UIColor redColor];
     }
     
+    cell.reviewerNameLabel.text = self.currentPost[@"author"];
     cell.content.text = self.currentPost[@"body"];
+    cell.content.layer.cornerRadius=8.0f;
+    cell.content.layer.masksToBounds=YES;
+    cell.content.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
+    cell.content.layer.borderWidth= 1.0f;
     
 //    cell.avatarImageView = self.currentPost[@"avatar"];
     
 //    cell.avatarImageView.image = [UIImage imageNamed:@"avatar"];
     
+    cell.avatarImageView.clipsToBounds = YES;
     PFFile *userImageFile = self.currentPost[@"avatar"];
     [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
         if (!error) {
