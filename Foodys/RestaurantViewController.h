@@ -13,4 +13,6 @@
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
 @property BOOL cameFromProfileFavorites;
 
+@property NSString *searchTerm;
+
 @end

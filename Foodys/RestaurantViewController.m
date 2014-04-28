@@ -11,6 +11,7 @@
 #import "ShareViewController.h"
 #import "WebViewController.h"
 #import <Parse/Parse.h>
+#import "SearchViewController.h"
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
@@ -483,14 +484,25 @@
 
 #pragma mark - flickr method
 
+
+
 - (void)loadFlickrImageForAtmosphere
 {
     NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
-    NSString *name = self.chosenRestaurantDictionary[@"name"];
+    NSString* name = self.chosenRestaurantDictionary[@"name"];
     
-    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=1&format=json&nojsoncallback=1",
+    
+    NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
                                     apiKey,
-                                    [name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
+//                                self.searchTerm];
+    
+    [name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
+    
+   
+    
+//    NSLog(@"%@",self.chosenRestaurantDictionary);
+    
+    
     
     NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
     NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
@@ -498,7 +510,8 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
      {
          NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-         NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
+       NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
+//         PFObject *object = [PFObject objectWithClassName:@"Kitten"];
          
          if (flickrPhotosArray) {
              NSDictionary *flickrElement = flickrPhotosArray.firstObject;

@@ -75,6 +75,38 @@
 
 }
 
+//- (void)locationManager: (CLLocationManager *)manager
+//       didFailWithError: (NSError *)error
+//{
+//    [manager stopUpdatingLocation];
+//    NSLog(@"error%@",error);
+//    switch([error code])
+//    {
+//        case kCLErrorNetwork: // general, network-related error
+//        {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"please check your network connection or that you are not in airplane mode" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
+//            //[alert release];
+//        }
+//            break;
+//        case kCLErrorDenied:{
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"user has denied to use current Location " delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
+//            //[alert release];
+//        }
+//            break;
+//        default:
+//        {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"unknown network error" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
+//            //[alert release];
+//        }
+//            break;
+//    }
+//}
+
+
+
 #pragma mark - check if there is a current user method
 
 -(void)viewWillAppear:(BOOL)animated
@@ -239,12 +271,31 @@
                                  self.locationManager.location.coordinate.longitude];
         [itemSearchString appendString:locationTextForSearch];
     }
+    
+    
+    
+
 
     NSURL *url = [NSURL URLWithString: itemSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *error;
+        
+        if (connectionError != nil) {
+            
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Data Connection Error"
+                                                        message:@"No data connection try again later"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+            [av show];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            
+    
+        
+        } else {
+        
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
         NSMutableArray *venues = [NSMutableArray new];
@@ -259,6 +310,9 @@
         }
         self.venueSearch = 0;
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
+        
+    }
+        
     }];
 }
 
@@ -287,6 +341,7 @@
     if ([[segue identifier] isEqualToString:@"RestaurantViewControllerSegue"])
     {
         RestaurantViewController *rvc = segue.destinationViewController;
+//        rvc.chosenRestaurantDictionary = ?.searchTerm;
         rvc.chosenRestaurantDictionary = self.searchResultsArray.firstObject;
     }
     else if ([[segue identifier] isEqualToString:@"ShowMoreResultsSegue"])
