@@ -348,11 +348,26 @@
     favorite[@"name"]=self.chosenRestaurantDictionary[@"name"];
     favorite[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
     
-    [favorite saveInBackground];
+    int counter = 0;
     
-    self.currentUser = [PFUser currentUser];
-    [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
-    [self.currentUser saveInBackground];
+    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
+    {
+        [alreadyFavorite fetchIfNeeded];
+        
+        if ([favorite[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+        {
+            counter++;
+        }
+    }
+
+    if (counter == 0)
+    {
+        [favorite saveInBackground];
+        
+        self.currentUser = [PFUser currentUser];
+        [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
+        [self.currentUser saveInBackground];
+    }
 }
 
 - (IBAction)onLocationButtonPressed:(id)sender
