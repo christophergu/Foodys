@@ -48,6 +48,7 @@
 {
     [super viewDidLoad];
     
+
     self.locationManager = [CLLocationManager new];
     
     self.locationManager.delegate = self;
