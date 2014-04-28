@@ -100,19 +100,31 @@
     }
     
     self.currentUser = [PFUser currentUser];
-    for (PFObject *favorite in self.currentUser[@"favorites"])
+    
+    int counter = 0;
+    
+    NSLog(@"favorites %@", self.currentUser[@"favorites"]);
+    
+    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
     {
-        [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            if ([favorite[@"restaurantDictionary"][@"name"] isEqual:self.chosenRestaurantDictionary[@"name"]])
-            {
-                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
-            }
-            else
-            {
-                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_unsel"];
-            }
-        }];
+        [alreadyFavorite fetchIfNeeded];
+        
+        NSLog(@"chosen dict %@",self.chosenRestaurantDictionary);
+        
+        if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+        {
+            counter++;
+            
+            NSLog(@"counter %d",counter);
+        }
     }
+    
+    NSLog(@"counter %d",counter);
+    if (counter > 0)
+    {
+        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+    }
+
     
     [self loadFlickrImageForAtmosphere];
     [self getVenueDetail];
@@ -342,31 +354,42 @@
 
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
 {
-    // fix the bug that allows you to add multiples of the same restaurant
-    
     PFObject *favorite = [PFObject objectWithClassName:@"Favorite"];
     favorite[@"name"]=self.chosenRestaurantDictionary[@"name"];
     favorite[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
     
     int counter = 0;
     
-    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
-    {
-        [alreadyFavorite fetchIfNeeded];
-        
-        if ([favorite[@"name"] isEqualToString: alreadyFavorite[@"name"]])
-        {
-            counter++;
-        }
-    }
-
-    if (counter == 0)
-    {
+    if (self.currentUser[@"favorites"] == nil) {
         [favorite saveInBackground];
+        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+        [self.favoriteStarImageView setNeedsDisplay];
         
         self.currentUser = [PFUser currentUser];
         [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
         [self.currentUser saveInBackground];
+    }
+    else
+    {
+        for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
+        {
+            [alreadyFavorite fetchIfNeeded];
+            
+            if ([favorite[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+            {
+                counter++;
+            }
+        }
+        if (counter == 0)
+        {
+            [favorite saveInBackground];
+            self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+            [self.favoriteStarImageView setNeedsDisplay];
+            
+            self.currentUser = [PFUser currentUser];
+            [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
+            [self.currentUser saveInBackground];
+        }
     }
 }
 
