@@ -49,6 +49,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *locationButton;
 @property (strong, nonatomic) NSString *locationCoordinatesString;
 @property (strong, nonatomic) NSMutableString *locationSearchString;
+@property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
+
 
 @end
 
@@ -74,24 +76,9 @@
         self.telephoneIndicatorLabel.alpha = 0.0;
     }
     
-//    if ((self.chosenRestaurantDictionary[@"website_url"] != (id)[NSNull null]))
-//    {
-//        [self.websiteURL setTitle:self.chosenRestaurantDictionary[@"website_url"] forState:UIControlStateNormal];
-//        self.websiteURL.enabled = YES;
-//    }
-//    else
-//    {
-//        self.websiteURL.enabled = NO;
-//        self.websiteURL.alpha = 0.0;
-//    }
-    
     if (self.chosenRestaurantDictionary[@"street_address"] != (id)[NSNull null]) {
         
         self.addressLabel.text = self.chosenRestaurantDictionary[@"street_address"];
-//        NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@, %@",self.chosenRestaurantDictionary[@"street_address"],self.chosenRestaurantDictionary[@"region"], self.chosenRestaurantDictionary[@"postal_code"]];
-//        [self.address setTitle:fullAddress forState:UIControlStateNormal];
-//        [self.address.titleLabel setTextAlignment: NSTextAlignmentCenter];
-//        self.address.enabled = YES;
     }
     else
     {
@@ -109,6 +96,21 @@
     else
     {
         self.saveToProfileButton.enabled = YES;
+    }
+    
+    self.currentUser = [PFUser currentUser];
+    for (PFObject *favorite in self.currentUser[@"favorites"])
+    {
+        [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if ([favorite[@"restaurantDictionary"][@"name"] isEqual:self.chosenRestaurantDictionary[@"name"]])
+            {
+                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+            }
+            else
+            {
+                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_unsel"];
+            }
+        }];
     }
     
     [self loadFlickrImageForAtmosphere];
@@ -339,6 +341,8 @@
 
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
 {
+    // fix the bug that allows you to add multiples of the same restaurant
+    
     PFObject *favorite = [PFObject objectWithClassName:@"Favorite"];
     favorite[@"name"]=self.chosenRestaurantDictionary[@"name"];
     favorite[@"restaurantDictionary"]=self.chosenRestaurantDictionary;

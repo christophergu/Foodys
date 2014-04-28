@@ -235,6 +235,21 @@
 - (IBAction)onMySliderChanged:(UISlider *)sender
 {
     self.sliderIntValue = roundl([sender value]);
+    
+    if (self.sliderIntValue > 25 && self.sliderIntValue < 75)
+    {
+        [self.mySlider setThumbImage:[UIImage imageNamed:@"meh_icon"] forState:UIControlStateNormal];
+    }
+    else if (self.sliderIntValue > 74)
+    {
+        [self.mySlider setThumbImage:[UIImage imageNamed:@"smiley_icon"] forState:UIControlStateNormal];
+    }
+    else if (self.sliderIntValue < 26)
+    {
+        [self.mySlider setThumbImage:[UIImage imageNamed:@"frowny_icon"] forState:UIControlStateNormal];
+    }
+    
+    
     self.sliderScoreLabel.text = [NSString stringWithFormat:@"%d", self.sliderIntValue];
 }
 
