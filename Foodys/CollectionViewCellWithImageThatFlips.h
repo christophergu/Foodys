@@ -11,11 +11,14 @@
 
 @interface CollectionViewCellWithImageThatFlips : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *friendImageView;
-@property BOOL flipped;
+//@property BOOL flipped;
 @property (strong, nonatomic) IBOutlet UIView *detailView;
 @property (strong, nonatomic) IBOutlet UIImageView *friendDetailImageView;
 @property (strong, nonatomic) IBOutlet UILabel *rankLabel;
 @property (strong, nonatomic) IBOutlet AddFriendButton *addFriendButton;
 @property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (strong, nonatomic) IBOutlet UIView *greenHiderView;
+@property (strong, nonatomic) IBOutlet UIImageView *circularFrameImageView;
+
 
 @end

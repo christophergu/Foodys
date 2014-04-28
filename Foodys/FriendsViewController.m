@@ -103,6 +103,7 @@
     self.currentFriendUser = self.userFriendsArray[indexPath.row];
     [self.currentFriendUser fetchIfNeeded];
     
+    cell.usernameLabel.text = self.currentFriendUser[@"username"];
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             UIImage *photo = [UIImage imageWithData:data];
@@ -148,6 +149,11 @@
         }
     }];
                         
+}
+
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(5.0, 0.0, 5.0, 0.0);
 }
 
 

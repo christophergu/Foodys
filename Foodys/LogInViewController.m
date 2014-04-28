@@ -31,8 +31,6 @@
     {
         [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
     }
-    
-
 }
 
 
@@ -53,7 +51,12 @@
       }
     }];
     
+    [self.passwordTextField endEditing:YES];
+    [self.usernameTextField endEditing:YES];
+}
 
+- (IBAction)endEditingButton:(id)sender
+{
     [self.passwordTextField endEditing:YES];
     [self.usernameTextField endEditing:YES];
 }

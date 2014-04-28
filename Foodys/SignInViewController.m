@@ -7,6 +7,7 @@
 //
 
 #import "SignInViewController.h"
+#import "LogInViewController.h"
 #import <Parse/Parse.h>
 
 @interface SignInViewController ()
@@ -63,15 +64,14 @@
     if (!error)
     {
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-    if (user) {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [logInFailAlert show];            }
-    }];
+        if (user) {
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        }
+        else
+        {
+            UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [logInFailAlert show];            }
+        }];
     }
     else
     {

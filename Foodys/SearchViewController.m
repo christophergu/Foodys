@@ -48,7 +48,6 @@
 {
     [super viewDidLoad];
     
-
     self.locationManager = [CLLocationManager new];
     
     self.locationManager.delegate = self;
@@ -67,6 +66,8 @@
                       @"Celebrity Foodie",
                       @"Rockstar Foodie",
                       @"Superhero Foodie"];
+    
+    [self.tabBarController.tabBar setTintColor:[UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f]];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -130,6 +131,7 @@
         nameTextForSearch = [nameTextForSearch stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         [itemSearchString appendString:nameTextForSearch];
     }
+
     
     if (self.locationManager.location)
     {
@@ -154,7 +156,37 @@
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         self.searchResultsArray = intermediateDictionary[@"objects"];
         
+        self.venueSearch = 1;
+        [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
+    }];
+}
+
+- (void)nearbySearch
+{
+    NSMutableString *itemSearchString = nil;
+    itemSearchString = [@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
+    
+    NSString *locationTextForSearch;
+    
+    if (self.locationManager.location)
+    {
+        NSLog(@"hi");
+        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
+        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
+        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=10000",
+                                 self.locationManager.location.coordinate.latitude,
+                                 self.locationManager.location.coordinate.longitude];
+        [itemSearchString appendString:locationTextForSearch];
+    }
+    
+    NSURL *url = [NSURL URLWithString: itemSearchString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSError *error;
+        NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSLog(@"%@",intermediateDictionary);
+        self.searchResultsArray = intermediateDictionary[@"objects"];
         
         self.venueSearch = 1;
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
@@ -233,41 +265,20 @@
 
 #pragma mark - button methods
 
-- (IBAction)cuisineTextFieldDidEndOnExitButtonPressed:(id)sender {
-    [self foodSearch];
-}
-
-
-- (IBAction)onSearchNearbyButtonPressed:(id)sender
+- (IBAction)cuisineTextFieldDidEndOnExitButtonPressed:(id)sender
 {
-    NSMutableString *itemSearchString = nil;
-    itemSearchString = [@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e" mutableCopy];
-    
-    NSString *locationTextForSearch;
-    
-    if (self.locationManager.location)
+    if ([self.cuisineTextField.text isEqualToString:@""] ||
+        [self.cuisineTextField.text.lowercaseString isEqualToString:@"nearby"] ||
+        [self.cuisineTextField.text.lowercaseString isEqualToString:@"food"] ||
+        [self.cuisineTextField.text.lowercaseString isEqualToString:@"anything"]||
+        [self.cuisineTextField.text.lowercaseString isEqualToString:@"whatever"])
     {
-        NSLog(@"hi");
-        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
-        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=10000",
-                                 self.locationManager.location.coordinate.latitude,
-                                 self.locationManager.location.coordinate.longitude];
-        [itemSearchString appendString:locationTextForSearch];
+        [self nearbySearch];
     }
-    
-    NSURL *url = [NSURL URLWithString: itemSearchString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSError *error;
-        NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSLog(@"%@",intermediateDictionary);
-        self.searchResultsArray = intermediateDictionary[@"objects"];
-        
-        self.venueSearch = 1;
-        [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
-    }];
+    else
+    {
+        [self foodSearch];
+    }
 }
 
 #pragma mark - segue methods

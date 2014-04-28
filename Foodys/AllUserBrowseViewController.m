@@ -52,6 +52,24 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
+    
+    NSLog(@"aaa %@",self.friendsNamesArray);
+    if ([self.friendsNamesArray count] == 0)
+    {
+        PFQuery *getFriendsNamesQuery = [PFUser query];
+        [getFriendsNamesQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
+        [getFriendsNamesQuery includeKey:@"friends"];
+        
+        [getFriendsNamesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             NSArray *friendsArrayFromQuery = objects.firstObject[@"friends"];
+             for (PFUser *friend in friendsArrayFromQuery)
+             {
+                 [self.friendsNamesArray addObject: friend[@"username"]];
+             }
+             [self.myCollectionView reloadData];
+         }];
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -68,6 +86,40 @@
     cell.usernameLabel.text = self.currentFriendUser[@"username"];
     cell.rankLabel.text = self.currentFriendUser[@"rank"];
     
+    
+    if ([cell.usernameLabel.text isEqualToString:self.currentUser[@"username"]])
+    {
+        cell.addFriendButton.hidden = YES;
+        cell.addFriendButton.enabled = NO;
+        cell.usernameLabel.text = @"YOU";
+        cell.greenHiderView.alpha = 0.0;
+    }
+    else
+    {
+        cell.addFriendButton.hidden = NO;
+        cell.addFriendButton.enabled = YES;
+        cell.addFriendButton.friendUser = self.userArray[indexPath.row];
+        cell.greenHiderView.alpha = 0.95;
+    }
+    
+    for (NSString *usernameString in self.friendsNamesArray)
+    {
+        NSLog(@"usernamestring %@",usernameString);
+        
+        if ([cell.usernameLabel.text isEqualToString:usernameString])
+        {
+            cell.addFriendButton.hidden = YES;
+            cell.addFriendButton.enabled = NO;
+            cell.greenHiderView.alpha = 0.0;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             UIImage *photo = [UIImage imageWithData:data];
@@ -77,7 +129,7 @@
         }
     }];
     
-    cell.flipped = NO;
+//    cell.flipped = NO;
     
     return cell;
 }
@@ -93,12 +145,14 @@
         cell.addFriendButton.hidden = YES;
         cell.addFriendButton.enabled = NO;
         cell.usernameLabel.text = @"YOU";
+        cell.greenHiderView.alpha = 0.0;
     }
     else
     {
         cell.addFriendButton.hidden = NO;
         cell.addFriendButton.enabled = YES;
         cell.addFriendButton.friendUser = self.userArray[indexPath.row];
+        cell.greenHiderView.alpha = 1.0;
     }
     
     for (NSString *usernameString in self.friendsNamesArray)
@@ -107,49 +161,55 @@
         {
             cell.addFriendButton.hidden = YES;
             cell.addFriendButton.enabled = NO;
+            cell.greenHiderView.alpha = 0.0;
         }
     }
     
-    if (cell.flipped == NO)
-    {
-        [UIView animateWithDuration:1.0
-                              delay:0
-                            options:(UIViewAnimationOptionAllowUserInteraction)
-                         animations:^
-         {
-             [UIView transitionFromView:cell.friendImageView
-                                 toView:cell.detailView
-                               duration:.5
-                                options:UIViewAnimationOptionTransitionFlipFromRight
-                             completion:nil];
-         }
-                         completion:^(BOOL finished)
-         {
-             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-             cell.flipped = YES;
-         }
-         ];
-    }
-    else if (cell.flipped == YES)
-    {
-        [UIView animateWithDuration:1.0
-                              delay:0
-                            options:(UIViewAnimationOptionAllowUserInteraction)
-                         animations:^
-         {
-             [UIView transitionFromView:cell.detailView
-                                 toView:cell.friendImageView
-                               duration:.5
-                                options:UIViewAnimationOptionTransitionFlipFromRight
-                             completion:nil];
-         }
-                         completion:^(BOOL finished)
-         {
-             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-             cell.flipped = NO;
-         }
-         ];
-    }
+//    if (cell.flipped == NO)
+//    {
+//        [UIView animateWithDuration:1.0
+//                              delay:0
+//                            options:(UIViewAnimationOptionAllowUserInteraction)
+//                         animations:^
+//         {
+//             [UIView transitionFromView:cell.friendImageView
+//                                 toView:cell.detailView
+//                               duration:.5
+//                                options:UIViewAnimationOptionTransitionFlipFromRight
+//                             completion:nil];
+//         }
+//                         completion:^(BOOL finished)
+//         {
+//             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+//             cell.flipped = YES;
+//         }
+//         ];
+//    }
+//    else if (cell.flipped == YES)
+//    {
+//        [UIView animateWithDuration:1.0
+//                              delay:0
+//                            options:(UIViewAnimationOptionAllowUserInteraction)
+//                         animations:^
+//         {
+//             [UIView transitionFromView:cell.detailView
+//                                 toView:cell.friendImageView
+//                               duration:.5
+//                                options:UIViewAnimationOptionTransitionFlipFromRight
+//                             completion:nil];
+//         }
+//                         completion:^(BOOL finished)
+//         {
+//             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+//             cell.flipped = NO;
+//         }
+//         ];
+//    }
+}
+
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(5.0, 0.0, 5.0, 0.0);
 }
 
 - (IBAction)onAddButtonPressed:(AddFriendButton *)sender
