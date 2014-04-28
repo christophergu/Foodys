@@ -344,6 +344,21 @@
         
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSError *error;
+            
+            if (connectionError != nil) {
+                
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Data Connection Error"
+                                                            message:@"No data connection try again later"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+                [av show];
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                
+                
+                
+            } else {
+
             NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
             self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
@@ -360,6 +375,7 @@
             }
             [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
             }
+        }
         ];
     }
     else
