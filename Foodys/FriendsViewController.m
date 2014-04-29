@@ -94,7 +94,7 @@
     int numberOfItems;
     
     // have to check for null instead of nil here
-    if ([self.currentUser[@"friends"] isEqual:[NSNull null]])
+    if ([self.currentUser[@"friends"] isEqual:[NSNull null]] || self.currentUser[@"friends"] == nil)
         numberOfItems = 0;
     else
     {
