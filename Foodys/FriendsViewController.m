@@ -76,7 +76,20 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.userFriendsArray = self.currentUser[@"friends"];
+    self.currentUser = [PFUser currentUser];
+    
+    PFQuery *queryForFriends = [PFUser query];
+    [queryForFriends whereKey:@"username" containsString:self.currentUser[@"username"]];
+    [queryForFriends includeKey:@"friends"];
+    [queryForFriends findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        self.userFriendsArray = self.currentUser[@"friends"];
+        [self.myCollectionView reloadData];
+    }];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    
 }
 
 #pragma mark - collection view delegate methods
@@ -101,7 +114,6 @@
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
 
     self.currentFriendUser = self.userFriendsArray[indexPath.row];
-    [self.currentFriendUser fetchIfNeeded];
     
     cell.usernameLabel.text = self.currentFriendUser[@"username"];
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {

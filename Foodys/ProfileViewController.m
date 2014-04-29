@@ -366,8 +366,6 @@
     [receivedRecommendationsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFObject *recommendation in objects) {
             [self.currentUser addUniqueObject:recommendation forKey:@"recommendations"];
-            
-//            [self.currentUser save];
         }
         int recommendationCount = [self.currentUser[@"recommendations"] count];
         for (int i = 0; i < recommendationCount; i++)
@@ -440,7 +438,7 @@
         }
     }];
     
-    [user save];
+    [user saveInBackground];
 }
 
 #pragma mark - segue methods
