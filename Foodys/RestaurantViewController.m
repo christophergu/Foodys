@@ -165,7 +165,7 @@
     PFQuery *cumulativeReviewQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
     [cumulativeReviewQuery whereKey:@"name" containsString:self.chosenRestaurantDictionary[@"name"]];
     [cumulativeReviewQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (objects.firstObject != [NSNull null]) {
+        if (![objects.firstObject[@"rating"] isEqual: [NSNull null]]) {            
             self.cumulativeRatingLabel.text = [NSString stringWithFormat:@"%@%%",objects.firstObject[@"rating"]];
         }
     }];
