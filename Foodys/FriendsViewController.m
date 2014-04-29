@@ -222,19 +222,16 @@
 
 -(void)autoDeleteFriendsThatDefriended;
 {
-    for (PFUser *friend in self.currentUser[@"friends"])
-    {
-        PFQuery *defriendRequestQuery = [PFQuery queryWithClassName:@"DefriendRequest"];
-        [defriendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
-        [defriendRequestQuery whereKey:@"requestor" equalTo:friend];
-        
-        [defriendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    PFQuery *defriendRequestQuery = [PFQuery queryWithClassName:@"DefriendRequest"];
+    [defriendRequestQuery whereKey:@"requestee" equalTo:self.currentUser];
+
+    [defriendRequestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (objects.firstObject)
          {
-             NSLog(@"objects %@",objects.firstObject);
-             if (objects.firstObject)
+             [objects.firstObject deleteInBackground];
+             for (PFUser *friend in self.currentUser[@"friends"])
              {
-                 [objects.firstObject deleteInBackground];
-                 
                  [self.currentUser removeObject:friend forKey:@"friends"];
                  if ([self.currentUser[@"friends"]count] == 0)
                  {
@@ -244,8 +241,8 @@
                      [self.myCollectionView reloadData];
                  }];
              }
-         }];
-    }
+         }
+     }];
 }
 
 //- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

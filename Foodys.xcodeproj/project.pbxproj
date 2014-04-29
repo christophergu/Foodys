@@ -76,7 +76,7 @@
 		43A04C12190566000078E5D9 /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsTableViewCell.h; sourceTree = "<group>"; };
 		43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewCell.m; sourceTree = "<group>"; };
-		43C0B868190F10E0007A6CF2 /* nevis 2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "nevis 2.ttf"; path = "../../../Downloads/nevis 2.ttf"; sourceTree = "<group>"; };
+		43C0B868190F10E0007A6CF2 /* nevis.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = nevis.ttf; sourceTree = "<group>"; };
 		43C0B86A190F1502007A6CF2 /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Bold.ttf"; sourceTree = "<group>"; };
 		43C0B86B190F1502007A6CF2 /* NotoSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		43C0B86C190F1502007A6CF2 /* NotoSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Italic.ttf"; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 				43C0B86D190F1502007A6CF2 /* NotoSans-Regular.ttf */,
 			);
 			name = "NotoSans 2";
-			path = "../../../Downloads/NotoSans 2";
+			path = NotoSans;
 			sourceTree = "<group>";
 		};
 		DF4DB84218FC44FF00C225EC = {
@@ -246,7 +246,7 @@
 		DF4DB85418FC450000C225EC /* Foodys */ = {
 			isa = PBXGroup;
 			children = (
-				43C0B868190F10E0007A6CF2 /* nevis 2.ttf */,
+				43C0B868190F10E0007A6CF2 /* nevis.ttf */,
 				43C0B869190F1502007A6CF2 /* NotoSans 2 */,
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
