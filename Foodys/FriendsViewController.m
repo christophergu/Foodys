@@ -138,9 +138,9 @@
                     if (![self.favoritesArray containsObject:favorite[@"restaurantDictionary"]]) {
                         [self.favoritesArray addObject:favorite[@"restaurantDictionary"]];
                     }
-                    [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
                 }];
             }
+            [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
         }
         else
         {
@@ -420,6 +420,7 @@
 {
     
     if ([[segue identifier] isEqualToString:@"FriendsProfileSegue"]) {
+        NSLog(@"ya");
         FriendProfileViewController *fpvc = segue.destinationViewController;
         
         fpvc.currentFriendUser = self.currentFriendUser;
