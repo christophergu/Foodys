@@ -96,10 +96,6 @@
     cell.content.layer.borderColor=[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor];
     cell.content.layer.borderWidth= 1.0f;
     
-//    cell.avatarImageView = self.currentPost[@"avatar"];
-    
-//    cell.avatarImageView.image = [UIImage imageNamed:@"avatar"];
-    
     cell.avatarImageView.clipsToBounds = YES;
     PFFile *userImageFile = self.currentPost[@"avatar"];
     [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
@@ -108,6 +104,14 @@
         }
     }];
     
+    if ([self.currentPost[@"rating"] intValue] > 74)
+    {
+        cell.ratingFaceImageView.image = [UIImage imageNamed:@"smiley_icon"];
+    }
+    else if ([self.currentPost[@"rating"] intValue] < 26)
+    {
+        cell.ratingFaceImageView.image = [UIImage imageNamed:@"frowny_icon"];
+    }
 
     return cell;
 }

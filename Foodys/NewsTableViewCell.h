@@ -16,4 +16,5 @@
 @property (strong, nonatomic) IBOutlet UITextView *content;
 @property (strong, nonatomic) IBOutlet UILabel *reviewerNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
 @end

@@ -14,11 +14,13 @@
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *subjectTextField;
 @property (strong, nonatomic) IBOutlet UILabel *yesNoLabel;
-@property (strong, nonatomic) IBOutlet UILabel *averageRating;
+@property (strong, nonatomic) IBOutlet UILabel *restaurantRating;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantTitle;
 @property (strong, nonatomic) IBOutlet UILabel *reviewerNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *getMoreInfoButton;
+@property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
+@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 
 @end
 
@@ -41,7 +43,7 @@
     self.restaurantTitle.text = self.currentPost[@"title"];
     self.myTextView.text = self.currentPost[@"body"];
     self.yesNoLabel.text = self.currentPost[@"wouldGoAgain"];
-    self.averageRating.text = [NSString stringWithFormat:@"%@%%",self.currentPost[@"rating"]];//[NSNumber numberWithInt:@"%i,rating"];
+    self.restaurantRating.text = [NSString stringWithFormat:@"%@%%",self.currentPost[@"rating"]];//[NSNumber numberWithInt:@"%i,rating"];
     
     self.avatarImageView.clipsToBounds = YES;
     PFFile *userImageFile = self.currentPost[@"avatar"];
@@ -51,15 +53,17 @@
         }
     }];
     
-    NSLog(@"%@",self.currentPost[@"rating"]);
     
-    if ([self.yesNoLabel.text isEqualToString:@"YES"])
+    NSLog(@"%@",self.currentPost);
+    self.addressLabel.text = self.currentPost[@"restaurantDictionary"][@"street_address"];
+    
+    if ([self.currentPost[@"rating"] intValue] > 74)
     {
-        self.yesNoLabel.textColor = [UIColor greenColor];
+        self.ratingFaceImageView.image = [UIImage imageNamed:@"smiley_icon"];
     }
-    else if ([self.yesNoLabel.text isEqualToString:@"NO"])
+    else if ([self.currentPost[@"rating"] intValue] < 26)
     {
-        self.yesNoLabel.textColor = [UIColor redColor];
+        self.ratingFaceImageView.image = [UIImage imageNamed:@"frowny_icon"];
     }
 }
 
