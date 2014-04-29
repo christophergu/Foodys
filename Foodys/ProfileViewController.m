@@ -9,7 +9,7 @@
 #import "ProfileViewController.h"
 #import "FriendsViewController.h"
 #import "RestaurantViewController.h"
-#import "ShareViewController.h"
+#import "SeeRecommendationViewController.h"
 #import "AddFriendsViewController.h"
 #import <Parse/Parse.h>
 
@@ -211,6 +211,11 @@
     [userPostQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
     
     [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        
+        // blocks
+        [self friendsSetter];
+        
+        
         self.numberOfReviewsAndRecommendations += number;
         
         self.reviewsCounterLabel.text = [NSString stringWithFormat:@"%d Reviews", self.numberOfReviewsAndRecommendations];
@@ -260,9 +265,7 @@
         self.currentUser[@"rank"] = self.rankings[7];
     }
     
-    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        self.rankingLabel.text = self.currentUser[@"rank"];
-    }];
+    self.rankingLabel.text = self.currentUser[@"rank"];
 }
 
 - (void)retrieveFavorites
@@ -316,7 +319,8 @@
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-        cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+//        cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+        NSLog(@"%@",self.recommendationsArray[indexPath.row]);
         
 //        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
 //        [reviewedRestaurantQuery whereKey:@"name" containsString:self.recommendationsArray[indexPath.row][@"name"]];
@@ -340,7 +344,7 @@
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
         self.chosenRestaurantRecommendationObject = self.recommendationsArray[indexPath.row];
-        [self performSegueWithIdentifier:@"RecommendToShareSegue" sender:self];
+        [self performSegueWithIdentifier:@"ProfileToSeeRecommendationSegue" sender:self];
     }
 }
 
@@ -349,17 +353,6 @@
 -(IBAction) segmentedControlIndexChanged
 {
     [self.myTableView reloadData];
-
-//    switch (self.mySegmentedControl.selectedSegmentIndex)
-//    {
-//        case 0:
-//            [self.myTableView reloadData];
-//            break;
-//        case 1:
-//            [self.myTableView reloadData];
-//        default:
-//            break;
-//    }
 }
 
 #pragma mark - recommendation methods
@@ -373,8 +366,6 @@
     [receivedRecommendationsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFObject *recommendation in objects) {
             [self.currentUser addUniqueObject:recommendation forKey:@"recommendations"];
-            
-            [self.currentUser save];
         }
         int recommendationCount = [self.currentUser[@"recommendations"] count];
         for (int i = 0; i < recommendationCount; i++)
@@ -397,9 +388,12 @@
 
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
-//    [PFUser logOut];
-    
-//    [self.tabBarController setSelectedIndex:0];
+    NSLog(@"ya");
+    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    {
+        [self performSegueWithIdentifier:@"unwindToBeginningSegue" sender:self];
+
+    }];
 }
 
 - (IBAction)favoriteTextFieldDidEndOnExit:(id)sender
@@ -444,7 +438,7 @@
         }
     }];
     
-    [user save];
+    [user saveInBackground];
 }
 
 #pragma mark - segue methods
@@ -457,12 +451,11 @@
         rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
         rvc.cameFromProfileFavorites = 1;
     }
-    else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
+    else if ([[segue identifier] isEqualToString:@"ProfileToSeeRecommendationSegue"])
     {
-        ShareViewController *svc = segue.destinationViewController;
-        svc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
-        svc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
-        svc.cameFromProfileRecommendations = 1;
+        SeeRecommendationViewController *srvc = segue.destinationViewController;
+        srvc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
+        srvc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
     }
 
 }

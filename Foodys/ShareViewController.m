@@ -84,12 +84,17 @@
                 self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
         }];
         self.chooseFriendsDoneButton.enabled = YES;
+        
+        [self.doneButton setTitle:@"Send Recommendation" forState:UIControlStateNormal];
     }
     else
     {
         self.chooseFriendToWriteView.alpha = 0.0;
         self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
         self.chooseFriendsDoneButton.enabled = NO;
+        
+        [self.doneButton setTitle:@"Post Review" forState:UIControlStateNormal];
+
     }
 }
 
@@ -250,10 +255,6 @@
 
 #pragma mark - button methods
 
-- (IBAction)onGetRestaurantInfoButtonPressed:(id)sender
-{
-    [self performSegueWithIdentifier:@"ShareToRestaurantSegue" sender:self];
-}
 
 - (IBAction)onEndEditingAllButtonPressed:(id)sender
 {
@@ -341,13 +342,12 @@
     {
         self.recommendation[@"name"] = self.chosenRestaurantDictionary[@"name"];
         self.recommendation[@"author"] = self.currentUser[@"username"];
+        self.recommendation[@"avatar"] = self.currentUser[@"avatar"];
         self.recommendation[@"authorObjectId"] = self.currentUser.objectId;
         self.recommendation[@"date"] = [formatter dateFromString:self.dateLabel.text];
-//        self.recommendation[@"title"] = self.subjectTextField.text;
         self.recommendation[@"body"] = self.myTextView.text;
         int rating = [self.sliderScoreLabel.text integerValue];
         self.recommendation[@"rating"] = @(rating);
-//        self.recommendation[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
         self.recommendation[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
         
         [self.recommendation saveInBackground];
@@ -407,15 +407,9 @@
          [self refreshRatingLabel];
          [self.reviewedRestaurant saveInBackground];
      }];
+    
+    [self.myTextView endEditing:YES];
+    [self performSegueWithIdentifier:@"unwindDoneSharingSegue" sender:self];
 };
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"ShareToRestaurantSegue"])
-    {
-        RestaurantViewController *rvc = segue.destinationViewController;
-        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
-    }
-}
 
 @end

@@ -51,6 +51,8 @@
 @property (strong, nonatomic) NSString *locationCoordinatesString;
 @property (strong, nonatomic) NSMutableString *locationSearchString;
 @property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
+@property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
+@property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
 
 
 @end
@@ -100,19 +102,31 @@
     }
     
     self.currentUser = [PFUser currentUser];
-    for (PFObject *favorite in self.currentUser[@"favorites"])
+    
+    int counter = 0;
+    
+    NSLog(@"favorites %@", self.currentUser[@"favorites"]);
+    
+    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
     {
-        [favorite fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            if ([favorite[@"restaurantDictionary"][@"name"] isEqual:self.chosenRestaurantDictionary[@"name"]])
-            {
-                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
-            }
-            else
-            {
-                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_unsel"];
-            }
-        }];
+        [alreadyFavorite fetchIfNeeded];
+        
+        NSLog(@"chosen dict %@",self.chosenRestaurantDictionary);
+        
+        if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+        {
+            counter++;
+            
+            NSLog(@"counter %d",counter);
+        }
     }
+    
+    NSLog(@"counter %d",counter);
+    if (counter > 0)
+    {
+        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+    }
+
     
     [self loadFlickrImageForAtmosphere];
     [self getVenueDetail];
@@ -144,6 +158,17 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    PFQuery *cumulativeReviewQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+    [cumulativeReviewQuery whereKey:@"name" containsString:self.chosenRestaurantDictionary[@"name"]];
+    [cumulativeReviewQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (objects.firstObject != [NSNull null]) {
+            self.cumulativeRatingLabel.text = [NSString stringWithFormat:@"%@%%",objects.firstObject[@"rating"]];
+        }
+    }];
 }
 
 //-(void)locationCoordinatesStringMethod:(NSNotification *)notification
@@ -342,17 +367,43 @@
 
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
 {
-    // fix the bug that allows you to add multiples of the same restaurant
-    
     PFObject *favorite = [PFObject objectWithClassName:@"Favorite"];
     favorite[@"name"]=self.chosenRestaurantDictionary[@"name"];
     favorite[@"restaurantDictionary"]=self.chosenRestaurantDictionary;
     
-    [favorite saveInBackground];
+    int counter = 0;
     
-    self.currentUser = [PFUser currentUser];
-    [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
-    [self.currentUser saveInBackground];
+    if (self.currentUser[@"favorites"] == nil) {
+        [favorite saveInBackground];
+        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+        [self.favoriteStarImageView setNeedsDisplay];
+        
+        self.currentUser = [PFUser currentUser];
+        [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
+        [self.currentUser saveInBackground];
+    }
+    else
+    {
+        for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
+        {
+            [alreadyFavorite fetchIfNeeded];
+            
+            if ([favorite[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+            {
+                counter++;
+            }
+        }
+        if (counter == 0)
+        {
+            [favorite saveInBackground];
+            self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+            [self.favoriteStarImageView setNeedsDisplay];
+            
+            self.currentUser = [PFUser currentUser];
+            [self.currentUser addUniqueObject:favorite forKey:@"favorites"];
+            [self.currentUser saveInBackground];
+        }
+    }
 }
 
 - (IBAction)onLocationButtonPressed:(id)sender
@@ -532,6 +583,12 @@
          }
          
      }];
+}
+
+// used when sharing is finished and button is pressed
+- (IBAction)unwindDoneSharing:(UIStoryboardSegue *)unwindSegue
+{
+    
 }
 
 #pragma mark - segue methods

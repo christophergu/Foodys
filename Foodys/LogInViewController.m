@@ -7,6 +7,7 @@
 //
 
 #import "LogInViewController.h"
+#import "ProfileViewController.h"
 #import <Parse/Parse.h>
 #import "TestFont.h"
 
