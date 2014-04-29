@@ -1317,6 +1317,12 @@
                                     <action selector="onDoneButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="lOG-iG-bKC"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5x-LD-oEt" userLabel="Label - cumulativeRating">
+                                <rect key="frame" x="139" y="274" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FKt-Kb-JmN">
                                 <rect key="frame" x="0.0" y="64" width="320" height="454"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1365,6 +1371,7 @@
                     <connections>
                         <outlet property="chooseFriendToWriteView" destination="FKt-Kb-JmN" id="Dhp-RS-QKJ"/>
                         <outlet property="chooseFriendsDoneButton" destination="TfV-sb-lzd" id="7lv-fA-jmL"/>
+                        <outlet property="cumulativeRestaurantRatingLabel" destination="P5x-LD-oEt" id="4W4-x2-ddV"/>
                         <outlet property="dateLabel" destination="tNv-jP-LXl" id="7SU-A9-fCc"/>
                         <outlet property="doneButton" destination="dEX-g3-phP" id="g1d-xS-EHQ"/>
                         <outlet property="getRestaurantInfoButton" destination="fDQ-0h-i8M" id="DP8-px-mMi"/>
