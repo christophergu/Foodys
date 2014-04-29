@@ -1391,11 +1391,11 @@
             </objects>
             <point key="canvasLocation" x="2341" y="-348"/>
         </scene>
-        <!--Navigation Controller - Search-->
+        <!--Navigation Controller-->
         <scene sceneID="o2e-HV-WGA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gJd-vD-2iy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="find_unsel" id="X7a-mz-s8s"/>
+                    <tabBarItem key="tabBarItem" title="" image="find_unsel" id="X7a-mz-s8s"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ui4-jc-Gpo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1410,11 +1410,11 @@
             </objects>
             <point key="canvasLocation" x="474" y="-1023"/>
         </scene>
-        <!--Navigation Controller - News Feed-->
+        <!--Navigation Controller-->
         <scene sceneID="DpW-hF-MH5">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wc1-9F-xiD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News Feed" image="feed_unsel" id="9nC-gQ-ku5"/>
+                    <tabBarItem key="tabBarItem" title="" image="feed_unsel" id="9nC-gQ-ku5"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rps-ww-6xL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1686,11 +1686,11 @@
             </objects>
             <point key="canvasLocation" x="1000" y="2524"/>
         </scene>
-        <!--Navigation Controller - Friends-->
+        <!--Navigation Controller-->
         <scene sceneID="KWF-Xc-fwO">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Rhd-hF-e1L" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" image="friends_unsel" id="rnB-OU-Aha"/>
+                    <tabBarItem key="tabBarItem" title="" image="friends_unsel" id="rnB-OU-Aha"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9mK-dD-mdw">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1788,11 +1788,11 @@
             </objects>
             <point key="canvasLocation" x="1000" y="1856"/>
         </scene>
-        <!--Navigation Controller - Profile-->
+        <!--Navigation Controller-->
         <scene sceneID="qw1-BT-MFQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ozh-Zh-4Up" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="profile_unsel" id="yhC-Yr-FGf"/>
+                    <tabBarItem key="tabBarItem" title="" image="profile_unsel" id="yhC-Yr-FGf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fQc-cZ-HNv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2157,9 +2157,9 @@
     </scenes>
     <resources>
         <image name="favorite_unsel" width="56" height="48"/>
-        <image name="feed_unsel" width="50" height="48"/>
-        <image name="find_unsel" width="50" height="48"/>
-        <image name="friends_unsel" width="50" height="48"/>
+        <image name="feed_unsel" width="30" height="29"/>
+        <image name="find_unsel" width="30" height="29"/>
+        <image name="friends_unsel" width="30" height="29"/>
         <image name="friends_white_green" width="100" height="100"/>
         <image name="location" width="36" height="48"/>
         <image name="meh_icon" width="32" height="32"/>
@@ -2169,7 +2169,7 @@
         <image name="poweredby-color" width="155" height="25"/>
         <image name="poweredby-gray" width="155" height="25"/>
         <image name="profile_gray_green" width="114" height="114"/>
-        <image name="profile_unsel" width="50" height="48"/>
+        <image name="profile_unsel" width="30" height="29"/>
         <image name="smokePlaceholder" width="320" height="568"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
