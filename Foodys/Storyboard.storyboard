@@ -1579,7 +1579,7 @@
                     <navigationItem key="navigationItem" title="User's Name Here" id="65f-AI-6pn">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="OZ1-9j-Lpz">
                             <connections>
-                                <segue destination="1Ua-Gp-ixN" kind="unwind" unwindAction="unwindToBeginning:" id="M4P-8s-BN8"/>
+                                <action selector="onLogOutButtonPressed:" destination="Bg0-Kt-1wg" id="W6o-NW-pHh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1596,6 +1596,7 @@
                         <outlet property="reviewsCounterLabel" destination="bx8-h9-2qg" id="HuF-sM-UnE"/>
                         <segue destination="cM8-7k-1gT" kind="push" identifier="FavoriteToRestaurantSegue" id="zKF-Wz-zN4"/>
                         <segue destination="KAY-Kg-5rp" kind="push" identifier="ProfileToSeeRecommendationSegue" id="Dry-VB-ErZ"/>
+                        <segue destination="1Ua-Gp-ixN" kind="unwind" identifier="unwindToBeginningSegue" unwindAction="unwindToBeginning:" id="hh9-KX-yM6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3D-Pe-SXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2178,7 +2179,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="bu2-pw-jAn"/>
+        <segue reference="zKF-Wz-zN4"/>
         <segue reference="RhK-hE-tTe"/>
         <segue reference="fdc-o9-LBs"/>
     </inferredMetricsTieBreakers>
