@@ -1,21 +1,14 @@
 //
-//  AddFriendButton.m
+//  Test.m
 //  Foodys
 //
-//  Created by Christopher Gu on 4/15/14.
+//  Created by Matt Brax on 4/29/14.
 //  Copyright (c) 2014 Christopher Gu. All rights reserved.
 //
 
-#import "AddFriendButton.h"
+#import "Test.h"
 
-@implementation AddFriendButton
-
-
-- (void)commonInit
-{
-    
-    self.font = [UIFont fontWithName:@"NotoSans-Bold.ttf" size:self.font.pointSize];
-}
+@implementation Test
 
 - (id)initWithFrame:(CGRect)frame
 {

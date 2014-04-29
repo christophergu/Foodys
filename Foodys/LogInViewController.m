@@ -8,20 +8,24 @@
 
 #import "LogInViewController.h"
 #import <Parse/Parse.h>
+#import "TestFont.h"
 
 @interface LogInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) IBOutlet UIScrollView *autoLayoutScrollView;
-
+@property (strong, nonatomic) IBOutlet TestFont *fontLabel;
 @end
+
 
 @implementation LogInViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.fontLabel.font = [UIFont fontWithName:@"NotoSans-BoldItalic" size:self.fontLabel.font.pointSize];
 
     self.navigationController.navigationBarHidden = YES;
 }
@@ -36,6 +40,11 @@
         [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
     }
 }
+
+
+
+
+
 
 -(void)viewDidDisappear:(BOOL)animated { [super viewDidDisappear:animated]; [[NSNotificationCenter defaultCenter] removeObserver:self]; }
 

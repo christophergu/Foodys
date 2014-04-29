@@ -254,6 +254,12 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Feed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAG-on-YSL" customClass="TestFont">
+                                        <rect key="frame" x="20" y="35" width="229" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="EHn-if-BQo" firstAttribute="top" secondItem="Mk1-6V-SPc" secondAttribute="top" constant="10" id="cBm-YY-7lN"/>
@@ -265,6 +271,7 @@
                     <navigationItem key="navigationItem" id="xPH-y0-sCP"/>
                     <connections>
                         <outlet property="autoLayoutScrollView" destination="Mk1-6V-SPc" id="W8F-Sm-rZZ"/>
+                        <outlet property="fontLabel" destination="bAG-on-YSL" id="vsM-3M-KOJ"/>
                         <outlet property="passwordTextField" destination="gZr-rS-qe1" id="xGP-yG-gmM"/>
                         <outlet property="usernameTextField" destination="2Tg-VJ-Eup" id="NED-XV-qT5"/>
                         <segue destination="osG-gC-bet" kind="push" identifier="TabBarSegue" id="aKc-yZ-rBI"/>
@@ -2012,24 +2019,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZ5-ta-gXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1533" y="2524"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="qX2-5D-xQt">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="OmX-L5-hHb" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vDr-fU-gph"/>
-                        <viewControllerLayoutGuide type="bottom" id="edh-dR-g0E"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="uiD-ZY-P0c">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HlF-VG-mdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
