@@ -20,6 +20,7 @@
 		DF14E31018FEDD6800E4DDCF /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF14E30F18FEDD6800E4DDCF /* ShareViewController.m */; };
 		DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */; };
 		DF28E26B18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DF28E26A18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m */; };
+		DF30B1A6190F3E8E00D2C1C3 /* SeeRecommendationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF30B1A5190F3E8E00D2C1C3 /* SeeRecommendationViewController.m */; };
 		DF4DB84F18FC450000C225EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB84E18FC44FF00C225EC /* Foundation.framework */; };
 		DF4DB85118FC450000C225EC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85018FC450000C225EC /* CoreGraphics.framework */; };
 		DF4DB85318FC450000C225EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB85218FC450000C225EC /* UIKit.framework */; };
@@ -93,6 +94,8 @@
 		DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		DF28E26918FCC22E00E3D4F5 /* CollectionViewCellWithImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCellWithImage.h; sourceTree = "<group>"; };
 		DF28E26A18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCellWithImage.m; sourceTree = "<group>"; };
+		DF30B1A4190F3E8E00D2C1C3 /* SeeRecommendationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeeRecommendationViewController.h; sourceTree = "<group>"; };
+		DF30B1A5190F3E8E00D2C1C3 /* SeeRecommendationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeeRecommendationViewController.m; sourceTree = "<group>"; };
 		DF4DB84B18FC44FF00C225EC /* Foodys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foodys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4DB84E18FC44FF00C225EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF4DB85018FC450000C225EC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -242,6 +245,8 @@
 				43E412FE18FF397D008D7431 /* NewsViewController.m */,
 				DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */,
 				DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */,
+				DF30B1A4190F3E8E00D2C1C3 /* SeeRecommendationViewController.h */,
+				DF30B1A5190F3E8E00D2C1C3 /* SeeRecommendationViewController.m */,
 				DF4DB8A418FC508800C225EC /* ProfileViewController.h */,
 				DF4DB8A518FC508800C225EC /* ProfileViewController.m */,
 				DF28E26618FCBD5900E3D4F5 /* FriendsViewController.h */,
@@ -412,6 +417,7 @@
 				DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */,
 				DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */,
 				DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */,
+				DF30B1A6190F3E8E00D2C1C3 /* SeeRecommendationViewController.m in Sources */,
 				DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */,
 				43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,

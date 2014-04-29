@@ -341,6 +341,7 @@
     {
         self.recommendation[@"name"] = self.chosenRestaurantDictionary[@"name"];
         self.recommendation[@"author"] = self.currentUser[@"username"];
+        self.recommendation[@"avatar"] = self.currentUser[@"avatar"];
         self.recommendation[@"authorObjectId"] = self.currentUser.objectId;
         self.recommendation[@"date"] = [formatter dateFromString:self.dateLabel.text];
 //        self.recommendation[@"title"] = self.subjectTextField.text;

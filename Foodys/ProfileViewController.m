@@ -9,7 +9,7 @@
 #import "ProfileViewController.h"
 #import "FriendsViewController.h"
 #import "RestaurantViewController.h"
-#import "ShareViewController.h"
+#import "SeeRecommendationViewController.h"
 #import "AddFriendsViewController.h"
 #import <Parse/Parse.h>
 
@@ -340,7 +340,7 @@
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
         self.chosenRestaurantRecommendationObject = self.recommendationsArray[indexPath.row];
-        [self performSegueWithIdentifier:@"RecommendToShareSegue" sender:self];
+        [self performSegueWithIdentifier:@"ProfileToSeeRecommendationSegue" sender:self];
     }
 }
 
@@ -457,12 +457,11 @@
         rvc.chosenRestaurantDictionary = self.chosenRestaurantFavoriteDictionary;
         rvc.cameFromProfileFavorites = 1;
     }
-    else if ([[segue identifier] isEqualToString:@"RecommendToShareSegue"])
+    else if ([[segue identifier] isEqualToString:@"ProfileToSeeRecommendationSegue"])
     {
-        ShareViewController *svc = segue.destinationViewController;
-        svc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
-        svc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
-        svc.cameFromProfileRecommendations = 1;
+        SeeRecommendationViewController *srvc = segue.destinationViewController;
+        srvc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
+        srvc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
     }
 
 }
