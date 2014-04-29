@@ -51,6 +51,8 @@
 @property (strong, nonatomic) NSString *locationCoordinatesString;
 @property (strong, nonatomic) NSMutableString *locationSearchString;
 @property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
+@property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
+@property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
 
 
 @end
@@ -156,6 +158,17 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+//    PFQuery *cumulativeReviewQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
+//    [cumulativeReviewQuery whereKey:@"name" containsString:self.chosenRestaurantDictionary[@"name"]];
+//    [cumulativeReviewQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (objects.firstObject != [NSNull null]) {
+//            self.cumulativeRatingLabel.text = [NSString stringWithFormat:@"%@%%",objects.firstObject[@"rating"]];
+//        }
+//    }];
 }
 
 //-(void)locationCoordinatesStringMethod:(NSNotification *)notification
@@ -572,6 +585,7 @@
      }];
 }
 
+// used when sharing is finished and button is pressed
 - (IBAction)unwindDoneSharing:(UIStoryboardSegue *)unwindSegue
 {
     

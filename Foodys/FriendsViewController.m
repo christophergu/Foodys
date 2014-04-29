@@ -66,7 +66,6 @@
     self.requestorsToAddArray = [NSMutableArray new];
     [self acceptFriends];
     [self autoAddFriendsThatAccepted];
-    [self autoDeleteFriendsThatDefriended];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -76,6 +75,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self autoDeleteFriendsThatDefriended];
+    
     self.currentUser = [PFUser currentUser];
     
     PFQuery *queryForFriends = [PFUser query];
@@ -397,8 +398,6 @@
          for (PFUser *friend in objects.firstObject[@"friends"]) {
              if ([friend[@"username"] isEqualToString:self.friendUserToDelete[@"username"]])
              {
-                 NSLog(@"friend %@",friend);
-                 NSLog(@"delete friend %@", self.friendUserToDelete);
                  [friendToDeleteArray addObject:self.friendUserToDelete];
              }
          }
@@ -408,18 +407,31 @@
          {
              [self.currentUser removeObjectForKey:@"friends"];
          }
-         NSLog(@"after delete %@",self.currentUser[@"friends"]);
-         [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+         [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             // for deleting yourself on the other user's object
+             PFObject *defriendRequest = [PFObject objectWithClassName:@"DefriendRequest"];
+             [defriendRequest setObject:self.currentUser forKey:@"requestor"];
+             [defriendRequest setObject:self.friendUserToDelete forKey:@"requestee"];
+             
+//             PFQuery *friendsFriendQuery = [PFUser query];
+//             [friendsFriendQuery whereKey:@"username" equalTo:self.friendUserToDelete[@"username"]];
+//             [friendsFriendQuery includeKey:@"friends"];
+//             [friendsFriendQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//                 for (PFUser *friendsFriend in objects)
+//                 {
+//                     if ([friendsFriend[@"username"] isEqualToString:self.currentUser[@"username"]])
+//                     {
+                         [defriendRequest saveInBackground];
+//                     }
+//                 }
+//             }];
+             
              [self.myCollectionView reloadData];
          }];
      }];
     
-    // for deleting yourself on the other user's object
-    PFObject *defriendRequest = [PFObject objectWithClassName:@"DefriendRequest"];
-    [defriendRequest setObject:self.currentUser forKey:@"requestor"];
-    [defriendRequest setObject:self.friendUserToDelete forKey:@"requestee"];
-    
-    [defriendRequest saveInBackground];
+
 }
 
 
