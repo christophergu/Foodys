@@ -113,6 +113,8 @@
 {
     self.currentUser = [PFUser currentUser];
     
+    [self.myTableView deselectRowAtIndexPath:[self.myTableView indexPathForSelectedRow] animated:YES];
+    
 //    self.locationCoordinatesString = [NSString stringWithFormat:@"%.1f,%.1f",
 //                                      self.locationManager.location.coordinate.latitude,
 //                                      self.locationManager.location.coordinate.longitude];

@@ -87,11 +87,6 @@
     }];
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
-    
-}
-
 #pragma mark - collection view delegate methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

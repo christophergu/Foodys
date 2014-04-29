@@ -344,11 +344,9 @@
         self.recommendation[@"avatar"] = self.currentUser[@"avatar"];
         self.recommendation[@"authorObjectId"] = self.currentUser.objectId;
         self.recommendation[@"date"] = [formatter dateFromString:self.dateLabel.text];
-//        self.recommendation[@"title"] = self.subjectTextField.text;
         self.recommendation[@"body"] = self.myTextView.text;
         int rating = [self.sliderScoreLabel.text integerValue];
         self.recommendation[@"rating"] = @(rating);
-//        self.recommendation[@"wouldGoAgain"] = self.wouldGoAgainYesNoLabel.text;
         self.recommendation[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
         
         [self.recommendation saveInBackground];
