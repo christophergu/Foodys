@@ -215,7 +215,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.menuView.frame = CGRectMake(0, 256, 320, 514);
+                 self.menuView.frame = CGRectMake(0, 276, 320, 514);
              }
                              completion:
              ^(BOOL finished){
@@ -293,7 +293,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.hoursView.frame = CGRectMake(0, 354, 320, 514);
+                 self.hoursView.frame = CGRectMake(0, 374, 320, 514);
                  self.hoursUnavailableLabel.alpha = 1.0;
              }
                              completion:
@@ -328,7 +328,7 @@
                                 options: UIViewAnimationOptionCurveEaseOut
                              animations:
              ^{
-                 self.hoursView.frame = CGRectMake(0, 256, 320, 514);
+                 self.hoursView.frame = CGRectMake(0, 276, 320, 514);
              }
                              completion:
              ^(BOOL finished){
