@@ -7,43 +7,42 @@
 //
 
 #import "DirectionsViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface DirectionsViewController ()
+@property (strong, nonatomic) IBOutlet MKMapView *myMapView;
+
+//@property location *location;
+@property CLLocationManager *locationManager;
+@property CLLocation *currentLocation;
+
+
 
 @end
 
 @implementation DirectionsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
+    
+    self.locationManager = [CLLocationManager new];
+    [self.myMapView setShowsUserLocation:YES];
+    self.currentLocation = [CLLocation new];
+    self.currentLocation = self.locationManager.location;
+    
+    CLLocationCoordinate2D centerCoordinate = self.locationManager.location.coordinate;
+    MKCoordinateSpan coordinateSpan = MKCoordinateSpanMake(0.015, 0.015);
+    MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, coordinateSpan);
+    self.myMapView.region = region;
+    
+//    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+//    annotation.coordinate = CLLocationCoordinate2DMake(CLLocationDegrees latitude, CLLocationDegrees longitude);
+//    [self.myMapView addAnnotation:annotation];
+//    
+    
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
