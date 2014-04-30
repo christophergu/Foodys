@@ -11,5 +11,6 @@
 
 
 @interface DirectionsViewController : UIViewController
+@property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
 
 @end

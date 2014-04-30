@@ -9,6 +9,7 @@
 #import "RestaurantViewController.h"
 #import "RestaurantMenuTableViewCell.h"
 #import "ShareViewController.h"
+#import "DirectionsViewController.h"
 #import "WebViewController.h"
 #import <Parse/Parse.h>
 #import "SearchViewController.h"
@@ -65,6 +66,8 @@
 
     self.restaurantNameLabel.text = self.chosenRestaurantDictionary[@"name"];
     
+    NSLog(@"%@",self.chosenRestaurantDictionary);
+    
     if ((self.chosenRestaurantDictionary[@"phone"] != (id)[NSNull null]))
     {
         [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
@@ -103,58 +106,41 @@
     
     self.currentUser = [PFUser currentUser];
     
-//    int counter = 0;
-    
-    NSLog(@"favorites %@", self.currentUser[@"favorites"]);
-    
-    
     PFQuery *favoritesQuery = [PFUser query];
     [favoritesQuery whereKey:@"username" containsString:self.currentUser[@"username"]];
     [favoritesQuery includeKey:@"favorites"];
     [favoritesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        int counter = 0;
-
-        for (PFObject *alreadyFavorite in objects.firstObject[@"favorites"])
+        
+        if (!objects.count)
         {
-            NSLog(@"chosen dict %@",objects.firstObject[@"favorites"]);
+            int counter = 0;
             
-            if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+            for (PFObject *alreadyFavorite in objects.firstObject[@"favorites"])
             {
-                counter++;
+                NSLog(@"chosen dict %@",objects.firstObject[@"favorites"]);
                 
-                NSLog(@"counter %d",counter);
+                if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+                {
+                    counter++;
+                    
+                    NSLog(@"counter %d",counter);
+                }
+            }
+            
+            NSLog(@"counter %d",counter);
+            if (counter > 0)
+            {
+                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+                [self.favoriteStarImageView setNeedsDisplay];
             }
         }
-        
-        NSLog(@"counter %d",counter);
-        if (counter > 0)
+        else
         {
-            self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
-            [self.favoriteStarImageView setNeedsDisplay];
+            UIAlertView *noConnection = [[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"Foody's is experiencing technical difficulties and is unable to connect to its cloud. Some data may be incomplete." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            
+            [noConnection show];
         }
     }];
-    
-    
-//    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
-//    {
-//        [alreadyFavorite fetchIfNeeded];
-//        
-//        NSLog(@"chosen dict %@",self.chosenRestaurantDictionary);
-//        
-//        if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
-//        {
-//            counter++;
-//            
-//            NSLog(@"counter %d",counter);
-//        }
-//    }
-//    
-//    NSLog(@"counter %d",counter);
-//    if (counter > 0)
-//    {
-//        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
-//    }
-
     
     [self loadFlickrImageForAtmosphere];
     [self getVenueDetail];
@@ -178,11 +164,6 @@
     self.reviewButton.layer.masksToBounds=YES;
     self.reviewButton.tintColor = [UIColor whiteColor];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(locationCoordinatesStringMethod:)
-//                                                 name:@"locationNotification"
-//                                               object:nil];
-    
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -198,12 +179,6 @@
         }
     }];
 }
-
-//-(void)locationCoordinatesStringMethod:(NSNotification *)notification
-//{
-//    self.locationCoordinatesString = notification.object;
-//    NSLog(@"work? %@",self.locationCoordinatesString);
-//}
 
 #pragma mark - tableview delegate methods
 
@@ -388,9 +363,7 @@
              }
              ];
         }
-
     }
-
 }
 
 - (IBAction)onSaveToProfileButtonPressed:(id)sender
@@ -436,20 +409,7 @@
 
 - (IBAction)onLocationButtonPressed:(id)sender
 {
-//    self.locationSearchString = [@"https://www.google.com/maps" mutableCopy];
-//    
-//    if (self.locationManager.location)
-//    {
-//        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=1000000",
-//                                 self.locationManager.location.coordinate.latitude,
-//                                 self.locationManager.location.coordinate.longitude];
-//        
-//        NSLog(@"%@",self.locationManager.location);
-//        [locationSearchString appendString:locationTextForSearch];
-//    }
-//    
-//    @"https://www.google.com/maps";     // /dir/long,lat/self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"streetAddress"],self.chosenRestaurantDictionary[@"locality"],self.chosenRestaurantDictionary[@"region"],self.chosenRestaurantDictionary[@"postal_code"]/";
-//    
+
     [self performSegueWithIdentifier:@"DirectionsSegue" sender:self];
 }
 
@@ -509,7 +469,6 @@
             [self.myTableView reloadData];
         }
         
-        
         int hasHoursCounter = 0;
         
         if (!([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0))
@@ -563,25 +522,13 @@
 
 #pragma mark - flickr method
 
-
-
 - (void)loadFlickrImageForAtmosphere
 {
     NSString *apiKey = @"0a0bffa4d380be872ecba2aa0630065b";
     NSString* name = self.chosenRestaurantDictionary[@"name"];
     
-    
     NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
-                                    apiKey,
-//                                self.searchTerm];
-    
-    [name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
-    
-   
-    
-//    NSLog(@"%@",self.chosenRestaurantDictionary);
-    
-    
+                                    apiKey,[name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
     
     NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
     NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
@@ -590,7 +537,6 @@
      {
          NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
        NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
-//         PFObject *object = [PFObject objectWithClassName:@"Kitten"];
          
          if (flickrPhotosArray) {
              NSDictionary *flickrElement = flickrPhotosArray.firstObject;
@@ -609,7 +555,6 @@
          {
              // do something else
          }
-         
      }];
 }
 
@@ -634,7 +579,8 @@
         svc.cameForFriend = 1;
     }
     else if ([[segue identifier] isEqualToString:@"DirectionsSegue"]) {
-        
+        DirectionsViewController *dvc = segue.destinationViewController;
+        dvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
     }
         
 }
