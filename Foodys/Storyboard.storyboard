@@ -94,6 +94,7 @@
                     <connections>
                         <outlet property="cuisineTextField" destination="7oO-1e-0Wk" id="J8Y-Yo-Mp4"/>
                         <outlet property="myTableView" destination="gD7-B6-yZc" id="unU-Fa-P9A"/>
+                        <outlet property="suggestionsLabel" destination="UCo-XC-K7u" id="MmL-nc-1kL"/>
                         <segue destination="A1S-Mz-i4t" kind="push" identifier="ShowMoreResultsSegue" id="Bhm-sR-I30"/>
                     </connections>
                 </viewController>

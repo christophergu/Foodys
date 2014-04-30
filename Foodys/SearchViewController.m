@@ -39,6 +39,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (strong, nonatomic) NSString *locationCoordinatesString;
+@property (strong, nonatomic) IBOutlet UILabel *suggestionsLabel;
 
 @end
 
@@ -47,6 +48,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.suggestionsLabel.font = [UIFont fontWithName:@"nevis-Bold" size:self.suggestionsLabel.font.pointSize];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+
     
     self.locationManager = [CLLocationManager new];
     

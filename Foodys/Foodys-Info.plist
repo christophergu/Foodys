@@ -32,6 +32,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>nevis.ttf</string>
 		<string>NotoSans-Bold.ttf</string>
 		<string>NotoSans-BoldItalic.ttf</string>
 		<string>NotoSans-Italic.ttf</string>
