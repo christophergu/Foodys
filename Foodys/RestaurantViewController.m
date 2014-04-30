@@ -54,6 +54,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *ratingCircleImageView;
 
 
 @end
@@ -158,8 +159,14 @@
     PFQuery *cumulativeReviewQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
     [cumulativeReviewQuery whereKey:@"name" containsString:self.chosenRestaurantDictionary[@"name"]];
     [cumulativeReviewQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (![objects.firstObject[@"rating"] isEqual: [NSNull null]]) {            
+        if (![objects.firstObject[@"rating"] isEqual: [NSNull null]] && !(objects.firstObject[@"rating"] == nil))
+        {
             self.cumulativeRatingLabel.text = [NSString stringWithFormat:@"%@%%",objects.firstObject[@"rating"]];
+            self.ratingCircleImageView.alpha = 1.0;
+        }
+        else
+        {
+            self.ratingCircleImageView.alpha = 0.0;
         }
     }];
     
