@@ -480,6 +480,37 @@
             </objects>
             <point key="canvasLocation" x="1497" y="-1023"/>
         </scene>
+        <!--Directions View Controller-->
+        <scene sceneID="8yH-sr-vi6">
+            <objects>
+                <viewController id="YaT-UE-f43" customClass="DirectionsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ee4-PS-HnP"/>
+                        <viewControllerLayoutGuide type="bottom" id="QKy-nV-RjM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ugJ-Fu-ONo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rgz-Ch-fwG">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="YaT-UE-f43" id="HKT-Gq-3bs"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="LJU-3k-kzG"/>
+                    <connections>
+                        <outlet property="myMapView" destination="rgz-Ch-fwG" id="Zre-j6-j6u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hk1-5d-6ZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1934" y="-1401"/>
+        </scene>
         <!--Web View Controller-->
         <scene sceneID="UwM-yc-F3C">
             <objects>
@@ -1043,7 +1074,7 @@
                         <outlet property="tuesdayHoursLabel" destination="ZNE-vp-93j" id="WS5-nG-nQs"/>
                         <outlet property="wedLabel" destination="ZmJ-fh-3VE" id="UiK-LD-llC"/>
                         <outlet property="wednesdayHoursLabel" destination="xb0-UZ-18x" id="OpH-Fh-gVc"/>
-                        <segue destination="AXQ-aG-xAl" kind="push" identifier="WebSegue" id="6bX-fr-E2l"/>
+                        <segue destination="YaT-UE-f43" kind="push" identifier="DirectionsSegue" id="IFE-tv-xlb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gi8-aI-6y6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2164,8 +2195,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zKF-Wz-zN4"/>
-        <segue reference="RhK-hE-tTe"/>
         <segue reference="fdc-o9-LBs"/>
+        <segue reference="Htr-aG-CF1"/>
+        <segue reference="RhK-hE-tTe"/>
     </inferredMetricsTieBreakers>
 </document>

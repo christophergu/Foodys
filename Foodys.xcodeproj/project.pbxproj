@@ -17,6 +17,7 @@
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
 		DF0A6C2C18FF5FE90064DA6B /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */; };
 		DF0B3A7419083BFD00EFCF43 /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */; };
+		DF113AC3191084E9005465CB /* DirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF113AC2191084E9005465CB /* DirectionsViewController.m */; };
 		DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */; };
 		DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */; };
 		DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */; };
@@ -89,6 +90,8 @@
 		DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
 		DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsViewController.h; sourceTree = "<group>"; };
 		DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsViewController.m; sourceTree = "<group>"; };
+		DF113AC1191084E9005465CB /* DirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsViewController.h; sourceTree = "<group>"; };
+		DF113AC2191084E9005465CB /* DirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsViewController.m; sourceTree = "<group>"; };
 		DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
 		DF11A00C18FD7C6800CAB607 /* FriendProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileViewController.m; sourceTree = "<group>"; };
 		DF11A00E18FD905500CAB607 /* FriendsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendsViewController.h; sourceTree = "<group>"; };
@@ -284,6 +287,8 @@
 				DF11A00F18FD905500CAB607 /* FriendsFriendsViewController.m */,
 				DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */,
 				DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */,
+				DF113AC1191084E9005465CB /* DirectionsViewController.h */,
+				DF113AC2191084E9005465CB /* DirectionsViewController.m */,
 				DF4DB8A718FC60B200C225EC /* Storyboard.storyboard */,
 				43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */,
 				43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */,
@@ -446,6 +451,7 @@
 				DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */,
 				DF30B1A6190F3E8E00D2C1C3 /* SeeRecommendationViewController.m in Sources */,
 				DF4DB89A18FC4EFF00C225EC /* SearchViewController.m in Sources */,
+				DF113AC3191084E9005465CB /* DirectionsViewController.m in Sources */,
 				43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */,
 				DF4DB85B18FC450000C225EC /* main.m in Sources */,
 				DF4DB8A018FC4FBC00C225EC /* SignInViewController.m in Sources */,

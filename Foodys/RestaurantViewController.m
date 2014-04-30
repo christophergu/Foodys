@@ -103,29 +103,57 @@
     
     self.currentUser = [PFUser currentUser];
     
-    int counter = 0;
+//    int counter = 0;
     
     NSLog(@"favorites %@", self.currentUser[@"favorites"]);
     
-    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
-    {
-        [alreadyFavorite fetchIfNeeded];
-        
-        NSLog(@"chosen dict %@",self.chosenRestaurantDictionary);
-        
-        if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
-        {
-            counter++;
-            
-            NSLog(@"counter %d",counter);
-        }
-    }
     
-    NSLog(@"counter %d",counter);
-    if (counter > 0)
-    {
-        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
-    }
+    PFQuery *favoritesQuery = [PFUser query];
+    [favoritesQuery whereKey:@"username" containsString:self.currentUser[@"username"]];
+    [favoritesQuery includeKey:@"favorites"];
+    [favoritesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        int counter = 0;
+
+        for (PFObject *alreadyFavorite in objects.firstObject[@"favorites"])
+        {
+            NSLog(@"chosen dict %@",objects.firstObject[@"favorites"]);
+            
+            if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+            {
+                counter++;
+                
+                NSLog(@"counter %d",counter);
+            }
+        }
+        
+        NSLog(@"counter %d",counter);
+        if (counter > 0)
+        {
+            self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+            [self.favoriteStarImageView setNeedsDisplay];
+        }
+    }];
+    
+    
+//    for (PFObject *alreadyFavorite in self.currentUser[@"favorites"])
+//    {
+//        [alreadyFavorite fetchIfNeeded];
+//        
+//        NSLog(@"chosen dict %@",self.chosenRestaurantDictionary);
+//        
+//        if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
+//        {
+//            counter++;
+//            
+//            NSLog(@"counter %d",counter);
+//        }
+//    }
+//    
+//    NSLog(@"counter %d",counter);
+//    if (counter > 0)
+//    {
+//        self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+//    }
 
     
     [self loadFlickrImageForAtmosphere];
@@ -422,7 +450,7 @@
 //    
 //    @"https://www.google.com/maps";     // /dir/long,lat/self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"streetAddress"],self.chosenRestaurantDictionary[@"locality"],self.chosenRestaurantDictionary[@"region"],self.chosenRestaurantDictionary[@"postal_code"]/";
 //    
-    [self performSegueWithIdentifier:@"WebSegue" sender:self];
+    [self performSegueWithIdentifier:@"DirectionsSegue" sender:self];
 }
 
 #pragma mark - phone methods
@@ -605,9 +633,9 @@
         svc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
         svc.cameForFriend = 1;
     }
-    else if ([[segue identifier] isEqualToString:@"WebSegue"]) {
-        WebViewController *wvc = segue.destinationViewController;
-        wvc.websiteUrl = @"https://www.google.com/maps";     // /dir/long,lat/self.chosenRestaurantDictionary[@"name"],self.chosenRestaurantDictionary[@"streetAddress"],self.chosenRestaurantDictionary[@"locality"],self.chosenRestaurantDictionary[@"region"],self.chosenRestaurantDictionary[@"postal_code"]/";
+    else if ([[segue identifier] isEqualToString:@"DirectionsSegue"]) {
+        
     }
+        
 }
 @end
