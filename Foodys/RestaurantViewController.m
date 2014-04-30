@@ -66,8 +66,6 @@
 
     self.restaurantNameLabel.text = self.chosenRestaurantDictionary[@"name"];
     
-    NSLog(@"%@",self.chosenRestaurantDictionary);
-    
     if ((self.chosenRestaurantDictionary[@"phone"] != (id)[NSNull null]))
     {
         [self.phoneNumber setTitle:self.chosenRestaurantDictionary[@"phone"] forState:UIControlStateNormal];
@@ -107,38 +105,24 @@
     self.currentUser = [PFUser currentUser];
     
     PFQuery *favoritesQuery = [PFUser query];
-    [favoritesQuery whereKey:@"username" containsString:self.currentUser[@"username"]];
+    [favoritesQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
     [favoritesQuery includeKey:@"favorites"];
     [favoritesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
-        if (!objects.count)
+        int counter = 0;
+
+        for (PFObject *alreadyFavorite in objects.firstObject[@"favorites"])
         {
-            int counter = 0;
+            NSLog(@"chosen dict %@",objects.firstObject[@"favorites"]);
             
-            for (PFObject *alreadyFavorite in objects.firstObject[@"favorites"])
+            if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
             {
-                NSLog(@"chosen dict %@",objects.firstObject[@"favorites"]);
-                
-                if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
-                {
-                    counter++;
-                    
-                    NSLog(@"counter %d",counter);
-                }
-            }
-            
-            NSLog(@"counter %d",counter);
-            if (counter > 0)
-            {
-                self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
-                [self.favoriteStarImageView setNeedsDisplay];
+                counter++;
             }
         }
-        else
+        if (counter > 0)
         {
-            UIAlertView *noConnection = [[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"Foody's is experiencing technical difficulties and is unable to connect to its cloud. Some data may be incomplete." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            
-            [noConnection show];
+            self.favoriteStarImageView.image = [UIImage imageNamed:@"favorite_sel"];
+            [self.favoriteStarImageView setNeedsDisplay];
         }
     }];
     
@@ -178,6 +162,8 @@
             self.cumulativeRatingLabel.text = [NSString stringWithFormat:@"%@%%",objects.firstObject[@"rating"]];
         }
     }];
+    
+
 }
 
 #pragma mark - tableview delegate methods
