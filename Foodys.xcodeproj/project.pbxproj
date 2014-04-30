@@ -15,6 +15,7 @@
 		43C0B871190F1502007A6CF2 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C0B86D190F1502007A6CF2 /* NotoSans-Regular.ttf */; };
 		43C0B88019100518007A6CF2 /* TestFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C0B87F19100518007A6CF2 /* TestFont.m */; };
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
+		DF005EAC1911579B00F9D1A1 /* AddFriendsSureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF005EAB1911579B00F9D1A1 /* AddFriendsSureViewController.m */; };
 		DF0A6C2C18FF5FE90064DA6B /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */; };
 		DF0B3A7419083BFD00EFCF43 /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */; };
 		DF113AC3191084E9005465CB /* DirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF113AC2191084E9005465CB /* DirectionsViewController.m */; };
@@ -86,6 +87,8 @@
 		43C0B87F19100518007A6CF2 /* TestFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestFont.m; sourceTree = "<group>"; };
 		43E412FD18FF397D008D7431 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
 		43E412FE18FF397D008D7431 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
+		DF005EAA1911579B00F9D1A1 /* AddFriendsSureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsSureViewController.h; sourceTree = "<group>"; };
+		DF005EAB1911579B00F9D1A1 /* AddFriendsSureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsSureViewController.m; sourceTree = "<group>"; };
 		DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailViewController.h; sourceTree = "<group>"; };
 		DF0A6C2B18FF5FE90064DA6B /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
 		DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsViewController.h; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				DF28E26718FCBD5900E3D4F5 /* FriendsViewController.m */,
 				DF11A01118FD9A7400CAB607 /* AllUserBrowseViewController.h */,
 				DF11A01218FD9A7400CAB607 /* AllUserBrowseViewController.m */,
+				DF005EAA1911579B00F9D1A1 /* AddFriendsSureViewController.h */,
+				DF005EAB1911579B00F9D1A1 /* AddFriendsSureViewController.m */,
 				DF0B3A7219083BFD00EFCF43 /* AddFriendsViewController.h */,
 				DF0B3A7319083BFD00EFCF43 /* AddFriendsViewController.m */,
 				DF11A00B18FD7C6800CAB607 /* FriendProfileViewController.h */,
@@ -447,6 +452,7 @@
 				DF4DB8A618FC508800C225EC /* ProfileViewController.m in Sources */,
 				DF11A01018FD905500CAB607 /* FriendsFriendsViewController.m in Sources */,
 				DF4DB85F18FC450000C225EC /* AppDelegate.m in Sources */,
+				DF005EAC1911579B00F9D1A1 /* AddFriendsSureViewController.m in Sources */,
 				DF28E26818FCBD5900E3D4F5 /* FriendsViewController.m in Sources */,
 				DF11A01318FD9A7400CAB607 /* AllUserBrowseViewController.m in Sources */,
 				DF30B1A6190F3E8E00D2C1C3 /* SeeRecommendationViewController.m in Sources */,

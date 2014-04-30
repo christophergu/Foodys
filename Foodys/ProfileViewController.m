@@ -73,7 +73,6 @@
     self.currentUser = [PFUser currentUser];
     
     self.nameLabel.text = self.currentUser[@"username"];
-    self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
     
     [self countReviewsAndRecommendations];

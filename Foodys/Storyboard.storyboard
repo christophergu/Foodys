@@ -1406,7 +1406,7 @@
             </objects>
             <point key="canvasLocation" x="474" y="-348"/>
         </scene>
-        <!--Profile View Controller - User's Name Here-->
+        <!--Profile View Controller - Profile-->
         <scene sceneID="0Eg-Yw-Ogy">
             <objects>
                 <viewController id="Bg0-Kt-1wg" customClass="ProfileViewController" sceneMemberID="viewController">
@@ -1553,7 +1553,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="User's Name Here" id="65f-AI-6pn">
+                    <navigationItem key="navigationItem" title="Profile" id="65f-AI-6pn">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="OZ1-9j-Lpz">
                             <connections>
                                 <action selector="onLogOutButtonPressed:" destination="Bg0-Kt-1wg" id="W6o-NW-pHh"/>
@@ -1785,7 +1785,7 @@
             </objects>
             <point key="canvasLocation" x="474" y="1081"/>
         </scene>
-        <!--Friend Profile View Controller - User's Name Here-->
+        <!--Friend Profile View Controller - Profile-->
         <scene sceneID="L38-6m-ids">
             <objects>
                 <viewController id="au0-BR-c0e" customClass="FriendProfileViewController" sceneMemberID="viewController">
@@ -1889,7 +1889,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="User's Name Here" id="APr-E9-liO">
+                    <navigationItem key="navigationItem" title="Profile" id="APr-E9-liO">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="imM-az-NuI">
                             <connections>
                                 <segue destination="b78-Vy-pKn" kind="unwind" unwindAction="unwindAfterDeletingFriend:" id="4Bi-Co-z6b"/>
@@ -2085,6 +2085,13 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Friend Request Pending" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="82" translatesAutoresizingMaskIntoConstraints="NO" id="dId-bw-Gsr">
+                                                    <rect key="frame" x="9" y="5" width="82" height="81"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -2092,6 +2099,7 @@
                                             <outlet property="addFriendButton" destination="7bN-xW-Jaw" id="dAD-OP-xLe"/>
                                             <outlet property="circularFrameImageView" destination="qb4-cz-ERZ" id="RnN-5c-Der"/>
                                             <outlet property="friendImageView" destination="YWQ-IX-4vy" id="Cvg-AU-9tg"/>
+                                            <outlet property="friendRequestPendingLabel" destination="dId-bw-Gsr" id="h1I-hk-GO2"/>
                                             <outlet property="greenHiderView" destination="y7T-6Y-iff" id="u0k-Qs-9cZ"/>
                                             <outlet property="usernameLabel" destination="Amd-mN-Hey" id="URP-cI-JCw"/>
                                         </connections>
@@ -2108,11 +2116,103 @@
                     <navigationItem key="navigationItem" id="0CH-OV-hxj"/>
                     <connections>
                         <outlet property="myCollectionView" destination="NXb-Jz-vF7" id="Nia-wM-Vd4"/>
+                        <segue destination="Fdn-JX-69G" kind="push" identifier="AddFriendSureSegue" id="aJP-vR-3DD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZ5-ta-gXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1533" y="2524"/>
+        </scene>
+        <!--Add Friends Sure View Controller-->
+        <scene sceneID="pZ3-HI-ftX">
+            <objects>
+                <viewController id="Fdn-JX-69G" customClass="AddFriendsSureViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jWZ-lD-g2F"/>
+                        <viewControllerLayoutGuide type="bottom" id="hgt-H7-55v"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mG6-Zs-mBu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zKr-lC-PUj">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="211"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96470588239999999" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vmf-oU-OFE">
+                                <rect key="frame" x="103" y="81" width="114" height="114"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="profile_gray_green" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-88-H9L">
+                                <rect key="frame" x="101" y="79" width="116" height="116"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Eu-mg-qnG">
+                                <rect key="frame" x="20" y="251" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WHT-qz-AAA">
+                                <rect key="frame" x="118" y="232" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="rankLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbL-Vh-jZF">
+                                <rect key="frame" x="20" y="314" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rank:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ill-oQ-0ct">
+                                <rect key="frame" x="138" y="297" width="44" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Sk-hI-R1q">
+                                <rect key="frame" x="10" y="372" width="300" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1215686275" green="0.74117647060000003" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Add Friend">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onAddFriendButtonPressed:" destination="Fdn-JX-69G" eventType="touchUpInside" id="30h-c8-BDP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wc2-uG-fCO">
+                                <rect key="frame" x="136" y="419" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.1215686275" green="0.74117647060000003" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onCancelButtonPressed:" destination="Fdn-JX-69G" eventType="touchUpInside" id="8tG-Qy-MWq"/>
+                                    <segue destination="WbS-he-8hE" kind="unwind" identifier="unwindAfterFriendSureSegue" unwindAction="unwindAfterFriendSure:" id="MHf-ES-RnG"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hHV-dG-coQ"/>
+                    <connections>
+                        <outlet property="addFriendButton" destination="1Sk-hI-R1q" id="lxO-IX-QUh"/>
+                        <outlet property="avatarImageView" destination="Vmf-oU-OFE" id="bU8-gK-kLR"/>
+                        <outlet property="cancelButton" destination="Wc2-uG-fCO" id="Gqf-XM-mLI"/>
+                        <outlet property="nameLabel" destination="4Eu-mg-qnG" id="kVj-fq-vIp"/>
+                        <outlet property="rankLabel" destination="xbL-Vh-jZF" id="CbD-p5-frg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W0L-xA-KP1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="WbS-he-8hE" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1937" y="2524"/>
         </scene>
     </scenes>
     <resources>
@@ -2138,8 +2238,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Htr-aG-CF1"/>
         <segue reference="Bhm-sR-I30"/>
+        <segue reference="94m-tQ-6MG"/>
         <segue reference="RhK-hE-tTe"/>
     </inferredMetricsTieBreakers>
 </document>
