@@ -331,7 +331,7 @@
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
-//        cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
+        cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
         NSLog(@"%@",self.recommendationsArray[indexPath.row]);
         
 //        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];

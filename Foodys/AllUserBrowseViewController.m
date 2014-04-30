@@ -7,14 +7,18 @@
 //
 
 #import "AllUserBrowseViewController.h"
+#import "AddFriendsSureViewController.h"
 #import "CollectionViewCellWithImageThatFlips.h"
 #import <Parse/Parse.h>
 
 @interface AllUserBrowseViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (strong, nonatomic) PFUser *currentFriendUser;
+@property (strong, nonatomic) PFUser *currentFriendUserToSend;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *friendsNamesArray;
+@property (strong, nonatomic) NSMutableArray *pendingFriendsArray;
+
 
 @end
 
@@ -41,6 +45,8 @@
             [self.friendsNamesArray addObject: friend[@"username"]];
         }
     }];
+    
+    self.pendingFriendsArray = [NSMutableArray new];
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     
@@ -70,6 +76,19 @@
              [self.myCollectionView reloadData];
          }];
     }
+    
+    PFQuery *friendRequestsQuery = [PFQuery queryWithClassName:@"FriendRequest"];
+    [friendRequestsQuery includeKey:@"requestee"];
+    [friendRequestsQuery includeKey:@"requestor"];
+    
+    [friendRequestsQuery whereKey:@"requestor" equalTo:self.currentUser];
+    [friendRequestsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *friendRequest in objects)
+        {
+            [self.pendingFriendsArray addObject: friendRequest[@"requestee"][@"username"]];
+        }
+        [self.myCollectionView reloadData];
+    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -86,7 +105,6 @@
     cell.usernameLabel.text = self.currentFriendUser[@"username"];
     cell.rankLabel.text = self.currentFriendUser[@"rank"];
     
-    
     if ([cell.usernameLabel.text isEqualToString:self.currentUser[@"username"]])
     {
         cell.addFriendButton.hidden = YES;
@@ -94,12 +112,19 @@
         cell.usernameLabel.text = @"YOU";
         cell.greenHiderView.alpha = 0.0;
     }
+    else if ([self.pendingFriendsArray containsObject:self.currentFriendUser[@"username"]])
+    {
+        cell.addFriendButton.hidden = YES;
+        cell.addFriendButton.enabled = NO;
+        cell.friendRequestPendingLabel.hidden = NO;
+        cell.greenHiderView.alpha = 0.75;
+    }
     else
     {
         cell.addFriendButton.hidden = NO;
         cell.addFriendButton.enabled = YES;
         cell.addFriendButton.friendUser = self.userArray[indexPath.row];
-        cell.greenHiderView.alpha = 0.95;
+        cell.greenHiderView.alpha = 0.75;
     }
     
     for (NSString *usernameString in self.friendsNamesArray)
@@ -114,97 +139,15 @@
         }
     }
     
-    
-    
-    
-    
-    
-    
+
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             UIImage *photo = [UIImage imageWithData:data];
             cell.friendImageView.image = photo;
-            cell.friendDetailImageView.alpha = 0.5;
-            cell.friendDetailImageView.image = photo;
         }
     }];
     
-//    cell.flipped = NO;
-    
     return cell;
-}
-
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CollectionViewCellWithImageThatFlips *cell = (CollectionViewCellWithImageThatFlips *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    
-    if ([cell.usernameLabel.text isEqualToString:self.currentUser[@"username"]])
-    {
-        cell.addFriendButton.hidden = YES;
-        cell.addFriendButton.enabled = NO;
-        cell.usernameLabel.text = @"YOU";
-        cell.greenHiderView.alpha = 0.0;
-    }
-    else
-    {
-        cell.addFriendButton.hidden = NO;
-        cell.addFriendButton.enabled = YES;
-        cell.addFriendButton.friendUser = self.userArray[indexPath.row];
-        cell.greenHiderView.alpha = 1.0;
-    }
-    
-    for (NSString *usernameString in self.friendsNamesArray)
-    {
-        if ([cell.usernameLabel.text isEqualToString:usernameString])
-        {
-            cell.addFriendButton.hidden = YES;
-            cell.addFriendButton.enabled = NO;
-            cell.greenHiderView.alpha = 0.0;
-        }
-    }
-    
-//    if (cell.flipped == NO)
-//    {
-//        [UIView animateWithDuration:1.0
-//                              delay:0
-//                            options:(UIViewAnimationOptionAllowUserInteraction)
-//                         animations:^
-//         {
-//             [UIView transitionFromView:cell.friendImageView
-//                                 toView:cell.detailView
-//                               duration:.5
-//                                options:UIViewAnimationOptionTransitionFlipFromRight
-//                             completion:nil];
-//         }
-//                         completion:^(BOOL finished)
-//         {
-//             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-//             cell.flipped = YES;
-//         }
-//         ];
-//    }
-//    else if (cell.flipped == YES)
-//    {
-//        [UIView animateWithDuration:1.0
-//                              delay:0
-//                            options:(UIViewAnimationOptionAllowUserInteraction)
-//                         animations:^
-//         {
-//             [UIView transitionFromView:cell.detailView
-//                                 toView:cell.friendImageView
-//                               duration:.5
-//                                options:UIViewAnimationOptionTransitionFlipFromRight
-//                             completion:nil];
-//         }
-//                         completion:^(BOOL finished)
-//         {
-//             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-//             cell.flipped = NO;
-//         }
-//         ];
-//    }
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -214,21 +157,35 @@
 
 - (IBAction)onAddButtonPressed:(AddFriendButton *)sender
 {
-    NSLog(@"%@",sender.friendUser);
-    PFUser *currentUser = [PFUser currentUser];
+    self.currentFriendUserToSend = sender.friendUser;
+    [self performSegueWithIdentifier:@"AddFriendSureSegue" sender:self];
+    
+//    NSLog(@"%@",sender.friendUser);
+//    PFUser *currentUser = [PFUser currentUser];
+//
+//    PFObject *friendRequest = [PFObject objectWithClassName:@"FriendRequest"];
+//    [friendRequest setObject:currentUser forKey:@"requestor"];
+//    [friendRequest setObject:sender.friendUser forKey:@"requestee"];
+//    
+//    UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Sent!"
+//                                                          message:[NSString stringWithFormat:@"You invited %@ to be your friend!",sender.friendUser[@"username"]]
+//                                                         delegate:self
+//                                                cancelButtonTitle:@"OK"
+//                                                otherButtonTitles:nil];
+//    [friendAddedAlert show];
+//    
+//    [friendRequest saveInBackground];
+}
 
-    PFObject *friendRequest = [PFObject objectWithClassName:@"FriendRequest"];
-    [friendRequest setObject:currentUser forKey:@"requestor"];
-    [friendRequest setObject:sender.friendUser forKey:@"requestee"];
+- (IBAction)unwindAfterFriendSure:(UIStoryboardSegue *)unwindSegue
+{
     
-    UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Sent!"
-                                                          message:[NSString stringWithFormat:@"You invited %@ to be your friend!",sender.friendUser[@"username"]]
-                                                         delegate:self
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-    [friendAddedAlert show];
-    
-    [friendRequest saveInBackground];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    AddFriendsSureViewController *afsvc = segue.destinationViewController;
+    afsvc.friendToConfirm = self.currentFriendUserToSend;
 }
 
 @end

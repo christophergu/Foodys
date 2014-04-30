@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (strong, nonatomic) IBOutlet UIView *greenHiderView;
 @property (strong, nonatomic) IBOutlet UIImageView *circularFrameImageView;
+@property (strong, nonatomic) IBOutlet UILabel *friendRequestPendingLabel;
 
 
 @end
