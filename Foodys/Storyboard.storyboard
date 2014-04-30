@@ -379,7 +379,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="ResultsReuseCellID" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ResultsReuseCellID" rowHeight="53" id="ATO-Re-SRp" customClass="ResultsTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="53"/>
+                                        <rect key="frame" x="0.0" y="86" width="320" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ATO-Re-SRp" id="6UO-7U-s1H">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="52"/>
@@ -862,7 +862,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="VIEW HOURS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2s-q0-RPN">
-                                        <rect key="frame" x="36" y="11" width="109" height="21"/>
+                                        <rect key="frame" x="36" y="11" width="224" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.1215686275" green="0.74117647060000003" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -913,7 +913,7 @@
                                         <color key="backgroundColor" red="0.8862745098" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="VIEW MENU" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hen-cx-WbK">
-                                        <rect key="frame" x="36" y="11" width="91" height="21"/>
+                                        <rect key="frame" x="36" y="11" width="247" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.1215686275" green="0.74117647060000003" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -1020,9 +1020,11 @@
                         <outlet property="favoriteStarImageView" destination="yvB-f4-xUc" id="hiB-ii-WzO"/>
                         <outlet property="friLabel" destination="dFS-h2-bvi" id="hRa-WF-dor"/>
                         <outlet property="fridayHoursLabel" destination="UPT-3n-bZA" id="Va2-rC-E5k"/>
+                        <outlet property="hoursLabel" destination="L2s-q0-RPN" id="bgx-je-b2v"/>
                         <outlet property="hoursUnavailableLabel" destination="EcZ-UB-Tlq" id="KaS-eN-xFd"/>
                         <outlet property="hoursView" destination="oRh-2K-3ld" id="2Bj-vT-Avn"/>
                         <outlet property="locationButton" destination="Hzc-Ec-F8u" id="ccL-V6-r8o"/>
+                        <outlet property="menuLabel" destination="hen-cx-WbK" id="5RE-K1-lFV"/>
                         <outlet property="menuUnavailableLabel" destination="qHP-qy-1mQ" id="jIw-MG-LCt"/>
                         <outlet property="menuView" destination="OQ9-Qm-Qo3" id="oj2-su-zwA"/>
                         <outlet property="monLabel" destination="Ry0-rC-6BN" id="g4y-dz-ITN"/>
@@ -1236,6 +1238,7 @@
                     <navigationItem key="navigationItem" title="What's Cooking?" id="jET-Jh-cXb"/>
                     <connections>
                         <outlet property="myTableView" destination="Yx6-e5-YjB" id="DK6-RS-bdg"/>
+                        <outlet property="whatsCooking" destination="jET-Jh-cXb" id="yS5-Jg-7cG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ya-yf-k8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1433,7 +1436,7 @@
             </objects>
             <point key="canvasLocation" x="474" y="-348"/>
         </scene>
-        <!--Profile View Controller - User's Name Here-->
+        <!--Profile View Controller - Profile-->
         <scene sceneID="0Eg-Yw-Ogy">
             <objects>
                 <viewController id="Bg0-Kt-1wg" customClass="ProfileViewController" sceneMemberID="viewController">
@@ -1580,7 +1583,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="User's Name Here" id="65f-AI-6pn">
+                    <navigationItem key="navigationItem" title="Profile" id="65f-AI-6pn">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="OZ1-9j-Lpz">
                             <connections>
                                 <action selector="onLogOutButtonPressed:" destination="Bg0-Kt-1wg" id="W6o-NW-pHh"/>
@@ -1596,6 +1599,7 @@
                         <outlet property="mySegmentedControl" destination="wwZ-k4-ADx" id="Uja-XD-ye8"/>
                         <outlet property="myTableView" destination="NaG-DQ-JPW" id="YBT-na-oqJ"/>
                         <outlet property="nameLabel" destination="voR-lB-lE0" id="gxc-hE-aZR"/>
+                        <outlet property="profileHeader" destination="65f-AI-6pn" id="D9f-0i-dnl"/>
                         <outlet property="rankingLabel" destination="kUh-Fe-S99" id="2FX-Xd-zv0"/>
                         <outlet property="reviewsCounterLabel" destination="bx8-h9-2qg" id="HuF-sM-UnE"/>
                         <segue destination="cM8-7k-1gT" kind="push" identifier="FavoriteToRestaurantSegue" id="zKF-Wz-zN4"/>
@@ -2167,6 +2171,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="zKF-Wz-zN4"/>
         <segue reference="RhK-hE-tTe"/>
-        <segue reference="fdc-o9-LBs"/>
+        <segue reference="Bhm-sR-I30"/>
     </inferredMetricsTieBreakers>
 </document>

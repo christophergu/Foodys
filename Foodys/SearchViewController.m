@@ -49,9 +49,18 @@
 {
     [super viewDidLoad];
     
-    self.suggestionsLabel.font = [UIFont fontWithName:@"nevis-Bold" size:self.suggestionsLabel.font.pointSize];
+    self.navigationController.navigationBar.titleTextAttributes =
+    @{NSFontAttributeName: [UIFont fontWithName:@"NotoSans-Bold" size:16],
+      NSForegroundColorAttributeName: [UIColor whiteColor]};
     
-    self.navigationController.navigationBarHidden = YES;
+//    [self.navigationController.navigationBar setTitleTextAttributes:
+//     [NSDictionary dictionaryWithObjectsAndKeys:
+//      [UIFont fontWithName:@"NotoSans-Bold" size:21],
+//      NSFontAttributeName, nil]];
+    
+    self.suggestionsLabel.font = [UIFont fontWithName:@"nevis" size:self.suggestionsLabel.font.pointSize];
+//
+//    self.navigationController.navigationBarHidden = YES;
     
 
     

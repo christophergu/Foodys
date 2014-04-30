@@ -42,6 +42,7 @@
 @property BOOL isEditModeEnabled;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UINavigationItem *profileHeader;
 
 @end
 
@@ -50,6 +51,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor blackColor], UITextAttributeTextColor,
+      [UIFont fontWithName:@"NotoSans-Bold" size:16.0], UITextAttributeFont,nil]];
+    
+//    self.navigationController.navigationBarHidden = YES;
+    
+    [[UISegmentedControl appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                             [UIColor blackColor],UITextAttributeTextColor,
+                                                             [UIColor clearColor], UITextAttributeTextShadowColor,
+                                                             [UIFont fontWithName:@"nevis" size:13.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
     
     self.rankings = @[@"Shy Foodie",
                       @"Novice Foodie",
@@ -73,7 +86,6 @@
     self.currentUser = [PFUser currentUser];
     
     self.nameLabel.text = self.currentUser[@"username"];
-    self.navigationItem.title = self.currentUser[@"username"];
     self.rankingLabel.text = self.currentUser[@"rank"];
     
     [self countReviewsAndRecommendations];
