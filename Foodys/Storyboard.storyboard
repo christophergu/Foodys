@@ -654,8 +654,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gnj-aK-cgL">
-
-                                <rect key="frame" x="0.0" y="273" width="320" height="295"/>
+                                <rect key="frame" x="0.0" y="276" width="320" height="292"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="favorite_unsel" translatesAutoresizingMaskIntoConstraints="NO" id="yvB-f4-xUc">
