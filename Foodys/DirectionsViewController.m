@@ -74,10 +74,12 @@
     double centerLatitude = (self.locationManager.location.coordinate.latitude + latitude)/2.0;
     double centerLongitude = (self.locationManager.location.coordinate.longitude + longitude)/2.0;
     
+    CLLocation *locA = [[CLLocation alloc] initWithLatitude:self.locationManager.location.coordinate.latitude longitude:self.locationManager.location.coordinate.longitude];
+    CLLocation *locB = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+    CLLocationDistance distance = [locA distanceFromLocation:locB]*1.25;
     
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(centerLatitude, centerLongitude);
-    MKCoordinateSpan coordinateSpan = MKCoordinateSpanMake(0.1, 0.1);
-    MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, coordinateSpan);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, distance, distance);
     mapView.region = region;
     
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
