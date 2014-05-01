@@ -57,7 +57,7 @@
     
     // hiding the choose friends button
 
-    self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
     self.chooseFriendsDoneButton.enabled = NO;
     
     self.sliderIntValue = 50;
@@ -69,6 +69,9 @@
     self.doneButton.layer.cornerRadius=4.0f;
     self.doneButton.layer.masksToBounds=YES;
     self.doneButton.tintColor = [UIColor whiteColor];
+    
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    self.chooseFriendsDoneButton.tintColor = [UIColor whiteColor];
         
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -81,7 +84,7 @@
     {
         self.chooseFriendToWriteView.alpha = 1.0;
         [UIView animateWithDuration:0.5 animations:^{
-                self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
+                self.chooseFriendsDoneButton.tintColor = [UIColor whiteColor];
         }];
         self.chooseFriendsDoneButton.enabled = YES;
         
@@ -90,7 +93,7 @@
     else
     {
         self.chooseFriendToWriteView.alpha = 0.0;
-        self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
+        self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
         self.chooseFriendsDoneButton.enabled = NO;
         
         [self.doneButton setTitle:@"Post Review" forState:UIControlStateNormal];
@@ -304,7 +307,7 @@
                         options: UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
-                         self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+                         self.chooseFriendsDoneButton.tintColor = [UIColor whiteColor];
                      }
                      completion:^(BOOL finished){
                          self.chooseFriendsDoneButton.enabled = YES;
@@ -315,12 +318,11 @@
 
 - (IBAction)onChooseFriendsButtonPressed:(id)sender
 {
-    [UIView animateWithDuration:0.5
-                          delay:0.0
+    [UIView animateWithDuration:1.0
+                          delay:1.0
                         options: UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.chooseFriendToWriteView.frame = CGRectMake(0, 529, 320, 514);
-                         self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:0.0];
                      }
                      completion:^(BOOL finished){
                          self.chooseFriendsDoneButton.enabled = NO;
@@ -350,7 +352,9 @@
         self.recommendation[@"rating"] = @(rating);
         self.recommendation[@"restaurantDictionary"] = self.chosenRestaurantDictionary;
         
-        [self.recommendation saveInBackground];
+        if (!([self.friendsToRecommendTo count] == 0)) {
+            [self.recommendation saveInBackground];
+        }
     }
     else
     {

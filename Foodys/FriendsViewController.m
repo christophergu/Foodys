@@ -60,11 +60,10 @@
     self.currentUser = [PFUser currentUser];
     
     // hiding the choose friends button
-    self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    self.addFriendButton.tintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
     self.addFriendButton.enabled = NO;
     
     self.requestorsToAddArray = [NSMutableArray new];
-    [self acceptFriends];
     [self autoAddFriendsThatAccepted];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
@@ -76,14 +75,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self autoDeleteFriendsThatDefriended];
+    [self acceptFriends];
     
     self.currentUser = [PFUser currentUser];
     
     PFQuery *queryForFriends = [PFUser query];
-    [queryForFriends whereKey:@"username" containsString:self.currentUser[@"username"]];
+    [queryForFriends whereKey:@"username" equalTo:self.currentUser[@"username"]];
     [queryForFriends includeKey:@"friends"];
     [queryForFriends findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.userFriendsArray = self.currentUser[@"friends"];
+        
+        self.userFriendsArray = objects.firstObject[@"friends"];
         [self.myCollectionView reloadData];
     }];
 }
@@ -108,10 +109,15 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
-
-    self.currentFriendUser = self.userFriendsArray[indexPath.row];
     
-    if (![self.currentFriendUser[@"username"] isEqual:[NSNull null]] && !(self.currentFriendUser[@"username"] == nil)) {
+    self.currentFriendUser = self.userFriendsArray[indexPath.row];
+
+    if ([self.currentFriendUser[@"username"] isEqual:[NSNull null]] || (self.currentFriendUser[@"username"] == nil))
+    {
+        cell.usernameLabel.text = @"";
+    }
+    else
+    {
         cell.usernameLabel.text = self.currentFriendUser[@"username"];
         [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if (!error) {
@@ -119,10 +125,6 @@
                 cell.friendImageView.image = photo;
             }
         }];
-    }
-    else
-    {
-        cell.usernameLabel.text = @"";
     }
 
     return cell;
@@ -187,12 +189,12 @@
          
          if (self.requestorsToAddArray.firstObject)
          {
-             self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
+             self.addFriendButton.tintColor = [UIColor whiteColor];
              self.addFriendButton.enabled = YES;
          }
          else
          {
-             self.addFriendButton.tintColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+             self.addFriendButton.tintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
              self.addFriendButton.enabled = NO;
          }
      }];
@@ -251,18 +253,6 @@
          }
      }];
 }
-
-//- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-//{
-//    if (buttonIndex == 1)
-//    {
-//        NSLog(@"alerttt");
-//    }
-//    else
-//    {
-//        NSLog(@"zeroo");
-//    }
-//}
 
 #pragma mark - segue methods or related
 
@@ -418,18 +408,9 @@
              [defriendRequest setObject:self.currentUser forKey:@"requestor"];
              [defriendRequest setObject:self.friendUserToDelete forKey:@"requestee"];
              
-//             PFQuery *friendsFriendQuery = [PFUser query];
-//             [friendsFriendQuery whereKey:@"username" equalTo:self.friendUserToDelete[@"username"]];
-//             [friendsFriendQuery includeKey:@"friends"];
-//             [friendsFriendQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//                 for (PFUser *friendsFriend in objects)
-//                 {
-//                     if ([friendsFriend[@"username"] isEqualToString:self.currentUser[@"username"]])
-//                     {
-                         [defriendRequest saveInBackground];
-//                     }
-//                 }
-//             }];
+
+             [defriendRequest saveInBackground];
+
              
              [self.myCollectionView reloadData];
          }];
