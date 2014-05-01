@@ -65,6 +65,8 @@
     {
         self.ratingFaceImageView.image = [UIImage imageNamed:@"frowny_icon"];
     }
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

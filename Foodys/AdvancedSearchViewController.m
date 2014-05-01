@@ -29,6 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 -(void)viewWillAppear:(BOOL)animated

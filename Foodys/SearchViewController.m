@@ -61,8 +61,7 @@
                               @"burrito",
                               @"burger",
                               @"coffee",
-                              @"dim sum",
-                              @"hot dogs",
+                              @"hot dog",
                               @"lasagna",
                               @"pad thai",
                               @"pancakes",
@@ -89,6 +88,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 #pragma mark - check if there is a current user method

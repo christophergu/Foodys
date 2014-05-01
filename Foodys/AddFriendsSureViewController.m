@@ -45,6 +45,8 @@
     self.addFriendButton.layer.cornerRadius=4.0f;
     self.addFriendButton.layer.masksToBounds=YES;
     self.addFriendButton.tintColor = [UIColor whiteColor];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 - (IBAction)onAddFriendButtonPressed:(id)sender

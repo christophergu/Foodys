@@ -96,6 +96,8 @@
 
     self.selectedFriends = [NSMutableArray new];
     self.currentUser = [PFUser currentUser];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 -(void)viewWillAppear:(BOOL)animated

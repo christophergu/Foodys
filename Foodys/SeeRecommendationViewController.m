@@ -57,6 +57,8 @@
     NSString *postString = [dateFormat stringFromDate:postDate];
     
     self.dateLabel.text = [NSString stringWithFormat:@"%@",postString];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

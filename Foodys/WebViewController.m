@@ -25,6 +25,8 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.websiteUrl]];
     [self.myWebView loadRequest:request];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 - (void) webViewDidFinishLoad: (UIWebView *)myWebView

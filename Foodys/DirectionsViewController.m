@@ -46,6 +46,8 @@
     [self loadMapAndDirections:self.myMapView withTransportType:0];
     
     self.myDriveMapView.alpha = 0.0;
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 - (IBAction)onSegmentedControlValueChanged:(id)sender
