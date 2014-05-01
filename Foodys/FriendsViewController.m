@@ -111,13 +111,20 @@
 
     self.currentFriendUser = self.userFriendsArray[indexPath.row];
     
-    cell.usernameLabel.text = self.currentFriendUser[@"username"];
-    [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
-            UIImage *photo = [UIImage imageWithData:data];
-            cell.friendImageView.image = photo;
-        }
-    }];
+    if (![self.currentFriendUser[@"username"] isEqual:[NSNull null]] && !(self.currentFriendUser[@"username"] == nil)) {
+        cell.usernameLabel.text = self.currentFriendUser[@"username"];
+        [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!error) {
+                UIImage *photo = [UIImage imageWithData:data];
+                cell.friendImageView.image = photo;
+            }
+        }];
+    }
+    else
+    {
+        cell.usernameLabel.text = @"";
+    }
+
     return cell;
 }
 

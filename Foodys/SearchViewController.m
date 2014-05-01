@@ -47,6 +47,12 @@
 
 - (void)viewDidLoad
 {
+    
+
+    
+
+    
+    
     [super viewDidLoad];
     
     self.navigationController.navigationBar.titleTextAttributes =
@@ -136,7 +142,6 @@
 //                                      self.locationManager.location.coordinate.longitude];
 //    NSLog(@"lcs %@",self.locationCoordinatesString);
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationNotification" object:self.locationCoordinatesString];
-
 }
 
 #pragma mark - table view methods

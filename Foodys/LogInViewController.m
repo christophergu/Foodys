@@ -11,12 +11,14 @@
 #import <Parse/Parse.h>
 #import "TestFont.h"
 
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+
 @interface LogInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) IBOutlet UIScrollView *autoLayoutScrollView;
-@property (strong, nonatomic) IBOutlet TestFont *fontLabel;
+@property (strong, nonatomic) IBOutlet UIButton *logInButton;
 @end
 
 
@@ -26,15 +28,37 @@
 {
     [super viewDidLoad];
     
-    self.fontLabel.font = [UIFont fontWithName:@"NotoSans-BoldItalic" size:self.fontLabel.font.pointSize];
+//    self.fontLabel.font = [UIFont fontWithName:@"NotoSans-BoldItalic" size:self.fontLabel.font.pointSize];
 
     self.navigationController.navigationBarHidden = YES;
+    
+    self.logInButton.layer.cornerRadius=4.0f;
+    self.logInButton.layer.masksToBounds=YES;
+    self.logInButton.tintColor = [UIColor whiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     
-    [super viewDidAppear:animated]; [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil]; [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardDidHideNotification object:nil];
+    [super viewDidAppear:animated];
+    
+    
+    if (isiPhone5)
+    {
+        // this is iphone 4 inch
+        NSLog(@"ya");
+    }
+    else
+    {
+        //Iphone  3.5 inch
+        NSLog(@"nah");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:)
+                                                     name:UIKeyboardDidShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:)
+                                                     name:UIKeyboardDidHideNotification object:nil];
+    }
+
     
     if (self.currentUser)
     {
@@ -42,18 +66,18 @@
     }
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
 
-
-
-
--(void)viewDidDisappear:(BOOL)animated { [super viewDidDisappear:animated]; [[NSNotificationCenter defaultCenter] removeObserver:self]; }
-
-- (void)keyboardWasShown:(NSNotification*)aNotification{
-
-    CGPoint point = CGPointMake(0, 50);
+    CGPoint point = CGPointMake(0, 150);
     [self.autoLayoutScrollView setContentOffset:point animated:YES];
-    NSLog(@"keyboard was shown");
+
 //    [UIView beginAnimations:nil context:nil];
 //    [UIView setAnimationDuration:0.5];
 //    [UIView setAnimationDelay:0];
@@ -62,7 +86,12 @@
 }
 
 
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification { NSLog(@"keyboard was hidden"); }
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSLog(@"keyboard was hidden");
+    CGPoint point = CGPointMake(0, -20);
+    [self.autoLayoutScrollView setContentOffset:point animated:YES];
+}
 
 
 - (IBAction)onLogInButtonPressed:(id)sender
