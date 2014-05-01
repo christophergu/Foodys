@@ -10,10 +10,14 @@
 #import "LogInViewController.h"
 #import <Parse/Parse.h>
 
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+
 @interface SignInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) IBOutlet UITextField *emailTextField;
+@property (strong, nonatomic) IBOutlet UIScrollView *autoLayoutScrollView;
+@property (strong, nonatomic) IBOutlet UIButton *signUpButton;
 
 @end
 
@@ -22,6 +26,56 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.signUpButton.layer.cornerRadius=4.0f;
+    self.signUpButton.layer.masksToBounds=YES;
+    self.signUpButton.tintColor = [UIColor whiteColor];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (isiPhone5)
+    {
+        // this is iphone 4 inch
+        NSLog(@"ya 4");
+    }
+    else
+    {
+        //Iphone  3.5 inch
+        NSLog(@"nah 3.5");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:)
+                                                     name:UIKeyboardDidShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:)
+                                                     name:UIKeyboardDidHideNotification object:nil];
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSLog(@"showing");
+    CGPoint point = CGPointMake(0, 50);
+    [self.autoLayoutScrollView setContentOffset:point animated:YES];
+    
+    //    [UIView beginAnimations:nil context:nil];
+    //    [UIView setAnimationDuration:0.5];
+    //    [UIView setAnimationDelay:0];
+    //    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    ////    self.topConstraint.constant = 10;
+}
+
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSLog(@"keyboard was hidden");
+    CGPoint point = CGPointMake(0, 0);
+    [self.autoLayoutScrollView setContentOffset:point animated:YES];
 }
 
 - (IBAction)onSignUpButtonPressed:(id)sender
