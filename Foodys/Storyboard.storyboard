@@ -1887,10 +1887,30 @@
                                 <segue destination="j9D-va-5yw" kind="push" identifier="AddFriendsSegue" id="RFv-wH-jo8"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Search for New Friends" id="FO8-c2-mdO">
-                            <connections>
-                                <segue destination="GT4-rm-hgZ" kind="push" identifier="AllUserBrowseSegue" id="fMT-3f-g41"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="8Ll-T8-qcc">
+                            <view key="customView" contentMode="scaleToFill" id="dNV-Rv-zQX">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCE-4K-Z41">
+                                        <rect key="frame" x="-2" y="-1" width="57" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Search">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="GT4-rm-hgZ" kind="push" identifier="AllUserBrowseSegue" id="ERE-mq-UVx"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right_caret" translatesAutoresizingMaskIntoConstraints="NO" id="31A-0m-kL2">
+                                        <rect key="frame" x="54" y="0.0" width="15" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2382,6 +2402,7 @@
         <image name="profile_gray_green" width="114" height="114"/>
         <image name="profile_unsel" width="30" height="29"/>
         <image name="ratingCircle" width="250" height="250"/>
+        <image name="right_caret" width="12" height="20"/>
         <image name="smokePlaceholder" width="320" height="568"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
