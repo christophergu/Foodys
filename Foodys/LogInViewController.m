@@ -59,8 +59,8 @@
                                                      name:UIKeyboardDidHideNotification object:nil];
     }
 
-    
-    if (self.currentUser)
+    PFUser *userNow = [PFUser currentUser];
+    if (userNow)
     {
         [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
     }
@@ -135,6 +135,36 @@
     [self.usernameTextField endEditing:YES];
     [self.passwordTextField endEditing:YES];
 }
+
+- (IBAction)usernameDidEndOnExit:(id)sender
+{
+    [self.passwordTextField endEditing:YES];
+    [self.usernameTextField endEditing:YES];
+}
+
+- (IBAction)passwordTextFieldDidEndOnExit:(id)sender
+{
+    [self.passwordTextField endEditing:YES];
+    [self.usernameTextField endEditing:YES];
+    
+    if (![self.passwordTextField.text isEqualToString: @""]&&![self.usernameTextField.text isEqualToString: @""])
+    {
+        [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error)
+         {
+             if (user)
+             {
+                 NSLog(@"logged in");
+                 [self performSegueWithIdentifier:@"TabBarSegue" sender:self];
+             }
+             else
+             {
+                 UIAlertView *logInFailAlert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:@"Username or Password is Incorrect or No Internet Connection" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                 [logInFailAlert show];
+             }
+         }];
+    }
+}
+
 
 - (IBAction)unwindToBeginning:(UIStoryboardSegue *)unwindSegue
 {

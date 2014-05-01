@@ -95,6 +95,13 @@
     [self.emailTextField endEditing:YES];
 }
 
+- (IBAction)emailTextFieldDidEndOnExit:(id)sender
+{
+    [self.usernameTextField endEditing:YES];
+    [self.passwordTextField endEditing:YES];
+    [self.emailTextField endEditing:YES];
+}
+
 - (void)createNewUser
 {
     PFUser *user = [PFUser user];
