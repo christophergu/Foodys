@@ -75,7 +75,7 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
 
-    CGPoint point = CGPointMake(0, 200);
+    CGPoint point = CGPointMake(0, 150);
     [self.autoLayoutScrollView setContentOffset:point animated:YES];
 
 //    [UIView beginAnimations:nil context:nil];
@@ -89,7 +89,7 @@
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     NSLog(@"keyboard was hidden");
-    CGPoint point = CGPointMake(0, 0);
+    CGPoint point = CGPointMake(0, -20);
     [self.autoLayoutScrollView setContentOffset:point animated:YES];
 }
 

@@ -46,6 +46,12 @@
 
 - (void)viewDidLoad
 {
+    
+
+    
+
+    
+    
     [super viewDidLoad];
     
     self.locationManager = [CLLocationManager new];
@@ -120,7 +126,6 @@
 //                                      self.locationManager.location.coordinate.longitude];
 //    NSLog(@"lcs %@",self.locationCoordinatesString);
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationNotification" object:self.locationCoordinatesString];
-
 }
 
 #pragma mark - table view methods
