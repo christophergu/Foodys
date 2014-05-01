@@ -1471,16 +1471,35 @@
                     </view>
                     <navigationItem key="navigationItem" id="fpH-tw-1aM">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="TfV-sb-lzd">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="onChooseFriendsButtonPressed:" destination="Pty-GU-GcG" id="igr-Uw-L5S"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="mEH-Nn-hte">
+                            <view key="customView" contentMode="scaleToFill" id="0vO-kp-XWS">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gci-dJ-POM">
+                                        <rect key="frame" x="8" y="1" width="46" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Next">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onChooseFriendsButtonPressed:" destination="Pty-GU-GcG" eventType="touchUpInside" id="1CQ-TN-ioS"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right_caret" translatesAutoresizingMaskIntoConstraints="NO" id="iMs-ac-keM">
+                                        <rect key="frame" x="54" y="7" width="12" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="chooseFriendToWriteView" destination="FKt-Kb-JmN" id="Dhp-RS-QKJ"/>
-                        <outlet property="chooseFriendsDoneButton" destination="TfV-sb-lzd" id="7lv-fA-jmL"/>
+                        <outlet property="chooseFriendsDoneButton" destination="Gci-dJ-POM" id="Le4-4u-raV"/>
                         <outlet property="cumulativeRestaurantRatingLabel" destination="P5x-LD-oEt" id="4W4-x2-ddV"/>
                         <outlet property="dateLabel" destination="tNv-jP-LXl" id="7SU-A9-fCc"/>
                         <outlet property="doneButton" destination="dEX-g3-phP" id="g1d-xS-EHQ"/>
@@ -1893,7 +1912,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCE-4K-Z41">
-                                        <rect key="frame" x="-2" y="-1" width="57" height="30"/>
+                                        <rect key="frame" x="-1" y="3" width="57" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Search">
@@ -1905,7 +1924,7 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right_caret" translatesAutoresizingMaskIntoConstraints="NO" id="31A-0m-kL2">
-                                        <rect key="frame" x="54" y="0.0" width="15" height="25"/>
+                                        <rect key="frame" x="54" y="7" width="12" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>

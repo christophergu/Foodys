@@ -26,7 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *recommendToFriendsButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseFriendToWriteView;
 @property (strong, nonatomic) IBOutlet UIButton *chooseFriendsToWriteButton;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *chooseFriendsDoneButton;
+@property (strong, nonatomic) IBOutlet UIButton *chooseFriendsDoneButton;
 
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
