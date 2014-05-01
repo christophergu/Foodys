@@ -16,6 +16,7 @@
 @property (strong,nonatomic) PFUser* currentUser;
 @property (strong,nonatomic) NSArray* currentUserPostsArray;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+@property (strong, nonatomic) IBOutlet UINavigationItem *whatsCooking;
 
 @end
 
@@ -34,9 +35,16 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.titleTextAttributes =
+    @{NSFontAttributeName: [UIFont fontWithName:@"NotoSans-Bold" size:16],
+      NSForegroundColorAttributeName: [UIColor whiteColor]};
+    
+//    NSMutableDictionary *whatsCooking = [NSMutableDictionary dictionaryWithDictionary: [[UINavigationBar appearance] titleTextAttributes]];
+//    [titleBarAttributes setValue:[UIFont fontWithName:@"NotoSans-Bold" size:16] forKey:NSFontAttributeName];
+//    [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
+    
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 -(void)viewWillAppear:(BOOL)animated

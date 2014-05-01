@@ -33,6 +33,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//   [[UISegmentedControl appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"nevis" size:13.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+    
+    
     self.myMapView.alpha = 0.0;
     self.myRecommendedMapView.alpha = 0.0;
 

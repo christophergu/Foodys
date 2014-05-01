@@ -39,6 +39,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (strong, nonatomic) NSString *locationCoordinatesString;
+@property (strong, nonatomic) IBOutlet UILabel *suggestionsLabel;
 
 @end
 
@@ -47,6 +48,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.titleTextAttributes =
+    @{NSFontAttributeName: [UIFont fontWithName:@"NotoSans-Bold" size:16],
+      NSForegroundColorAttributeName: [UIColor whiteColor]};
+    
+//    [self.navigationController.navigationBar setTitleTextAttributes:
+//     [NSDictionary dictionaryWithObjectsAndKeys:
+//      [UIFont fontWithName:@"NotoSans-Bold" size:21],
+//      NSFontAttributeName, nil]];
+    
+    self.suggestionsLabel.font = [UIFont fontWithName:@"nevis" size:self.suggestionsLabel.font.pointSize];
+//
+//    self.navigationController.navigationBarHidden = YES;
+    
+
     
     self.locationManager = [CLLocationManager new];
     
