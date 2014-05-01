@@ -46,12 +46,6 @@
 
 - (void)viewDidLoad
 {
-    
-
-    
-
-    
-    
     [super viewDidLoad];
     
     self.locationManager = [CLLocationManager new];
@@ -81,51 +75,14 @@
 
 }
 
-//- (void)locationManager: (CLLocationManager *)manager
-//       didFailWithError: (NSError *)error
-//{
-//    [manager stopUpdatingLocation];
-//    NSLog(@"error%@",error);
-//    switch([error code])
-//    {
-//        case kCLErrorNetwork: // general, network-related error
-//        {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"please check your network connection or that you are not in airplane mode" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//            [alert show];
-//            //[alert release];
-//        }
-//            break;
-//        case kCLErrorDenied:{
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"user has denied to use current Location " delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//            [alert show];
-//            //[alert release];
-//        }
-//            break;
-//        default:
-//        {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"unknown network error" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//            [alert show];
-//            //[alert release];
-//        }
-//            break;
-//    }
-//}
-
-
-
 #pragma mark - check if there is a current user method
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.currentUser = [PFUser currentUser];
     
+    self.cuisineTextField.text = @"";
     [self.myTableView deselectRowAtIndexPath:[self.myTableView indexPathForSelectedRow] animated:YES];
-    
-//    self.locationCoordinatesString = [NSString stringWithFormat:@"%.1f,%.1f",
-//                                      self.locationManager.location.coordinate.latitude,
-//                                      self.locationManager.location.coordinate.longitude];
-//    NSLog(@"lcs %@",self.locationCoordinatesString);
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationNotification" object:self.locationCoordinatesString];
 }
 
 #pragma mark - table view methods
@@ -176,7 +133,7 @@
         NSLog(@"hi");
         NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
         NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
-        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=1000000",
+        locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
                                  self.locationManager.location.coordinate.latitude,
                                  self.locationManager.location.coordinate.longitude];
         

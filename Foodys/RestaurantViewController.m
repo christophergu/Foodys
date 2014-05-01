@@ -14,6 +14,8 @@
 #import <Parse/Parse.h>
 #import "SearchViewController.h"
 
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
@@ -211,74 +213,157 @@
 {
     NSString *hasMenuString = [NSString stringWithFormat:@"%@",self.chosenRestaurantDictionary[@"has_menu"]];
     NSLog(@"%@",hasMenuString);
-    if ([hasMenuString isEqualToString:@"1"])
+    
+    if (isiPhone5)
     {
-        self.menuBoolForButton = !self.menuBoolForButton;
+        // this is iphone 4 inch
+        NSLog(@"ya");
         
-        if (self.menuBoolForButton)
+        if ([hasMenuString isEqualToString:@"1"])
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseOut
-                             animations:
-             ^{
-                 self.menuView.frame = CGRectMake(0, 211, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
+            self.menuBoolForButton = !self.menuBoolForButton;
+            
+            if (self.menuBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 211, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 452, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
         }
         else
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseIn
-                             animations:
-             ^{
-                 self.menuView.frame = CGRectMake(0, 452, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
+            self.menuBoolForButton = !self.menuBoolForButton;
+            
+            if (self.menuBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 398, 320, 514);
+                     self.menuUnavailableLabel.alpha = 1.0;
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 452, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                     self.menuUnavailableLabel.alpha = 0.0;
+                 }
+                 ];
+            }
         }
+
     }
     else
     {
-        self.menuBoolForButton = !self.menuBoolForButton;
-        
-        if (self.menuBoolForButton)
+        //Iphone  3.5 inch
+        NSLog(@"nah");
+        if ([hasMenuString isEqualToString:@"1"])
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseOut
-                             animations:
-             ^{
-                 self.menuView.frame = CGRectMake(0, 398, 320, 514);
-                 self.menuUnavailableLabel.alpha = 1.0;
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
+            self.menuBoolForButton = !self.menuBoolForButton;
+            
+            if (self.menuBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 137, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 368, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
         }
         else
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseIn
-                             animations:
-             ^{
-                 self.menuView.frame = CGRectMake(0, 452, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-                 self.menuUnavailableLabel.alpha = 0.0;
-             }
-             ];
+            self.menuBoolForButton = !self.menuBoolForButton;
+            
+            if (self.menuBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 137, 320, 514);
+                     self.menuUnavailableLabel.alpha = 1.0;
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.menuView.frame = CGRectMake(0, 368, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                     self.menuUnavailableLabel.alpha = 0.0;
+                 }
+                 ];
+            }
         }
+
     }
+
 }
 
 - (IBAction)onHoursButtonPressed:(id)sender
