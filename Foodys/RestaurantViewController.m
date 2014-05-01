@@ -54,12 +54,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
-<<<<<<< HEAD
+
 @property (strong, nonatomic) NSMutableArray *defaultMutableArray;
-=======
+
 @property (strong, nonatomic) IBOutlet UILabel *hoursLabel;
 @property (strong, nonatomic) IBOutlet UILabel *menuLabel;
->>>>>>> ac08776870954093ecc408641f8ad425700dafa5
 
 
 @end
