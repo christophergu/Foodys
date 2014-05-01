@@ -835,7 +835,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRh-2K-3ld" userLabel="View - Hours">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRh-2K-3ld" userLabel="View - Hours">
                                 <rect key="frame" x="0.0" y="414" width="320" height="514"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -1077,6 +1077,7 @@
                             <constraint firstItem="gnj-aK-cgL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="110" id="04j-KV-oAs"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dN5-Gt-ev5" secondAttribute="bottom" constant="350" id="4Q2-7V-c84"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Faq-Qe-3ct" secondAttribute="bottom" constant="343" id="7ch-Gi-ThT"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oRh-2K-3ld" secondAttribute="bottom" constant="-380" id="7lI-ml-pxc"/>
                             <constraint firstItem="WHB-GI-sYF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="92" id="8AB-sJ-lrs"/>
                             <constraint firstItem="Faq-Qe-3ct" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="67" id="9PP-aA-yVG"/>
                             <constraint firstItem="csV-SF-bge" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="115" id="GdU-pb-J1v"/>
