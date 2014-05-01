@@ -54,6 +54,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
+@property (strong, nonatomic) NSMutableArray *defaultMutableArray;
 
 
 @end
@@ -516,6 +517,8 @@
     NSString *flickrSearchString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&text=%@&sort=relevance&per_page=10&format=json&nojsoncallback=1",
                                     apiKey,[name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
     
+   
+    
     NSURL *flickrSearchURL = [NSURL URLWithString:flickrSearchString];
     NSURLRequest *flickrSearchRequest = [NSURLRequest requestWithURL:flickrSearchURL];
     [NSURLConnection sendAsynchronousRequest:flickrSearchRequest queue:[NSOperationQueue mainQueue]
@@ -531,11 +534,48 @@
                                           flickrElement[@"server"],
                                           flickrElement[@"id"],
                                           flickrElement[@"secret"]];
+             
              NSURL * flickrImageURL = [NSURL URLWithString:flickrURLstring];
              
              NSData * imageData = [[NSData alloc] initWithContentsOfURL: flickrImageURL];
              
-             self.myAtmosphereImageView.image = [UIImage imageWithData: imageData];
+             NSLog(@"%@", imageData);
+             
+             
+             if ([imageData isEqual:[NSNull null]] || imageData == nil)
+             {
+                
+                 
+                 NSLog(@"it's nilnull");
+                 
+                NSMutableArray *defaultMutableArray = [NSMutableArray arrayWithArray:@[@"Silverware", @"Family", @"Couple"]];
+                 
+                 int randomNumber = arc4random_uniform([defaultMutableArray count]);
+                 
+                 self.myAtmosphereImageView.image = [UIImage imageNamed: defaultMutableArray[randomNumber]];
+
+                 
+//                 [self.myAtmosphereImageView setNeedsDisplay];
+                 
+
+                 
+//                 NSUInteger count = [defaultMutableArray count];
+//                 if (count > 1) {
+//                     for (NSUInteger i = count - 1; i > 0; --i) {
+//                         [defaultMutableArray exchangeObjectAtIndex:i withObjectAtIndex:arc4random_uniform((int32_t)(i + 1))
+//                          
+//                          ];
+//                     }
+//                 }
+                 
+//                 NSArray *randomArray = [NSArray arrayWithArray:mutableArray];
+             }
+             else
+             {
+                 self.myAtmosphereImageView.image = [UIImage imageWithData: imageData];
+             }
+             
+             
          }
          else
          {
