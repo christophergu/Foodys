@@ -74,7 +74,7 @@
                                     <outlet property="delegate" destination="d44-jI-TxM" id="4Qc-Bb-iXj"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No time to waste, on to the next feast." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INo-43-pwf">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Let's find your next feast!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INo-43-pwf">
                                 <rect key="frame" x="14" y="73" width="293" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -1084,13 +1084,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gnj-aK-cgL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="107" id="04j-KV-oAs"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dN5-Gt-ev5" secondAttribute="bottom" constant="350" id="4Q2-7V-c84"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dN5-Gt-ev5" secondAttribute="bottom" constant="360" id="4Q2-7V-c84"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Faq-Qe-3ct" secondAttribute="bottom" constant="343" id="7ch-Gi-ThT"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oRh-2K-3ld" secondAttribute="bottom" constant="-368" id="7lI-ml-pxc"/>
                             <constraint firstItem="WHB-GI-sYF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="92" id="8AB-sJ-lrs"/>
                             <constraint firstItem="Faq-Qe-3ct" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="67" id="9PP-aA-yVG"/>
                             <constraint firstItem="csV-SF-bge" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="115" id="GdU-pb-J1v"/>
-                            <constraint firstItem="dN5-Gt-ev5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="114" id="JBS-Yb-7So"/>
+                            <constraint firstItem="dN5-Gt-ev5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="122" id="JBS-Yb-7So"/>
                             <constraint firstAttribute="bottom" secondItem="DGK-5p-VSR" secondAttribute="bottom" constant="48" id="N3d-Qq-msd"/>
                             <constraint firstItem="7W4-nR-gp9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="70" id="R4Y-5f-qHI"/>
                             <constraint firstItem="OQ9-Qm-Qo3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="369" id="Vww-Mg-WV5"/>

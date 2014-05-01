@@ -57,6 +57,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *ratingCircleImageView;
+@property (strong, nonatomic) NSArray *defaultRestaurantArray;
 
 
 @end
@@ -705,7 +706,7 @@
          NSDictionary *tempSearchResultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
        NSArray *flickrPhotosArray = tempSearchResultsDictionary[@"photos"][@"photo"];
          
-         if (flickrPhotosArray) {
+         if ([flickrPhotosArray count] > 0) {
              NSDictionary *flickrElement = flickrPhotosArray.firstObject;
              NSString *flickrURLstring = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@.jpg",
                                           [flickrElement[@"farm"] stringValue],
@@ -720,7 +721,15 @@
          }
          else
          {
-             // do something else
+             UIImage *painting01 = [UIImage imageNamed:@"painting01"];
+             UIImage *painting02 = [UIImage imageNamed:@"painting02"];
+             UIImage *painting03 = [UIImage imageNamed:@"painting03"];
+             UIImage *painting04 = [UIImage imageNamed:@"painting04"];
+
+             self.defaultRestaurantArray = @[painting01,painting02,painting03,painting04];
+             int randomNumber = arc4random_uniform([self.defaultRestaurantArray count]);
+             
+             self.myAtmosphereImageView.image = self.defaultRestaurantArray[randomNumber];
          }
      }];
 }

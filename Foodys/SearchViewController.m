@@ -39,6 +39,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (strong, nonatomic) NSString *locationCoordinatesString;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activitySpinner;
 
 @end
 
@@ -56,11 +57,19 @@
     
     self.currentLocation = self.locationManager.location;
     
-    self.suggestionsArray = @[@"burrito",
+    self.suggestionsArray = @[@"bagel",
+                              @"burrito",
                               @"burger",
+                              @"coffee",
+                              @"dim sum",
+                              @"hot dogs",
+                              @"lasagna",
                               @"pad thai",
                               @"pancakes",
                               @"pizza",
+                              @"salad",
+                              @"sandwich",
+                              @"smoothie",
                               @"steak",
                               @"sushi",
                               @"taco"];
@@ -157,7 +166,7 @@
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         self.searchResultsArray = intermediateDictionary[@"objects"];
-        
+                
         self.venueSearch = 1;
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
     }];
