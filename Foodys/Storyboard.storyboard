@@ -1067,10 +1067,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="WHB-GI-sYF" secondAttribute="bottom" constant="370" id="33V-0h-wve"/>
-                            <constraint firstAttribute="bottom" secondItem="csV-SF-bge" secondAttribute="bottom" constant="346" id="8U6-rN-TVb"/>
-                            <constraint firstAttribute="bottom" secondItem="dN5-Gt-ev5" secondAttribute="bottom" constant="340" id="WTI-6B-ONk"/>
-                            <constraint firstAttribute="bottom" secondItem="7W4-nR-gp9" secondAttribute="bottom" constant="390" id="w1f-cM-Ax9"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dN5-Gt-ev5" secondAttribute="bottom" constant="350" id="4Q2-7V-c84"/>
+                            <constraint firstItem="WHB-GI-sYF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="92" id="8AB-sJ-lrs"/>
+                            <constraint firstItem="csV-SF-bge" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="115" id="GdU-pb-J1v"/>
+                            <constraint firstItem="dN5-Gt-ev5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="114" id="JBS-Yb-7So"/>
+                            <constraint firstItem="7W4-nR-gp9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MhB-L3-KwZ" secondAttribute="top" constant="70" id="R4Y-5f-qHI"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="csV-SF-bge" secondAttribute="bottom" constant="349" id="e1X-uc-pjs"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="WHB-GI-sYF" secondAttribute="bottom" constant="369" id="urr-9b-gio"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7W4-nR-gp9" secondAttribute="bottom" constant="389" id="w14-8r-T4V"/>
                             <constraint firstAttribute="bottom" secondItem="AYZ-zb-LcP" secondAttribute="bottom" constant="435" id="yqI-ZD-2RQ"/>
                         </constraints>
                     </view>
