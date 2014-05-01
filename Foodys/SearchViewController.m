@@ -56,7 +56,14 @@
     
     self.currentLocation = self.locationManager.location;
     
-    self.suggestionsArray = @[@"burrito", @"burger", @"pizza", @"steak", @"sushi", @"taco"];
+    self.suggestionsArray = @[@"burrito",
+                              @"burger",
+                              @"pad thai",
+                              @"pancakes",
+                              @"pizza",
+                              @"steak",
+                              @"sushi",
+                              @"taco"];
     
     self.rankings = @[@"Shy Foodie",
                       @"Novice Foodie",
@@ -120,7 +127,7 @@
     
     NSString *nameTextForSearch;
     NSString *locationTextForSearch;
-    
+
     if (![self.cuisineTextField.text isEqualToString:@""])
     {
         nameTextForSearch = [NSString stringWithFormat:@"&name=%@",self.cuisineTextField.text];
