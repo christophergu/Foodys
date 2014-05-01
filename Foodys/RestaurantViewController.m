@@ -304,7 +304,7 @@
                                     options: UIViewAnimationOptionCurveEaseOut
                                  animations:
                  ^{
-                     self.menuView.frame = CGRectMake(0, 137, 320, 514);
+                     self.menuView.frame = CGRectMake(0, 137, 320, 250);
                  }
                                  completion:
                  ^(BOOL finished){
@@ -337,7 +337,7 @@
                                     options: UIViewAnimationOptionCurveEaseOut
                                  animations:
                  ^{
-                     self.menuView.frame = CGRectMake(0, 137, 320, 514);
+                     self.menuView.frame = CGRectMake(0, 312, 320, 514);
                      self.menuUnavailableLabel.alpha = 1.0;
                  }
                                  completion:
@@ -368,79 +368,168 @@
 
 - (IBAction)onHoursButtonPressed:(id)sender
 {
-    if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
-        ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
-        ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
-        ([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0) &&
-        ([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0) &&
-        ([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0) &&
-        ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
+    if (isiPhone5)
     {
-        self.hoursBoolForButton = !self.hoursBoolForButton;
-        
-        if (self.hoursBoolForButton)
+        // this is iphone 4 inch
+        NSLog(@"ya");
+        if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseOut
-                             animations:
-             ^{
-                 self.hoursView.frame = CGRectMake(0, 360, 320, 514);
-                 self.hoursUnavailableLabel.alpha = 1.0;
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
+            self.hoursBoolForButton = !self.hoursBoolForButton;
+            
+
+            
+            if (self.hoursBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 360, 320, 514);
+                     self.hoursUnavailableLabel.alpha = 1.0;
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 414, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                     self.hoursUnavailableLabel.alpha = 0.0;
+                 }
+                 ];
+            }
         }
         else
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseIn
-                             animations:
-             ^{
-                 self.hoursView.frame = CGRectMake(0, 414, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-                 self.hoursUnavailableLabel.alpha = 0.0;
-             }
-             ];
+            self.hoursBoolForButton = !self.hoursBoolForButton;
+            
+            if (self.hoursBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 211, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 414, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
         }
     }
     else
     {
-        self.hoursBoolForButton = !self.hoursBoolForButton;
-        
-        if (self.hoursBoolForButton)
+        //Iphone  3.5 inch
+        NSLog(@"nah");
+        if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Wednesday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Thursday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Friday"] count] == 0) &&
+            ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseOut
-                             animations:
-             ^{
-                 self.hoursView.frame = CGRectMake(0, 211, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
+            self.hoursBoolForButton = !self.hoursBoolForButton;
+            
+            
+            
+            if (self.hoursBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 277, 320, 514);
+                     self.hoursUnavailableLabel.alpha = 1.0;
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 335, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                     self.hoursUnavailableLabel.alpha = 0.0;
+                 }
+                 ];
+            }
         }
         else
         {
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options: UIViewAnimationOptionCurveEaseIn
-                             animations:
-             ^{
-                 self.hoursView.frame = CGRectMake(0, 414, 320, 514);
-             }
-                             completion:
-             ^(BOOL finished){
-             }
-             ];
+            self.hoursBoolForButton = !self.hoursBoolForButton;
+            
+            if (self.hoursBoolForButton)
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseOut
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 137, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.5
+                                      delay:0.0
+                                    options: UIViewAnimationOptionCurveEaseIn
+                                 animations:
+                 ^{
+                     self.hoursView.frame = CGRectMake(0, 335, 320, 514);
+                 }
+                                 completion:
+                 ^(BOOL finished){
+                 }
+                 ];
+            }
         }
+        
     }
 }
 
