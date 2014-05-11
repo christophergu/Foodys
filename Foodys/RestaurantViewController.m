@@ -587,8 +587,15 @@
 
 - (IBAction)onTelephoneButtonPressed:(id)sender
 {
-    NSString *phNo = self.chosenRestaurantDictionary[@"phone"];
+    NSString *phNoNonformatted = self.chosenRestaurantDictionary[@"phone"];
+    
+    NSString *phNo = [[phNoNonformatted componentsSeparatedByCharactersInSet:
+                            [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+                           componentsJoinedByString:@""];
+    
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
+    
+    NSLog(@"%@",phNo);
     
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
     {
@@ -596,7 +603,7 @@
     }
     else
     {
-        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [calert show];
     }
 }

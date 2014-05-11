@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		43A04C13190566000078E5D9 /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A04C12190566000078E5D9 /* NewsTableViewCell.m */; };
 		43A207B018FC987E00061C02 /* ResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */; };
-		43C0B86E190F1502007A6CF2 /* NotoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C0B86A190F1502007A6CF2 /* NotoSans-Bold.ttf */; };
-		43C0B86F190F1502007A6CF2 /* NotoSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C0B86B190F1502007A6CF2 /* NotoSans-BoldItalic.ttf */; };
-		43C0B870190F1502007A6CF2 /* NotoSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C0B86C190F1502007A6CF2 /* NotoSans-Italic.ttf */; };
-		43C0B871190F1502007A6CF2 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C0B86D190F1502007A6CF2 /* NotoSans-Regular.ttf */; };
 		43C0B88019100518007A6CF2 /* TestFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C0B87F19100518007A6CF2 /* TestFont.m */; };
 		43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E412FE18FF397D008D7431 /* NewsViewController.m */; };
 		DF005EAC1911579B00F9D1A1 /* AddFriendsSureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF005EAB1911579B00F9D1A1 /* AddFriendsSureViewController.m */; };
@@ -82,11 +78,6 @@
 		43A04C12190566000078E5D9 /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		43A207AE18FC987E00061C02 /* ResultsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsTableViewCell.h; sourceTree = "<group>"; };
 		43A207AF18FC987E00061C02 /* ResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewCell.m; sourceTree = "<group>"; };
-		43C0B868190F10E0007A6CF2 /* nevis.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = nevis.ttf; sourceTree = "<group>"; };
-		43C0B86A190F1502007A6CF2 /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Bold.ttf"; sourceTree = "<group>"; };
-		43C0B86B190F1502007A6CF2 /* NotoSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-BoldItalic.ttf"; sourceTree = "<group>"; };
-		43C0B86C190F1502007A6CF2 /* NotoSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Italic.ttf"; sourceTree = "<group>"; };
-		43C0B86D190F1502007A6CF2 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		43C0B87E19100518007A6CF2 /* TestFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFont.h; sourceTree = "<group>"; };
 		43C0B87F19100518007A6CF2 /* TestFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestFont.m; sourceTree = "<group>"; };
 		43E412FD18FF397D008D7431 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
@@ -204,18 +195,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		43C0B869190F1502007A6CF2 /* NotoSans 2 */ = {
-			isa = PBXGroup;
-			children = (
-				43C0B86A190F1502007A6CF2 /* NotoSans-Bold.ttf */,
-				43C0B86B190F1502007A6CF2 /* NotoSans-BoldItalic.ttf */,
-				43C0B86C190F1502007A6CF2 /* NotoSans-Italic.ttf */,
-				43C0B86D190F1502007A6CF2 /* NotoSans-Regular.ttf */,
-			);
-			name = "NotoSans 2";
-			path = NotoSans;
-			sourceTree = "<group>";
-		};
 		DF4DB84218FC44FF00C225EC = {
 			isa = PBXGroup;
 			children = (
@@ -261,8 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				DFE873081912CEE5002657A0 /* Images */,
-				43C0B868190F10E0007A6CF2 /* nevis.ttf */,
-				43C0B869190F1502007A6CF2 /* NotoSans 2 */,
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
 				DF4DB85E18FC450000C225EC /* AppDelegate.m */,
 				DF4DB8A118FC505400C225EC /* LogInViewController.h */,
@@ -444,15 +421,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFE8730D1912CEF2002657A0 /* Default-568h.png in Resources */,
-				43C0B86E190F1502007A6CF2 /* NotoSans-Bold.ttf in Resources */,
 				DFE8730E1912CEF2002657A0 /* Default-568h@2x.png in Resources */,
 				DF4DB86718FC450000C225EC /* Images.xcassets in Resources */,
-				43C0B86F190F1502007A6CF2 /* NotoSans-BoldItalic.ttf in Resources */,
 				DFE873101912CEF2002657A0 /* Default@2x.png in Resources */,
-				43C0B870190F1502007A6CF2 /* NotoSans-Italic.ttf in Resources */,
 				DF4DB8A818FC60B200C225EC /* Storyboard.storyboard in Resources */,
 				DF4DB85918FC450000C225EC /* InfoPlist.strings in Resources */,
-				43C0B871190F1502007A6CF2 /* NotoSans-Regular.ttf in Resources */,
 				DFE8730F1912CEF2002657A0 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

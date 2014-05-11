@@ -16,9 +16,10 @@
 @interface LogInViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) IBOutlet UIScrollView *autoLayoutScrollView;
 @property (strong, nonatomic) IBOutlet UIButton *logInButton;
+@property (strong, nonatomic) PFUser *currentUser;
+
 @end
 
 
@@ -27,8 +28,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    self.fontLabel.font = [UIFont fontWithName:@"NotoSans-BoldItalic" size:self.fontLabel.font.pointSize];
 
     self.navigationController.navigationBarHidden = YES;
     
@@ -41,19 +40,15 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    
     [super viewDidAppear:animated];
-    
     
     if (isiPhone5)
     {
         // this is iphone 4 inch
-        NSLog(@"ya");
     }
     else
     {
         //Iphone  3.5 inch
-        NSLog(@"nah");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:)
                                                      name:UIKeyboardDidShowNotification object:nil];
         
@@ -76,15 +71,8 @@
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-
     CGPoint point = CGPointMake(0, 150);
     [self.autoLayoutScrollView setContentOffset:point animated:YES];
-
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.5];
-//    [UIView setAnimationDelay:0];
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-////    self.topConstraint.constant = 10;
 }
 
 
@@ -120,16 +108,6 @@
 {
     [self.passwordTextField endEditing:YES];
     [self.usernameTextField endEditing:YES];
-}
-
-- (IBAction)onSignUpButtonPressed:(id)sender
-{
-    
-}
-
-- (IBAction)onForgotButtonPressed:(id)sender
-{
-    
 }
 
 - (IBAction)onEndEditingButtonPressed:(id)sender

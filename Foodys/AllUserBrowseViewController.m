@@ -114,13 +114,6 @@
         cell.usernameLabel.text = @"YOU";
         cell.greenHiderView.alpha = 0.0;
     }
-    else if ([self.pendingFriendsArray containsObject:self.currentFriendUser[@"username"]])
-    {
-        cell.addFriendButton.hidden = YES;
-        cell.addFriendButton.enabled = NO;
-        cell.friendRequestPendingLabel.hidden = NO;
-        cell.greenHiderView.alpha = 0.75;
-    }
     else
     {
         cell.addFriendButton.hidden = NO;
@@ -138,6 +131,19 @@
             cell.addFriendButton.hidden = YES;
             cell.addFriendButton.enabled = NO;
             cell.greenHiderView.alpha = 0.0;
+        }
+    }
+    
+    for (NSString *pendingFriend in self.pendingFriendsArray)
+    {
+        if ([pendingFriend isEqualToString:cell.usernameLabel.text])
+        {
+            cell.friendRequestPendingLabel.hidden = NO;
+            cell.greenHiderView.alpha = 0.75;
+        }
+        else
+        {
+            cell.friendRequestPendingLabel.hidden = YES;
         }
     }
     
@@ -161,22 +167,6 @@
 {
     self.currentFriendUserToSend = sender.friendUser;
     [self performSegueWithIdentifier:@"AddFriendSureSegue" sender:self];
-    
-//    NSLog(@"%@",sender.friendUser);
-//    PFUser *currentUser = [PFUser currentUser];
-//
-//    PFObject *friendRequest = [PFObject objectWithClassName:@"FriendRequest"];
-//    [friendRequest setObject:currentUser forKey:@"requestor"];
-//    [friendRequest setObject:sender.friendUser forKey:@"requestee"];
-//    
-//    UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Sent!"
-//                                                          message:[NSString stringWithFormat:@"You invited %@ to be your friend!",sender.friendUser[@"username"]]
-//                                                         delegate:self
-//                                                cancelButtonTitle:@"OK"
-//                                                otherButtonTitles:nil];
-//    [friendAddedAlert show];
-//    
-//    [friendRequest saveInBackground];
 }
 
 - (IBAction)unwindAfterFriendSure:(UIStoryboardSegue *)unwindSegue
