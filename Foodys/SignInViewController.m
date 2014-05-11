@@ -30,6 +30,8 @@
     self.signUpButton.layer.cornerRadius=4.0f;
     self.signUpButton.layer.masksToBounds=YES;
     self.signUpButton.tintColor = [UIColor whiteColor];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -59,6 +59,10 @@
 		DF4DB8AB18FC706D00C225EC /* ShowMoreResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4DB8AA18FC706D00C225EC /* ShowMoreResultsViewController.m */; };
 		DF4DB8EE18FC784900C225EC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4DB8ED18FC784900C225EC /* MapKit.framework */; };
 		DFE1B0FE1900E9CA0090F929 /* RestaurantMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */; };
+		DFE8730D1912CEF2002657A0 /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE873091912CEF2002657A0 /* Default-568h.png */; };
+		DFE8730E1912CEF2002657A0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE8730A1912CEF2002657A0 /* Default-568h@2x.png */; };
+		DFE8730F1912CEF2002657A0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE8730B1912CEF2002657A0 /* Default.png */; };
+		DFE873101912CEF2002657A0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE8730C1912CEF2002657A0 /* Default@2x.png */; };
 		DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */; };
 		DFF936FE19043BBD00843509 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF936FD19043BBD00843509 /* WebViewController.m */; };
 /* End PBXBuildFile section */
@@ -155,6 +159,10 @@
 		DF4DB8ED18FC784900C225EC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DFE1B0FC1900E9CA0090F929 /* RestaurantMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantMenuTableViewCell.h; sourceTree = "<group>"; };
 		DFE1B0FD1900E9CA0090F929 /* RestaurantMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantMenuTableViewCell.m; sourceTree = "<group>"; };
+		DFE873091912CEF2002657A0 /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
+		DFE8730A1912CEF2002657A0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DFE8730B1912CEF2002657A0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		DFE8730C1912CEF2002657A0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedSearchViewController.h; sourceTree = "<group>"; };
 		DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedSearchViewController.m; sourceTree = "<group>"; };
 		DFF936FC19043BBD00843509 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
@@ -252,6 +260,7 @@
 		DF4DB85418FC450000C225EC /* Foodys */ = {
 			isa = PBXGroup;
 			children = (
+				DFE873081912CEE5002657A0 /* Images */,
 				43C0B868190F10E0007A6CF2 /* nevis.ttf */,
 				43C0B869190F1502007A6CF2 /* NotoSans 2 */,
 				DF4DB85D18FC450000C225EC /* AppDelegate.h */,
@@ -344,6 +353,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		DFE873081912CEE5002657A0 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				DFE873091912CEF2002657A0 /* Default-568h.png */,
+				DFE8730A1912CEF2002657A0 /* Default-568h@2x.png */,
+				DFE8730B1912CEF2002657A0 /* Default.png */,
+				DFE8730C1912CEF2002657A0 /* Default@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -391,6 +411,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Christopher Gu";
 				TargetAttributes = {
+					DF4DB84A18FC44FF00C225EC = {
+						DevelopmentTeam = F2NWBUE69Q;
+					};
 					DF4DB86B18FC450000C225EC = {
 						TestTargetID = DF4DB84A18FC44FF00C225EC;
 					};
@@ -420,13 +443,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFE8730D1912CEF2002657A0 /* Default-568h.png in Resources */,
 				43C0B86E190F1502007A6CF2 /* NotoSans-Bold.ttf in Resources */,
+				DFE8730E1912CEF2002657A0 /* Default-568h@2x.png in Resources */,
 				DF4DB86718FC450000C225EC /* Images.xcassets in Resources */,
 				43C0B86F190F1502007A6CF2 /* NotoSans-BoldItalic.ttf in Resources */,
+				DFE873101912CEF2002657A0 /* Default@2x.png in Resources */,
 				43C0B870190F1502007A6CF2 /* NotoSans-Italic.ttf in Resources */,
 				DF4DB8A818FC60B200C225EC /* Storyboard.storyboard in Resources */,
 				DF4DB85918FC450000C225EC /* InfoPlist.strings in Resources */,
 				43C0B871190F1502007A6CF2 /* NotoSans-Regular.ttf in Resources */,
+				DFE8730F1912CEF2002657A0 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +575,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
+				PROVISIONING_PROFILE = "DAD26A51-A37B-4DF3-8B6A-9723401A75AA";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -580,7 +607,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
+				PROVISIONING_PROFILE = "DAD26A51-A37B-4DF3-8B6A-9723401A75AA";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -590,7 +617,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -601,7 +628,7 @@
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
+				PROVISIONING_PROFILE = "106703CE-3E3D-4C1C-A088-8C154DAB1A0F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -610,7 +637,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -621,7 +648,7 @@
 				INFOPLIST_FILE = "Foodys/Foodys-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2E71C144-F68C-42CD-8FC8-DF1F2194B027";
+				PROVISIONING_PROFILE = "106703CE-3E3D-4C1C-A088-8C154DAB1A0F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

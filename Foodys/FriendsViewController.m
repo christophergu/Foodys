@@ -111,21 +111,26 @@
 {
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
     
-    self.currentFriendUser = self.userFriendsArray[indexPath.row];
+//    NSLog(@"%lu", (unsigned long)[self.userFriendsArray count]);
 
-    if ([self.currentFriendUser[@"username"] isEqual:[NSNull null]] || (self.currentFriendUser[@"username"] == nil))
+    if (![self.userFriendsArray[indexPath.row] isEqual:[NSNull null]] && !(self.userFriendsArray[indexPath.row] == nil))
     {
-        cell.usernameLabel.text = @"";
-    }
-    else
-    {
-        cell.usernameLabel.text = self.currentFriendUser[@"username"];
-        [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!error) {
-                UIImage *photo = [UIImage imageWithData:data];
-                cell.friendImageView.image = photo;
-            }
-        }];
+        self.currentFriendUser = self.userFriendsArray[indexPath.row];
+        
+        if ([self.currentFriendUser[@"username"] isEqual:[NSNull null]] || (self.currentFriendUser[@"username"] == nil))
+        {
+            cell.usernameLabel.text = @"";
+        }
+        else
+        {
+            cell.usernameLabel.text = self.currentFriendUser[@"username"];
+            [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    UIImage *photo = [UIImage imageWithData:data];
+                    cell.friendImageView.image = photo;
+                }
+            }];
+        }
     }
 
     return cell;

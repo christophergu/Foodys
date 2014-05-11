@@ -35,6 +35,8 @@
     self.logInButton.layer.cornerRadius=4.0f;
     self.logInButton.layer.masksToBounds=YES;
     self.logInButton.tintColor = [UIColor whiteColor];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 - (void)viewDidAppear:(BOOL)animated
