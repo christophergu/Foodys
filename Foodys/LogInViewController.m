@@ -110,12 +110,6 @@
     [self.usernameTextField endEditing:YES];
 }
 
-- (IBAction)onEndEditingButtonPressed:(id)sender
-{
-    [self.usernameTextField endEditing:YES];
-    [self.passwordTextField endEditing:YES];
-}
-
 - (IBAction)usernameDidEndOnExit:(id)sender
 {
     [self.passwordTextField endEditing:YES];

@@ -19,10 +19,7 @@
 @interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property CLLocationManager *locationManager;
-@property (strong, nonatomic) LogInViewController *modalLogInViewController;
-@property (strong, nonatomic) SignInViewController *modalSignInViewController;
 @property (strong, nonatomic) NSMutableArray *searchResultsArray;
-
 @property (strong, nonatomic) NSArray *suggestionsArray;
 
 @property int numberOfReviewsAndRecommendations;

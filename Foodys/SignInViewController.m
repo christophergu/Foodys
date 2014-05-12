@@ -64,14 +64,7 @@
     NSLog(@"showing");
     CGPoint point = CGPointMake(0, 50);
     [self.autoLayoutScrollView setContentOffset:point animated:YES];
-    
-    //    [UIView beginAnimations:nil context:nil];
-    //    [UIView setAnimationDuration:0.5];
-    //    [UIView setAnimationDelay:0];
-    //    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    ////    self.topConstraint.constant = 10;
 }
-
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
