@@ -53,21 +53,26 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-
-    
     self.currentUser = [PFUser currentUser];
     
-    PFQuery *recommendationsQuery = [PFUser query];
-    [recommendationsQuery whereKey:@"username" equalTo:self.currentUser[@"username"]];
-    [recommendationsQuery includeKey:@"recommendations"];
+    NSArray *currentUserArray = @[self.currentUser];
+    self.recommendedOverlapArray = [NSMutableArray new];
+
+    
+    PFQuery *recommendationsQuery = [PFQuery queryWithClassName:@"Recommendation"];
+    [recommendationsQuery whereKey:@"receivers" containsAllObjectsInArray:currentUserArray];
     [recommendationsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *recommendation in objects.firstObject[@"recommendations"])
+        for (PFObject *recommendation in objects)
         {
             for (NSDictionary *searchResultDictionary in self.searchResultsArray)
             {
                 if ([searchResultDictionary[@"venue"][@"name"] isEqualToString:recommendation[@"name"]])
                 {
-                    [self.recommendedOverlapArray addObject: recommendation];
+                    if (![self.recommendedOverlapArray containsObject:recommendation])
+                    {
+                        [self.recommendedOverlapArray addObject: recommendation];
+                        NSLog(@"add %@",self.recommendedOverlapArray);
+                    }
                 }
             }
         }
@@ -333,11 +338,23 @@
     NSString* streetAddressString;
     
     if (!self.cameFromAdvancedSearch) {
-        nameString = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
-        postalCodeString = self.searchResultsArray[indexPath.row][@"venue"][@"postal_code"];
-        localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
-        regionString = self.searchResultsArray[indexPath.row][@"venue"][@"region"];
-        streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
+        
+        if (self.mySegmentedControl.selectedSegmentIndex == 0)
+        {
+            nameString = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
+            postalCodeString = self.searchResultsArray[indexPath.row][@"venue"][@"postal_code"];
+            localityString = self.searchResultsArray[indexPath.row][@"venue"][@"locality"];
+            regionString = self.searchResultsArray[indexPath.row][@"venue"][@"region"];
+            streetAddressString = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
+        }
+        else if (self.mySegmentedControl.selectedSegmentIndex == 1)
+        {
+            nameString = self.recommendedOverlapArray[indexPath.row][@"restaurantDictionary"][@"name"];
+            postalCodeString = self.recommendedOverlapArray[indexPath.row][@"restaurantDictionary"][@"postal_code"];
+            localityString = self.recommendedOverlapArray[indexPath.row][@"restaurantDictionary"][@"locality"];
+            regionString = self.recommendedOverlapArray[indexPath.row][@"restaurantDictionary"][@"region"];
+            streetAddressString = self.recommendedOverlapArray[indexPath.row][@"restaurantDictionary"][@"street_address"];
+        }
     
         NSString *venueSearchString = [NSString stringWithFormat:@"http://api.locu.com/v1_0/venue/search/?api_key=aea05d0dffb636cb9aad86f6482e51035d79e84e&radius=500&name=%@&postal_code=%@&locality=%@",
                                        nameString,
@@ -389,7 +406,15 @@
     }
     else
     {
-        self.chosenRestaurantDictionary = self.searchResultsArray[indexPath.row];
+        if (self.mySegmentedControl.selectedSegmentIndex == 0)
+        {
+            self.chosenRestaurantDictionary = self.searchResultsArray[indexPath.row];
+        }
+        else if (self.mySegmentedControl.selectedSegmentIndex == 0)
+        {
+            self.chosenRestaurantDictionary = self.recommendedOverlapArray[indexPath.row];
+        }
+
         [self performSegueWithIdentifier:@"RestaurantViewControllerSegue" sender:self];
     }
 }
@@ -400,14 +425,9 @@
 {
     RestaurantViewController *rvc = segue.destinationViewController;
     
-//    if (self.mySegmentedControl.selectedSegmentIndex == 2)
-//    {
-//        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
-//    }
     if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])
     {
         rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
-        
     }
 }
 @end
