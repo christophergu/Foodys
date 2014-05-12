@@ -53,8 +53,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-
-    
     self.currentUser = [PFUser currentUser];
     
     PFQuery *recommendationsQuery = [PFUser query];
@@ -105,23 +103,17 @@
         {
             self.myMapView.alpha = 1.0;
             self.myRecommendedMapView.alpha = 0.0;
-//            self.locuBackgroundView.alpha = 0.0;
-//            self.locuLogo.alpha = 0.0;
         }
         else if (self.mySegmentedControl.selectedSegmentIndex == 1)
         {
             self.myMapView.alpha = 0.0;
             self.myRecommendedMapView.alpha = 1.0;
-//            self.locuBackgroundView.alpha = 1.0;
-//            self.locuLogo.alpha = 1.0;
         }
     }
     else
     {
         self.myMapView.alpha = 0.0;
         self.myRecommendedMapView.alpha = 0.0;
-//        self.locuBackgroundView.alpha = 1.0;
-//        self.locuLogo.alpha = 1.0;
     }
 }
 
@@ -363,11 +355,9 @@
                                                   otherButtonTitles:nil];
                 [av show];
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                
-                
-                
-            } else {
-
+            }
+            else
+            {
             NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             NSArray *chosenRestaurantResultsArray = intermediateDictionary[@"objects"];
             self.chosenRestaurantDictionary = chosenRestaurantResultsArray.firstObject;
@@ -399,15 +389,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)cell
 {
     RestaurantViewController *rvc = segue.destinationViewController;
-    
-//    if (self.mySegmentedControl.selectedSegmentIndex == 2)
-//    {
-//        rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
-//    }
+
     if ([[segue identifier]isEqualToString:@"RestaurantViewControllerSegue"])
     {
         rvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
-        
     }
 }
 @end
