@@ -353,9 +353,7 @@
                  ];
             }
         }
-
     }
-
 }
 
 - (IBAction)onHoursButtonPressed:(id)sender
@@ -515,7 +513,6 @@
                  ];
             }
         }
-        
     }
 }
 
@@ -673,7 +670,6 @@
             self.friLabel.alpha = 1.0;
             self.satLabel.alpha = 1.0;
         }
-        
     }];
 }
 

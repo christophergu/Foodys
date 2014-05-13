@@ -164,14 +164,12 @@
             [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
         }
     }];
-                        
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(5.0, 0.0, 5.0, 0.0);
 }
-
 
 #pragma mark - friend request and accept management methods
 
@@ -330,10 +328,7 @@
     AddFriendsViewController *afvc = unwindSegue.sourceViewController;
     self.selectedFriends = afvc.selectedFriends;
     
-    
     // need to update self.userfriendsarray
-    
-    
     
     for (PFUser *friend in self.selectedFriends)
     {
@@ -414,16 +409,12 @@
              [self.myCollectionView reloadData];
          }];
      }];
-    
-
 }
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
     if ([[segue identifier] isEqualToString:@"FriendsProfileSegue"]) {
-        NSLog(@"ya");
         FriendProfileViewController *fpvc = segue.destinationViewController;
         
         fpvc.currentFriendUser = self.currentFriendUser;

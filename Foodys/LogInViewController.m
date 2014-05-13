@@ -22,7 +22,6 @@
 
 @end
 
-
 @implementation LogInViewController
 
 - (void)viewDidLoad
@@ -83,7 +82,6 @@
     [self.autoLayoutScrollView setContentOffset:point animated:YES];
 }
 
-
 - (IBAction)onLogInButtonPressed:(id)sender
 {
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error)
@@ -138,7 +136,6 @@
          }];
     }
 }
-
 
 - (IBAction)unwindToBeginning:(UIStoryboardSegue *)unwindSegue
 {

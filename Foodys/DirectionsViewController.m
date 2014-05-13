@@ -47,10 +47,12 @@
 - (IBAction)onSegmentedControlValueChanged:(id)sender
 {
     self.walkOrDrive = !self.walkOrDrive;
-    if (self.mySegmentedControl.selectedSegmentIndex == 0) {
+    if (self.mySegmentedControl.selectedSegmentIndex == 0)
+    {
         self.myDriveMapView.alpha = 0.0;
     }
-    else if (self.mySegmentedControl.selectedSegmentIndex == 1) {
+    else if (self.mySegmentedControl.selectedSegmentIndex == 1)
+    {
         self.myDriveMapView.alpha = 1.0;
     }
 }
@@ -127,7 +129,6 @@
 {
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc]initWithOverlay:overlay];
     renderer.strokeColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
-    NSLog(@"Blue");
     renderer.lineWidth   = 5.0;
     return renderer;
 }

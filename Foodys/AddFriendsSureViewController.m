@@ -23,7 +23,6 @@
 {
     [super viewDidLoad];
 
-    NSLog(@"%@", self.friendToConfirm);
     if (self.friendToConfirm[@"avatar"])
     {
         [self.friendToConfirm[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -57,18 +56,8 @@
     [friendRequest setObject:currentUser forKey:@"requestor"];
     [friendRequest setObject:self.friendToConfirm forKey:@"requestee"];
     
-
-    
-    
     [friendRequest saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self performSegueWithIdentifier:@"unwindAfterFriendSureSegue" sender:self];
-        
-//        UIAlertView *friendAddedAlert = [[UIAlertView alloc] initWithTitle:@"Friend Request Sent!"
-//                                                                   message:[NSString stringWithFormat:@"You invited %@ to be your friend!",self.friendToConfirm[@"username"]]
-//                                                                  delegate:self
-//                                                         cancelButtonTitle:@"OK"
-//                                                         otherButtonTitles:nil];
-//        [friendAddedAlert show];
     }];
 }
 

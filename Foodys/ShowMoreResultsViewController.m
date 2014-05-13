@@ -94,6 +94,7 @@
 }
 
 #pragma mark - map methods
+
 - (IBAction)onMapButtonPressed:(id)sender
 {
     self.mapDisplayBool = !self.mapDisplayBool;

@@ -19,7 +19,6 @@
 @property (strong, nonatomic) NSMutableArray *friendsNamesArray;
 @property (strong, nonatomic) NSMutableArray *pendingFriendsArray;
 
-
 @end
 
 @implementation AllUserBrowseViewController
@@ -61,7 +60,6 @@
 {
     self.currentUser = [PFUser currentUser];
     
-    NSLog(@"aaa %@",self.friendsNamesArray);
     if ([self.friendsNamesArray count] == 0)
     {
         PFQuery *getFriendsNamesQuery = [PFUser query];
@@ -124,8 +122,6 @@
     
     for (NSString *usernameString in self.friendsNamesArray)
     {
-        NSLog(@"usernamestring %@",usernameString);
-        
         if ([cell.usernameLabel.text isEqualToString:usernameString])
         {
             cell.addFriendButton.hidden = YES;
@@ -146,7 +142,6 @@
             cell.friendRequestPendingLabel.hidden = YES;
         }
     }
-    
 
     [self.currentFriendUser[@"avatar"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
