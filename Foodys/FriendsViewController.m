@@ -77,7 +77,6 @@
     [queryForFriends whereKey:@"username" equalTo:self.currentUser[@"username"]];
     [queryForFriends includeKey:@"friends"];
     [queryForFriends findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
         self.userFriendsArray = objects.firstObject[@"friends"];
         [self.myCollectionView reloadData];
     }];

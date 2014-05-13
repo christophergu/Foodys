@@ -11,22 +11,18 @@
 #import "RestaurantViewController.h"
 
 @interface FriendProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
-
-@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
-@property (strong, nonatomic) IBOutlet UILabel *reviewsCounterLabel;
-@property (strong, nonatomic) NSArray *userArray;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UITextField *favoriteTextField;
-
+@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *reviewsCounterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *friendDeleteButton;
+@property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
+@property (strong, nonatomic) NSArray *userArray;
 @property (strong, nonatomic) NSArray *rankings;
 @property int numberOfReviewsAndRecommendations;
-@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
-
-@property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *friendDeleteButton;
-
 
 @end
 

@@ -16,7 +16,6 @@
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
-
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *ratingCircleImageView;
@@ -115,8 +114,6 @@
 
         for (PFObject *alreadyFavorite in objects.firstObject[@"favorites"])
         {
-            NSLog(@"chosen dict %@",objects.firstObject[@"favorites"]);
-            
             if ([self.chosenRestaurantDictionary[@"name"] isEqualToString: alreadyFavorite[@"name"]])
             {
                 counter++;
@@ -211,7 +208,6 @@
 - (IBAction)onMenuButtonPressed:(id)sender
 {
     NSString *hasMenuString = [NSString stringWithFormat:@"%@",self.chosenRestaurantDictionary[@"has_menu"]];
-    NSLog(@"%@",hasMenuString);
     
     if (isiPhone5)
     {

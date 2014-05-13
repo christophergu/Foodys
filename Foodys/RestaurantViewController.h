@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RestaurantViewController : UIViewController
-
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
 @property NSString *searchTerm;
 @property BOOL cameFromProfileFavorites;

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchViewController : UIViewController
-
 @property (strong, nonatomic) NSArray *pickerArray;
 
 @end

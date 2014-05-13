@@ -12,7 +12,6 @@
 #import "NewsTableViewCell.h"
 
 @interface NewsViewController () <UITableViewDataSource, UITabBarDelegate, UIImagePickerControllerDelegate>
-
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong,nonatomic) NSArray* currentUserPostsArray;
 @property (strong,nonatomic) PFUser* currentUser;

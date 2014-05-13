@@ -13,14 +13,11 @@
 #import <Parse/Parse.h>
 
 @interface AdvancedSearchViewController ()
-
 @property (strong, nonatomic) IBOutlet UITextField *cuisineTextField;
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
-@property (strong, nonatomic) IBOutlet UIButton *searchButton;
 @property (strong, nonatomic) IBOutlet UITextField *locationTextField;
-
+@property (strong, nonatomic) IBOutlet UIButton *searchButton;
 @property (strong, nonatomic) NSArray *searchResultsArray;
-
 
 @end
 

@@ -13,7 +13,6 @@
 #import <Parse/Parse.h>
 
 @interface ShowMoreResultsViewController ()<UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
-
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (strong, nonatomic) IBOutlet MKMapView *myRecommendedMapView;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
@@ -68,7 +67,6 @@
                     if (![self.recommendedOverlapArray containsObject:recommendation])
                     {
                         [self.recommendedOverlapArray addObject: recommendation];
-                        NSLog(@"add %@",self.recommendedOverlapArray);
                     }
                 }
             }
@@ -319,9 +317,7 @@
                                        localityString];
         
         venueSearchString = [venueSearchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        
-        NSLog(@"%@",venueSearchString);
-        
+                
         NSURL *url = [NSURL URLWithString: venueSearchString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         

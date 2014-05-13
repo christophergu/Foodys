@@ -17,7 +17,6 @@
 #import <Parse/Parse.h>
 
 @interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
-
 @property CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation* currentLocation;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;

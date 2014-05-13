@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AddFriendsViewController : UIViewController
-
 @property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
 @property (strong, nonatomic) NSMutableArray *selectedFriends;
 

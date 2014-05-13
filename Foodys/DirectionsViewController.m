@@ -12,17 +12,12 @@
 @interface DirectionsViewController ()
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (strong, nonatomic) IBOutlet MKMapView *myDriveMapView;
-
-//@property location *location;
-@property CLLocationManager *locationManager;
-@property CLLocation *currentLocation;
 @property (strong, nonatomic) IBOutlet UITextView *directionsTextView;
 @property (strong, nonatomic) IBOutlet UITextView *driveDirectionsTextView;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
-
+@property CLLocationManager *locationManager;
+@property CLLocation *currentLocation;
 @property BOOL walkOrDrive;
-
-
 
 @end
 
@@ -31,7 +26,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
     self.locationManager = [CLLocationManager new];
     [self.myMapView setShowsUserLocation:YES];
@@ -60,7 +54,6 @@
         self.myDriveMapView.alpha = 1.0;
     }
 }
-
 
 -(void)loadMapAndDirections:(MKMapView *)mapView withTransportType:(BOOL)walkOrDrive
 {
@@ -115,11 +108,9 @@
              [self showRoute:mapView withResponse: response];
          }
      }];
-
 }
 
 -(void)showRoute:(MKMapView *)mapView withResponse:(MKDirectionsResponse *)response
-
 {
     for (MKRoute *route in response.routes)
     {

@@ -14,34 +14,27 @@
 #import <Parse/Parse.h>
 
 @interface ProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
+@property (strong, nonatomic) IBOutlet UITextField *favoriteTextField;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *friendsCounterLabel;
 @property (strong, nonatomic) IBOutlet UILabel *reviewsCounterLabel;
-@property (strong, nonatomic) NSArray *userFriendsArray;
-@property (strong, nonatomic) PFUser *currentUser;
-@property (strong, nonatomic) NSMutableArray *favoritesArray;
-
-@property (strong, nonatomic) IBOutlet UITableView *myTableView;
-@property (strong, nonatomic) IBOutlet UITextField *favoriteTextField;
-
-@property (strong, nonatomic) NSArray *rankings;
 @property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
-
-@property int numberOfReviewsAndRecommendations;
-
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
-@property (strong, nonatomic) NSMutableArray *recommendationsArray;
-
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
+@property (strong, nonatomic) IBOutlet UIButton *myAvatarPhotoButton;
 @property (strong, nonatomic) NSDictionary *chosenRestaurantFavoriteDictionary;
 @property (strong, nonatomic) NSDictionary *chosenRestaurantRecommendationDictionary;
+@property (strong, nonatomic) NSArray *rankings;
+@property (strong, nonatomic) NSArray *userFriendsArray;
+@property (strong, nonatomic) NSMutableArray *favoritesArray;
+@property (strong, nonatomic) NSMutableArray *recommendationsArray;
+@property (strong, nonatomic) PFUser *currentUser;
 @property (strong, nonatomic) PFObject *chosenRestaurantRecommendationObject;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
-
-@property (strong, nonatomic) IBOutlet UIButton *editButton;
+@property int numberOfReviewsAndRecommendations;
 @property BOOL isEditModeEnabled;
-
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end
 
@@ -98,7 +91,6 @@
     }
     self.avatarImageView.clipsToBounds = YES;
     
-    
     self.favoritesArray = [NSMutableArray new];
     
     if (self.currentUser[@"currentFavorite"])
@@ -111,7 +103,6 @@
     }
     
     [self retrieveFavorites];
-    
 
     self.isEditModeEnabled = NO;
 }
@@ -138,7 +129,6 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        
         if(self.mySegmentedControl.selectedSegmentIndex==0)
         {
             [self.favoritesArray removeObjectAtIndex:indexPath.row];
@@ -147,13 +137,9 @@
             [favoriteToDeleteQuery whereKey:@"name" equalTo:self.currentUser[@"favorites"][indexPath.row][@"name"]];
             [favoriteToDeleteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
              {
-                 NSLog(@"objects %@", objects.firstObject);
                  [objects.firstObject deleteInBackground];
-                 //             [self.myTableView reloadData];
              }];
             
-            
-            NSLog(@"favorite to delete %@",self.currentUser[@"favorites"][indexPath.row][@"name"]);
             [self.currentUser[@"favorites"] removeObjectIdenticalTo:self.currentUser[@"favorites"][indexPath.row]];
             if ([self.currentUser[@"favorites"]count] == 0)
             {
@@ -171,11 +157,8 @@
              {
                  NSLog(@"objects %@", objects.firstObject);
                  [objects.firstObject deleteInBackground];
-                 //             [self.myTableView reloadData];
              }];
             
-            
-            NSLog(@"recommendation to delete %@",self.currentUser[@"recommendations"][indexPath.row][@"name"]);
             [self.currentUser[@"recommendations"] removeObjectIdenticalTo:self.currentUser[@"recommendations"][indexPath.row]];
             if ([self.currentUser[@"recommendations"]count] == 0)
             {
@@ -187,12 +170,6 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
-
-//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-//    UITableViewCell *cellToMove = [items objectAtIndex:sourceIndexPath.row];
-//    [items removeObjectAtIndex:sourceIndexPath.row];
-//    [items insertObject:cellToMove atIndex:destinationIndexPath.row];
-//}
 
 #pragma mark - helper populate view methods
 
@@ -212,10 +189,7 @@
     [userPostQuery whereKey:@"author" equalTo:self.currentUser[@"username"]];
     
     [userPostQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-        
-        // blocks
         [self friendsSetter];
-        
         
         self.numberOfReviewsAndRecommendations += number;
         
@@ -309,27 +283,10 @@
     if(self.mySegmentedControl.selectedSegmentIndex==0)
     {
         cell.textLabel.text = self.favoritesArray[indexPath.row][@"name"];
-        
-//        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
-//        [reviewedRestaurantQuery whereKey:@"name" containsString:self.favoritesArray[indexPath.row][@"name"]];
-//        
-//        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//         {
-//             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%%", objects.firstObject[@"rating"]];
-//         }];
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
     {
         cell.textLabel.text = self.recommendationsArray[indexPath.row][@"name"];
-        NSLog(@"%@",self.recommendationsArray[indexPath.row]);
-        
-//        PFQuery *reviewedRestaurantQuery = [PFQuery queryWithClassName:@"ReviewedRestaurant"];
-//        [reviewedRestaurantQuery whereKey:@"name" containsString:self.recommendationsArray[indexPath.row][@"name"]];
-//        
-//        [reviewedRestaurantQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//         {
-//             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%%", objects.firstObject[@"rating"]];
-//         }];
     }
     
     return cell;
@@ -389,11 +346,9 @@
 
 - (IBAction)onLogOutButtonPressed:(id)sender
 {
-    NSLog(@"ya");
     [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
         [self performSegueWithIdentifier:@"unwindToBeginningSegue" sender:self];
-
     }];
 }
 
@@ -411,9 +366,11 @@
     UIImagePickerController * picker = [[UIImagePickerController alloc] init];
 	picker.delegate = self;
     
-	if((UIButton *) sender == self.myAvatarPhotoButton) {
+	if((UIButton *) sender == self.myAvatarPhotoButton)
+    {
 		picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-	} else {
+	} else
+    {
 		picker.sourceType = UIImagePickerControllerSourceTypeCamera;
 	}
     [self presentViewController:picker animated:YES completion:nil];
@@ -458,11 +415,6 @@
         srvc.chosenRestaurantDictionary = self.chosenRestaurantRecommendationObject[@"restaurantDictionary"];
         srvc.chosenRestaurantRecommendationObject = self.chosenRestaurantRecommendationObject;
     }
-
 }
-
-
-
-
 
 @end

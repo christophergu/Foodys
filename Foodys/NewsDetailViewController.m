@@ -10,7 +10,6 @@
 #import "RestaurantViewController.h"
 
 @interface NewsDetailViewController ()
-
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;

@@ -10,7 +10,6 @@
 #import <Parse/Parse.h>
 
 @interface ShareViewController : UIViewController
-
 @property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
 @property (strong, nonatomic) PFObject *recommendation;
 @property (strong, nonatomic) PFObject *chosenRestaurantRecommendationObject;
