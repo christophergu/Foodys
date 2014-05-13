@@ -13,18 +13,17 @@
 #import <Parse/Parse.h>
 
 @interface ShowMoreResultsViewController ()<UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
+
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (strong, nonatomic) IBOutlet MKMapView *myRecommendedMapView;
-@property BOOL mapDisplayBool;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *mySegmentedControl;
-
-@property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
-@property (strong, nonatomic) NSMutableArray *recommendedOverlapArray;
 @property (strong, nonatomic) IBOutlet UIView *locuBackgroundView;
 @property (strong, nonatomic) IBOutlet UIImageView *locuLogo;
-
+@property (strong, nonatomic) NSDictionary *chosenRestaurantDictionary;
+@property (strong, nonatomic) NSMutableArray *recommendedOverlapArray;
 @property (strong, nonatomic) PFUser *currentUser;
+@property BOOL mapDisplayBool;
 
 @end
 
@@ -35,7 +34,6 @@
     [super viewDidLoad];
     self.myMapView.alpha = 0.0;
     self.myRecommendedMapView.alpha = 0.0;
-
     self.mapDisplayBool = 0;
     
     self.recommendedOverlapArray = [NSMutableArray new];
@@ -57,7 +55,6 @@
     
     NSArray *currentUserArray = @[self.currentUser];
     self.recommendedOverlapArray = [NSMutableArray new];
-
     
     PFQuery *recommendationsQuery = [PFQuery queryWithClassName:@"Recommendation"];
     [recommendationsQuery whereKey:@"receivers" containsAllObjectsInArray:currentUserArray];
@@ -77,7 +74,6 @@
             }
         }
         [self mapLoadOnMap:self.myRecommendedMapView withArray:self.recommendedOverlapArray];
-
     }];
 }
 
@@ -126,11 +122,10 @@
 
 -(void)mapLoadOnMap:(MKMapView *)mapView withArray:(id)arrayToUse
 {
-    for (NSDictionary *restaurant in arrayToUse) {
-        
+    for (NSDictionary *restaurant in arrayToUse)
+    {
         NSString *restaurantAddress;
 
-        
         if ([restaurant isKindOfClass:[PFObject class]]) {
             restaurantAddress = [NSString stringWithFormat:@"%@, %@, %@ %@",
                                  restaurant[@"restaurantDictionary"][@"street_address"],
@@ -178,11 +173,8 @@
                 [mapView addAnnotation:annotation];
             }
             [mapView showAnnotations:mapView.annotations animated:NO];
-
         }];
-
     }
-
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -260,11 +252,10 @@
 {
     ResultsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsReuseCellID"];
     
+    cell.distanceLabel.text = @"";
     
     if(self.mySegmentedControl.selectedSegmentIndex==0)
     {
-        NSDictionary *currentRestaurant = self.searchResultsArray[indexPath.row];
-        
         if (self.cameFromAdvancedSearch)
         {
             cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"name"];
@@ -277,39 +268,11 @@
             {
                 cell.addressLabel.text = @"";
             }
-            
-            NSLog(@"%@",self.searchResultsArray[indexPath.row][@"street_address"]);
-            
-            if (!(currentRestaurant[@"lat"] == nil) && !(currentRestaurant[@"long"] == nil))
-            {
-                double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
-                double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
-                
-                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
-                MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-                
-//                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-                
-                cell.distanceLabel.text = @"";//[NSString stringWithFormat:@"%d meters", (int)distance];
-            }
         }
         else
         {
             cell.restaurantTitle.text = self.searchResultsArray[indexPath.row][@"venue"][@"name"];
             cell.addressLabel.text = self.searchResultsArray[indexPath.row][@"venue"][@"street_address"];
-            
-            if (!(currentRestaurant[@"venue"][@"lat"] == nil) && !(currentRestaurant[@"venue"][@"long"] == nil))
-            {
-                double latitude = [currentRestaurant[@"venue"][@"lat"] doubleValue];
-                double longitude = [currentRestaurant[@"venue"][@"long"] doubleValue];
-                
-                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) addressDictionary:nil];
-                MKMapItem *currentMapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-                
-//                float distance = [currentMapItem.placemark.location distanceFromLocation:self.currentLocation];
-                
-                cell.distanceLabel.text = @"";//[NSString stringWithFormat:@"%d meters", (int)distance];
-            }
         }
     }
     else if (self.mySegmentedControl.selectedSegmentIndex==1)
@@ -331,8 +294,8 @@
     NSString* regionString;
     NSString* streetAddressString;
     
-    if (!self.cameFromAdvancedSearch) {
-        
+    if (!self.cameFromAdvancedSearch)
+    {
         if (self.mySegmentedControl.selectedSegmentIndex == 0)
         {
             nameString = self.searchResultsArray[indexPath.row][@"venue"][@"name"];

@@ -60,7 +60,6 @@
 		DFE8730F1912CEF2002657A0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE8730B1912CEF2002657A0 /* Default.png */; };
 		DFE873101912CEF2002657A0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE8730C1912CEF2002657A0 /* Default@2x.png */; };
 		DFF5021B1902136500EA4D80 /* AdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */; };
-		DFF936FE19043BBD00843509 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF936FD19043BBD00843509 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,8 +155,6 @@
 		DFE8730C1912CEF2002657A0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		DFF502191902136500EA4D80 /* AdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedSearchViewController.h; sourceTree = "<group>"; };
 		DFF5021A1902136500EA4D80 /* AdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedSearchViewController.m; sourceTree = "<group>"; };
-		DFF936FC19043BBD00843509 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
-		DFF936FD19043BBD00843509 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,8 +251,6 @@
 				DF4DB89C18FC4F2B00C225EC /* RestaurantViewController.m */,
 				DF14E30E18FEDD6800E4DDCF /* ShareViewController.h */,
 				DF14E30F18FEDD6800E4DDCF /* ShareViewController.m */,
-				DFF936FC19043BBD00843509 /* WebViewController.h */,
-				DFF936FD19043BBD00843509 /* WebViewController.m */,
 				43E412FD18FF397D008D7431 /* NewsViewController.h */,
 				43E412FE18FF397D008D7431 /* NewsViewController.m */,
 				DF0A6C2A18FF5FE90064DA6B /* NewsDetailViewController.h */,
@@ -467,7 +462,6 @@
 				DFE1B0FE1900E9CA0090F929 /* RestaurantMenuTableViewCell.m in Sources */,
 				DF28E26B18FCC22E00E3D4F5 /* CollectionViewCellWithImage.m in Sources */,
 				DF11A00D18FD7C6800CAB607 /* FriendProfileViewController.m in Sources */,
-				DFF936FE19043BBD00843509 /* WebViewController.m in Sources */,
 				43E412FF18FF397D008D7431 /* NewsViewController.m in Sources */,
 				43A04C13190566000078E5D9 /* NewsTableViewCell.m in Sources */,
 				DF14E31018FEDD6800E4DDCF /* ShareViewController.m in Sources */,

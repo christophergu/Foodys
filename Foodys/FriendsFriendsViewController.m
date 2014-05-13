@@ -68,9 +68,6 @@
             cell.friendDetailImageView.image = photo;
         }
     }];
-    
-//    cell.flipped = NO;
-
     return cell;
 }
 
@@ -100,47 +97,6 @@
             cell.addFriendButton.enabled = NO;
         }
     }
-    
-//    if (cell.flipped == NO)
-//    {
-//        [UIView animateWithDuration:1.0
-//                              delay:0
-//                            options:(UIViewAnimationOptionAllowUserInteraction)
-//                         animations:^
-//         {
-//             [UIView transitionFromView:cell.friendImageView
-//                                 toView:cell.detailView
-//                               duration:.5
-//                                options:UIViewAnimationOptionTransitionFlipFromRight
-//                             completion:nil];
-//         }
-//                         completion:^(BOOL finished)
-//         {
-//             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-//             cell.flipped = YES;
-//         }
-//         ];
-//    }
-//    else if (cell.flipped == YES)
-//    {
-//        [UIView animateWithDuration:1.0
-//                              delay:0
-//                            options:(UIViewAnimationOptionAllowUserInteraction)
-//                         animations:^
-//         {
-//             [UIView transitionFromView:cell.detailView
-//                                 toView:cell.friendImageView
-//                               duration:.5
-//                                options:UIViewAnimationOptionTransitionFlipFromRight
-//                             completion:nil];
-//         }
-//                         completion:^(BOOL finished)
-//         {
-//             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-//             cell.flipped = NO;
-//         }
-//         ];
-//    }
 }
 
 @end

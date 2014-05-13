@@ -10,15 +10,15 @@
 #import "RestaurantViewController.h"
 
 @interface SeeRecommendationViewController ()
+
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
+@property (strong, nonatomic) IBOutlet UITextView *recommendationBodyTextField;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantRatingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *reviewerNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UITextView *recommendationBodyTextField;
-@property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantAddressLabel;
-
 
 @end
 
@@ -27,7 +27,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
     self.avatarImageView.clipsToBounds = YES;
     PFFile *userImageFile = self.chosenRestaurantRecommendationObject[@"avatar"];

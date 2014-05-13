@@ -10,20 +10,20 @@
 #import "RestaurantMenuTableViewCell.h"
 #import "ShareViewController.h"
 #import "DirectionsViewController.h"
-#import "WebViewController.h"
-#import <Parse/Parse.h>
 #import "SearchViewController.h"
+#import <Parse/Parse.h>
 
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
 @interface RestaurantViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) IBOutlet UIImageView *myAtmosphereImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *ratingCircleImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *telephoneIndicatorLabel;
-@property (strong, nonatomic) IBOutlet UIButton *phoneNumber;
-@property (strong, nonatomic) IBOutlet UIButton *address;
-@property (strong, nonatomic) NSDictionary *restaurantResultsDictionary;
 @property (strong, nonatomic) IBOutlet UILabel *sundayHoursLabel;
 @property (strong, nonatomic) IBOutlet UILabel *mondayHoursLabel;
 @property (strong, nonatomic) IBOutlet UILabel *tuesdayHoursLabel;
@@ -38,27 +38,26 @@
 @property (strong, nonatomic) IBOutlet UILabel *thuLabel;
 @property (strong, nonatomic) IBOutlet UILabel *friLabel;
 @property (strong, nonatomic) IBOutlet UILabel *satLabel;
-@property (strong, nonatomic) IBOutlet UITableView *myTableView;
-@property (strong, nonatomic) NSArray *restaurantUnfilteredMenu;
-@property (strong, nonatomic) NSMutableArray *restaurantMenu;
-@property (strong, nonatomic) IBOutlet UIView *menuView;
-@property BOOL menuBoolForButton;
-@property (strong, nonatomic) IBOutlet UIView *hoursView;
-@property BOOL hoursBoolForButton;
-@property (strong, nonatomic) PFUser *currentUser;
-@property (strong, nonatomic) IBOutlet UIButton *saveToProfileButton;
 @property (strong, nonatomic) IBOutlet UILabel *menuUnavailableLabel;
 @property (strong, nonatomic) IBOutlet UILabel *hoursUnavailableLabel;
-@property (strong, nonatomic) IBOutlet UIButton *reviewButton;
-@property (strong, nonatomic) IBOutlet UIButton *locationButton;
-@property (strong, nonatomic) NSString *locationCoordinatesString;
-@property (strong, nonatomic) NSMutableString *locationSearchString;
-@property (strong, nonatomic) IBOutlet UIImageView *favoriteStarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cumulativeRatingStaticLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *ratingCircleImageView;
+@property (strong, nonatomic) IBOutlet UIView *menuView;
+@property (strong, nonatomic) IBOutlet UIView *hoursView;
+@property (strong, nonatomic) IBOutlet UIButton *saveToProfileButton;
+@property (strong, nonatomic) IBOutlet UIButton *phoneNumber;
+@property (strong, nonatomic) IBOutlet UIButton *address;
+@property (strong, nonatomic) IBOutlet UIButton *reviewButton;
+@property (strong, nonatomic) IBOutlet UIButton *locationButton;
+@property (strong, nonatomic) NSDictionary *restaurantResultsDictionary;
 @property (strong, nonatomic) NSArray *defaultRestaurantArray;
-
+@property (strong, nonatomic) NSArray *restaurantUnfilteredMenu;
+@property (strong, nonatomic) NSMutableArray *restaurantMenu;
+@property (strong, nonatomic) NSString *locationCoordinatesString;
+@property (strong, nonatomic) NSMutableString *locationSearchString;
+@property (strong, nonatomic) PFUser *currentUser;
+@property BOOL menuBoolForButton;
+@property BOOL hoursBoolForButton;
 
 @end
 
@@ -147,7 +146,6 @@
     self.menuUnavailableLabel.alpha = 0.0;
     self.hoursUnavailableLabel.alpha = 0.0;
 
-    
     self.reviewButton.layer.cornerRadius=4.0f;
     self.reviewButton.layer.masksToBounds=YES;
     self.reviewButton.tintColor = [UIColor whiteColor];
@@ -174,8 +172,6 @@
             self.ratingCircleImageView.alpha = 0.0;
         }
     }];
-    
-
 }
 
 #pragma mark - tableview delegate methods
@@ -220,8 +216,6 @@
     if (isiPhone5)
     {
         // this is iphone 4 inch
-        NSLog(@"ya");
-        
         if ([hasMenuString isEqualToString:@"1"])
         {
             self.menuBoolForButton = !self.menuBoolForButton;
@@ -295,7 +289,6 @@
     else
     {
         //Iphone  3.5 inch
-        NSLog(@"nah");
         if ([hasMenuString isEqualToString:@"1"])
         {
             self.menuBoolForButton = !self.menuBoolForButton;
@@ -374,7 +367,6 @@
     if (isiPhone5)
     {
         // this is iphone 4 inch
-        NSLog(@"ya");
         if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
             ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
             ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
@@ -384,9 +376,7 @@
             ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
         {
             self.hoursBoolForButton = !self.hoursBoolForButton;
-            
-
-            
+    
             if (self.hoursBoolForButton)
             {
                 [UIView animateWithDuration:0.5
@@ -455,7 +445,6 @@
     else
     {
         //Iphone  3.5 inch
-        NSLog(@"nah");
         if (([self.restaurantResultsDictionary[@"open_hours"][@"Sunday"] count] == 0) &&
             ([self.restaurantResultsDictionary[@"open_hours"][@"Monday"] count] == 0) &&
             ([self.restaurantResultsDictionary[@"open_hours"][@"Tuesday"] count] == 0) &&
@@ -465,8 +454,6 @@
             ([self.restaurantResultsDictionary[@"open_hours"][@"Saturday"] count] == 0))
         {
             self.hoursBoolForButton = !self.hoursBoolForButton;
-            
-            
             
             if (self.hoursBoolForButton)
             {
@@ -579,7 +566,6 @@
 
 - (IBAction)onLocationButtonPressed:(id)sender
 {
-
     [self performSegueWithIdentifier:@"DirectionsSegue" sender:self];
 }
 
@@ -594,8 +580,6 @@
                            componentsJoinedByString:@""];
     
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
-    
-    NSLog(@"%@",phNo);
     
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
     {
@@ -767,6 +751,5 @@
         DirectionsViewController *dvc = segue.destinationViewController;
         dvc.chosenRestaurantDictionary = self.chosenRestaurantDictionary;
     }
-        
 }
 @end

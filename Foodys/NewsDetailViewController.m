@@ -10,17 +10,18 @@
 #import "RestaurantViewController.h"
 
 @interface NewsDetailViewController ()
-@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+
+@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *subjectTextField;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *yesNoLabel;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantRating;
 @property (strong, nonatomic) IBOutlet UILabel *restaurantTitle;
 @property (strong, nonatomic) IBOutlet UILabel *reviewerNameLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (strong, nonatomic) IBOutlet UIButton *getMoreInfoButton;
-@property (strong, nonatomic) IBOutlet UIImageView *ratingFaceImageView;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet UIButton *getMoreInfoButton;
 
 @end
 
@@ -30,7 +31,6 @@
 {
     [super viewDidLoad];
 
-    
     self.reviewerNameLabel.text = self.currentPost[@"author"];
     self.getMoreInfoButton.tintColor = [UIColor colorWithRed:31/255.0f green:189/255.0f blue:195/255.0f alpha:1.0f];
     
@@ -53,8 +53,6 @@
         }
     }];
     
-    
-    NSLog(@"%@",self.currentPost);
     self.addressLabel.text = self.currentPost[@"restaurantDictionary"][@"street_address"];
     
     if ([self.currentPost[@"rating"] intValue] > 74)

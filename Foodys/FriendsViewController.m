@@ -15,26 +15,20 @@
 
 @interface FriendsViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
-@property (strong, nonatomic) PFUser *currentFriendUser;
-@property (strong, nonatomic) NSArray *userArray;
-@property int numberOfReviewsAndRecommendations;
-@property (strong, nonatomic) NSArray *rankings;
-@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
-@property (strong, nonatomic) NSString *rankingStringForLabel;
-
-@property (strong, nonatomic) NSMutableArray *favoritesArray;
-
-@property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
-
-@property (strong, nonatomic) PFUser *currentUser;
-@property (strong, nonatomic) NSMutableArray *userFriendsArray;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addFriendButton;
-
+@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+@property (strong, nonatomic) NSArray *userArray;
+@property (strong, nonatomic) NSArray *rankings;
+@property (strong, nonatomic) NSMutableArray *favoritesArray;
+@property (strong, nonatomic) NSMutableArray *requestorsToAddArray;
+@property (strong, nonatomic) NSMutableArray *userFriendsArray;
 @property (strong, nonatomic) NSMutableArray *selectedFriends;
 @property (strong, nonatomic) NSString *reviewsCounterString;
-
+@property (strong, nonatomic) NSString *rankingStringForLabel;
+@property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) PFUser *currentFriendUser;
 @property (strong, nonatomic) PFUser *friendUserToDelete;
-
+@property int numberOfReviewsAndRecommendations;
 
 @end
 
@@ -54,7 +48,6 @@
                       @"Rockstar Foodie",
                       @"Superhero Foodie"];
     
-    self.favoritesArray = [NSMutableArray new];
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     
     self.currentUser = [PFUser currentUser];
@@ -110,8 +103,6 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCellWithImage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellReuseID" forIndexPath:indexPath];
-    
-//    NSLog(@"%lu", (unsigned long)[self.userFriendsArray count]);
 
     if (![self.userFriendsArray[indexPath.row] isEqual:[NSNull null]] && !(self.userFriendsArray[indexPath.row] == nil))
     {
@@ -143,8 +134,8 @@
 
 - (void)retrieveFavorites:(NSIndexPath *)indexPath
 {
-    
-//    NSLog(@"%@",[self.currentUser[@"friends"][indexPath.row][@"favorites"] class]);
+    self.favoritesArray = [NSMutableArray new];
+
     PFObject* friend = self.currentUser[@"friends"][indexPath.row];
                         
     [friend fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -161,9 +152,12 @@
                     if (![self.favoritesArray containsObject:favorite[@"restaurantDictionary"]]) {
                         [self.favoritesArray addObject:favorite[@"restaurantDictionary"]];
                     }
+                    
+                    if ([self.favoritesArray count] == favoriteCount) {
+                        [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
+                    }
                 }];
             }
-            [self performSegueWithIdentifier:@"FriendsProfileSegue" sender:self];
         }
         else
         {

@@ -108,13 +108,13 @@
     }
     
     // this is loaded for the friends friends vc page, so it isn't slow
-    PFQuery *friendsFriendsQuery = [PFUser query];
-    [friendsFriendsQuery whereKey:@"username" equalTo:self.currentFriendUser[@"username"]];
-    [friendsFriendsQuery includeKey:@"friends"];
-    
-    [friendsFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.userArray = objects.firstObject[@"friends"];
-    }];
+//    PFQuery *friendsFriendsQuery = [PFUser query];
+//    [friendsFriendsQuery whereKey:@"username" equalTo:self.currentFriendUser[@"username"]];
+//    [friendsFriendsQuery includeKey:@"friends"];
+//    
+//    [friendsFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        self.userArray = objects.firstObject[@"friends"];
+//    }];
     
     [self.myTableView reloadData];
 }

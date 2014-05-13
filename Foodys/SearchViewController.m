@@ -11,32 +11,25 @@
 #import "SignInViewController.h"
 #import "RestaurantViewController.h"
 #import "ShowMoreResultsViewController.h"
+#import "AdvancedSearchViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
-#import "AdvancedSearchViewController.h"
 
 @interface SearchViewController ()<CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray *searchResultsArray;
-@property (strong, nonatomic) NSArray *suggestionsArray;
-
-@property int numberOfReviewsAndRecommendations;
-
-@property (strong, nonatomic) NSArray *rankings;
-
-@property (strong, nonatomic) PFUser *currentUser;
-@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
-@property (strong, nonatomic) IBOutlet UITextField *cuisineTextField;
-
 @property (strong, nonatomic) CLLocation* currentLocation;
-
-@property BOOL venueSearch;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
-
+@property (strong, nonatomic) IBOutlet UITextField *cuisineTextField;
+@property (strong, nonatomic) IBOutlet UILabel *rankingLabel;
+@property (strong, nonatomic) NSArray *suggestionsArray;
+@property (strong, nonatomic) NSArray *rankings;
+@property (strong, nonatomic) NSMutableArray *searchResultsArray;
 @property (strong, nonatomic) NSString *locationCoordinatesString;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activitySpinner;
+@property (strong, nonatomic) PFUser *currentUser;
+@property int numberOfReviewsAndRecommendations;
+@property BOOL venueSearch;
 
 @end
 
@@ -49,11 +42,7 @@
     self.locationManager = [CLLocationManager new];
     
     self.locationManager.delegate = self;
-    
-    [self.locationManager startUpdatingLocation];
-    
-    self.currentLocation = self.locationManager.location;
-    
+
     self.suggestionsArray = @[@"bagel",
                               @"burrito",
                               @"burger",
@@ -88,10 +77,11 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
-#pragma mark - check if there is a current user method
-
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.locationManager startUpdatingLocation];
+    self.currentLocation = self.locationManager.location;
+    
     self.currentUser = [PFUser currentUser];
     
     self.cuisineTextField.text = @"";
@@ -143,18 +133,12 @@
     
     if (self.locationManager.location)
     {
-        NSLog(@"hi");
-        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
         locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=50000",
                                  self.locationManager.location.coordinate.latitude,
                                  self.locationManager.location.coordinate.longitude];
         
-        NSLog(@"%@",self.locationManager.location);
         [itemSearchString appendString:locationTextForSearch];
     }
-    
-    NSLog(@"%@",itemSearchString);
     
     NSURL *url = [NSURL URLWithString: itemSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -178,9 +162,6 @@
     
     if (self.locationManager.location)
     {
-        NSLog(@"hi");
-        NSLog(@"lat %.1f", self.locationManager.location.coordinate.latitude);
-        NSLog(@"long %.1f", self.locationManager.location.coordinate.longitude);
         locationTextForSearch = [NSString stringWithFormat:@"&location=%.1f,%.1f&radius=10000",
                                  self.locationManager.location.coordinate.latitude,
                                  self.locationManager.location.coordinate.longitude];
@@ -193,7 +174,6 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *error;
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSLog(@"%@",intermediateDictionary);
         self.searchResultsArray = intermediateDictionary[@"objects"];
         
         self.venueSearch = 1;
@@ -249,10 +229,6 @@
         [itemSearchString appendString:locationTextForSearch];
     }
     
-    
-    
-
-
     NSURL *url = [NSURL URLWithString: itemSearchString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -268,11 +244,9 @@
                                               otherButtonTitles:nil];
             [av show];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            
-    
-        
-        } else {
-        
+        }
+        else
+        {
         NSDictionary *intermediateDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
         NSMutableArray *venues = [NSMutableArray new];
@@ -287,9 +261,7 @@
         }
         self.venueSearch = 0;
         [self performSegueWithIdentifier:@"ShowMoreResultsSegue" sender:self];
-        
-    }
-        
+        }
     }];
 }
 
@@ -315,10 +287,11 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [self.locationManager stopUpdatingLocation];
+    
     if ([[segue identifier] isEqualToString:@"RestaurantViewControllerSegue"])
     {
         RestaurantViewController *rvc = segue.destinationViewController;
-//        rvc.chosenRestaurantDictionary = ?.searchTerm;
         rvc.chosenRestaurantDictionary = self.searchResultsArray.firstObject;
     }
     else if ([[segue identifier] isEqualToString:@"ShowMoreResultsSegue"])

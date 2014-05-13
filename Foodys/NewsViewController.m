@@ -12,23 +12,15 @@
 #import "NewsTableViewCell.h"
 
 @interface NewsViewController () <UITableViewDataSource, UITabBarDelegate, UIImagePickerControllerDelegate>
-@property (strong,nonatomic) PFObject* currentPost;
-@property (strong,nonatomic) PFUser* currentUser;
-@property (strong,nonatomic) NSArray* currentUserPostsArray;
+
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+@property (strong,nonatomic) NSArray* currentUserPostsArray;
+@property (strong,nonatomic) PFUser* currentUser;
+@property (strong,nonatomic) PFObject* currentPost;
 
 @end
 
 @implementation NewsViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -66,7 +58,7 @@
     }];
 }
 
-
+#pragma mark - tableview methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -118,6 +110,7 @@
     return cell;
 }
 
+#pragma mark - prepare for segue methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

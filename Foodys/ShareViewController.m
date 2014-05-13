@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 
 @interface ShareViewController ()<UITableViewDataSource, UITableViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *subjectTextField;
 
@@ -56,13 +57,10 @@
     [self cumulativeRestaurantRatingsLabelSetUp];
     
     // hiding the choose friends button
-
     self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
     self.chooseFriendsDoneButton.enabled = NO;
     
     self.sliderIntValue = 50;
-    
-    NSLog(@"%@",self.chosenRestaurantDictionary);
     
     self.friendsToRecommendTo = [NSMutableArray new];
     
@@ -99,29 +97,8 @@
         self.chooseFriendsDoneButton.enabled = NO;
         
         [self.doneButton setTitle:@"Post Review" forState:UIControlStateNormal];
-
     }
 }
-
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    NSLog(@"yea");
-//    if (self.cameForFriend)
-//    {
-//        NSLog(@"ra %hhd",self.cameForFriend);
-//
-//        [UIView animateWithDuration:0.5
-//                              delay:0.0
-//                            options: UIViewAnimationOptionCurveEaseIn
-//                         animations:^{
-//                             self.chooseFriendToWriteView.frame = CGRectMake(0, 64, 320, 514);
-//                             self.chooseFriendsDoneButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-//                         }
-//                         completion:^(BOOL finished){
-//                             self.chooseFriendsDoneButton.enabled = YES;
-//                         }];
-//    }
-//}
 
 -(void)setUpBasicElementsForThisView
 {
@@ -181,7 +158,6 @@
         self.getRestaurantInfoButton.alpha = 0.0;
         self.getRestaurantInfoButton.enabled = NO;
     }
-    
     
     [self refreshRatingLabel];
 }
@@ -245,7 +221,6 @@
     return cell;
 }
 
-
 // add friends to send your recommendation to
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -259,7 +234,6 @@
 }
 
 #pragma mark - button methods
-
 
 - (IBAction)onEndEditingAllButtonPressed:(id)sender
 {
@@ -297,7 +271,6 @@
     {
         [self.mySlider setThumbImage:[UIImage imageNamed:@"frowny_icon"] forState:UIControlStateNormal];
     }
-    
     
     self.sliderScoreLabel.text = [NSString stringWithFormat:@"%d", self.sliderIntValue];
 }

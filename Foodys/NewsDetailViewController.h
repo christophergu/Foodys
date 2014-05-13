@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 
 @interface NewsDetailViewController : UIViewController
+
 @property (strong, nonatomic) PFObject *currentPost;
 
 @end
